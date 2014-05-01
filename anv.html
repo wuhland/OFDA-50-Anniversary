@@ -11,7 +11,7 @@
   pointer-events: all;
 }
 
-#CAN { fill: red;  }
+#PHL { fill: red;  }
 
 .mesh {
   fill: none;
@@ -95,8 +95,8 @@ function country_clicked(d) {
     var xyz = get_xyz(d);
     country = d;
 
-    if (d.id  == 'SYX' || d.id == 'PHL') {
-      d3.json("data/json/states_" + d.id.toLowerCase() + "_min.topo.json", function(error, us) {
+    if ( d.id == 'PHL') {
+      d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
         g.append("g")
           .attr("id", "states")
           .selectAll("path")
@@ -106,21 +106,24 @@ function country_clicked(d) {
           .attr("id", function(d) { return d.id; })
           .attr("class", "active")
           .attr("d", path)
-          .on("click", state_clicked);
+  /*        .on("click", state_clicked);     */
 
         zoom(xyz);
         g.selectAll("#" + d.id).style('display', 'none');
       });      
     } else {
-      zoom(xyz);
+  /*    zoom(xyz); */
+      return;
     }
   } else {
     var xyz = [width / 2, height / 1.5, 1];
     country = null;
-    zoom(xyz);
+    zoom(xyz);   
+     
   }
 }
 
+/*
 function state_clicked(d) {
   g.selectAll("#cities").remove();
 
@@ -149,6 +152,7 @@ function state_clicked(d) {
     country_clicked(country);
   }
 }
+*/
 
 /*$(window).resize(function() {
   var w = $("#map").width();
