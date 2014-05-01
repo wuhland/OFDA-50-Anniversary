@@ -13,7 +13,7 @@ f = open(fle,"r")
 out = "["
 for line in f:
 
-	month = int(re.sub('^0','',line[2:4]))
+	month = "\"" +  monthDict[int(re.sub('^0','',line[2:4]))] +"\""
 	day = int(re.sub('^0','',line[4:6]))
 #	print(re.sub('^0','',line[8:9]))
 	hour = int(re.sub('^0','',line[6:8]))
@@ -22,7 +22,7 @@ for line in f:
 	h_class = int(line[13])
 	w_spd = int(re.sub('^0','',line[33:36]))
 
-	out += '{"month":%d,"day":%d, "hour":%d, "lat":%.1f, "lon":%.1f, "class": %d,"wspeed":%d },' %(
+	out += '{"month":%s,"day":%d, "hour":%d, "lat":%.1f, "lon":%.1f, "class": %d,"wspeed":%d },' %(
        month, day, hour, lat, lon, h_class, w_spd)
 out = out[0:-1] + "]"
 f.close()
