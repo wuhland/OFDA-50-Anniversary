@@ -5,15 +5,7 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
 -->
-<style>i
-
-.title {
-	fill: hsla(0,0,5,.5);
-	font: 20px arial, sans serif;
-
-}
-	
-
+<style>
 .background {
   fill: #EBF5FF;
   pointer-events: all;
@@ -37,14 +29,14 @@
 .boundary {
 	fill: none;
 	stroke: #C6C0AE; // #fed98e;
-	stroke-width: 1px;
+	stroke-width:  ix;
 	stroke-opacity: 1;
 	
 }
 .boundary_zoom {
 	fill: none;
 	stroke: #C6C0AE;
-	stroke-width: .5px;
+	stroke-width: 2px;
 }
 
 .dialogBox {
@@ -184,9 +176,6 @@ function zoom(xyz) {
 		.selectAll(".city")
 		.attr("d", path.pointRadius(20.0 / xyz[2]));
 
-
-		g.selectAll(".boundary").classed("boundary_zoom",true);
-
 }
 
 function get_xyz(d) {
@@ -198,16 +187,6 @@ function get_xyz(d) {
 	var y = (bounds[1][1] + bounds[0][1]) / 2 + (height / z / 6);
 	return [x, y, z];
 }
-
-
-svg.append("image")
-	.attr("xlink:href","data/phl/face.png")
-	.attr("width", "40px")
-	.attr("height", "40px")
-	.attr("id", "face")
-	.attr("x", 800)
-	.attr("y", 175) ; 
-
 
 function country_clicked(d) {
 	g.selectAll(["#states", "#cities"]).remove();
@@ -225,16 +204,15 @@ function country_clicked(d) {
 
 
 		if ( d.id == 'PHL') {
-		console.log(d)
-		console.log(path.centroid(d));
-		svg.selectAll("#face").remove();
 
-		d3.select("body").selectAll("div")
+		g.selectAll(".boundary").classed(".boundary_zoom");
+
+	/*	d3.select("body").selectAll("div")
 			.append("div")
-			.attr("class","title")
-			.style({"height":"20px", "top":"10px"})
+			.attr("class","dialogBox")
+			.style({"height":"20px", "left":"2px"})
 			.html("watch");
-	
+	*/
 			
 
 
@@ -252,8 +230,6 @@ function country_clicked(d) {
 				}
 			})
 */
-
-			
 
 
 			g.selectAll( "#" + country.id ).classed(".hide");
@@ -296,7 +272,7 @@ function country_clicked(d) {
 					var dateText = svg.append("text")
 						.attr("id", "dataTitle")
 						.text("2013" + " " + track[0].month + " " + track[0].day + " " + track[0].hour + ":00 class: " + track[0].class)
-						.attr("x", 650)
+						.attr("x", 70)
 						.attr("y", 20)
 						.attr("font-family", "sans-serif")
 						.attr("font-size", "20px")
@@ -454,9 +430,6 @@ function country_clicked(d) {
 			return;
     	}
 	} else {
-		
-
-		g.selectAll(".boundary_zoom").classed("boundary", true);
 		g.selectAll( "#" + country.id ).classed(".feature");
 		d3.select("#dataTitle").remove()
 		d3.select("#hurr").remove()
@@ -464,15 +437,7 @@ function country_clicked(d) {
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
     	zoom(xyz);   
- 		svg.append("image")
-			.attr("xlink:href","data/phl/face.png")
-			.attr("width", "40px")
-			.attr("height", "40px")
-			.attr("id", "face")
-			.attr("x", 800)
-			.attr("y", 175) ; 
-
-    
+     
   	}
 }
 
