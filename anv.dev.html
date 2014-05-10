@@ -12,6 +12,7 @@
 font-family: "Yanone Kaffeesatz";
 text-rendering: optimizeLegibility;
 overflow-wrap: break-word;
+vertical-align: middle;
 }
 
 #context {
@@ -20,6 +21,8 @@ margin-top: 0px;
 margin-bottom: 0px;
 margin-left: 0px;
 display: block;
+text-align: center;
+
 }
 
 #h1 {
@@ -27,8 +30,9 @@ font-size: 25px;
 margin-top: 0px;
 margin-bottom: 0px;
 margin-right: 20px;
-display: inline-block;
+display: block;
 font-weight: bold;
+text-align:right;
 }
 
 #mapFrame {
@@ -89,7 +93,7 @@ stroke-width: 2px;
 }
 
 .dialogBox {
-	background-color: hsla(0,0%,0%,.7);
+	background-color: #EDEDDD;
 	margin-right: 2px;
 	position: absolute;
 	padding-left: 0px;
@@ -425,7 +429,7 @@ function country_clicked(d) {
 				}
 				else {
 					d3.select("#map").select("#swipeBox").remove();
-					d3.select(this).classed("dialogBox",true);
+					d3.select(this).classed("dialogBox",true).classed("selected",false);
 					dialogClosed = true	            					
 				}
 			});
