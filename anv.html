@@ -5,42 +5,83 @@
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="//d3js.org/topojson.v1.min.js"></script>
 -->
-<style>i
+<style>
 
-.title {
-	fill: hsla(0,0,5,.5);
-	font: 20px arial, sans serif;
 
-}
-	
-
-.background {
-  fill: #EBF5FF;
-  pointer-events: all;
+#h1, #context {
+font-family: "Yanone Kaffeesatz";
+text-rendering: optimizeLegibility;
+overflow-wrap: break-word;
 }
 
-.active {
-	fill: #E65C5C;
-/*	stroke:  #C6C0AE;
-	stroke-width: .1px;
-	stroke-opacity: 1;
-*/
+#context {
+font-size: 15px;
+margin-top: 0px;
+margin-bottom: 0px;
+margin-left: 0px;
+display: block;
 }
 
+#h1 {
+font-size: 25px;
+margin-top: 0px;
+margin-bottom: 0px;
+margin-right: 20px;
+display: inline-block;
+font-weight: bold;
+}
 
-#PHL { fill: #DA4545;  }
+#mapFrame {
+margin-top:0px;
+}
+
+#seperator {
+stroke: hsla(0, 0%, 50%, 1);
+stroke-width: 2px; 
+}
+
 #hurr {
 	stroke-dasharray: 3,2;
 }
 
 #countries { fill: #F8F0D9; }
+
+.title {
+	fill: hsla(0,0%,5%,.5);
+	font: 20px arial, sans serif;
+}
+	
+.background {
+	fill: hsla(222, 100%, 84%, 1);
+	pointer-events: all;
+}
+
+.coast {
+	fill: none;
+	stroke: hsla(222, 100%, 50%, 1);
+	stroke-width: .4;
+}
+
+.coast_zoom {
+	fill: none;
+	stroke: hsla(222, 100%, 50%, 1);
+	stroke-width: .2;
+}
+
+.active {
+	fill: #E65C5C;
+}
+
+
+.featured { fill: #DA4545;  }
+
 .boundary {
 	fill: none;
 	stroke: #C6C0AE; // #fed98e;
 	stroke-width: 1px;
 	stroke-opacity: 1;
-	
 }
+
 .boundary_zoom {
 	fill: none;
 	stroke: #C6C0AE;
@@ -48,16 +89,41 @@
 }
 
 .dialogBox {
-	display: inline-block;
-	background-color: teal;
+	background-color: hsla(0,0%,0%,.7);
 	margin-right: 2px;
-	position: fixed;
-	top: 485px;
-	left: 0px;
-    height: 10px;
-	width: 100px;
-	z-index:100;
+	position: absolute;
+	padding-left: 0px;
+	padding-right: 5px;
+	text-align:center;
+	align-content: space-around;
+	font-size: 30px;
+	font-family: "Arial", helvetica, sans-serif;
+	font-color: hsl(0,0%,100%);
 }
+.selected {
+	background-color: hsla(262,96%,83%,70);
+	border-style: solid;
+	border-color: hsla(178,50%,0%,80);
+	border-width: 2px;
+}
+
+#swipeBox {
+	background-color: hsla(0, 100%, 100%, .7);
+	outline: hsla(360, 0%, 40%, .7);
+	border-width: 2px; 
+	padding-top, padding-bottom, padding-left, padding-right: 10px;
+	white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+	white-space: -pre-wrap;      /* Opera 4-6 */
+	white-space: -o-pre-wrap;    /* Opera 7 */
+	white-space: pre-wrap;       /* css-3 */
+	word-wrap: break-word;       /* Internet Explorer 5.5+ */
+	word-break: break-all;
+	white-space: normal;
+	position: absolute;
+	z-index:+1;
+	
+}
+
 
 .hide {
 	fill: none;
@@ -71,16 +137,16 @@
 	fill: none;
 	stroke: #FFFFFF; //#C6C0AE; 
 	stroke-width: .07px;
-//	stroke-opacity: .75;
 }	
 
-.graticule {
-  fill: none;
-  stroke: #777;
-  stroke-width: .3px;
-  stroke-opacity: .9;
-} 
 
+.face {
+opacity: .8;
+}
+
+.faceOff {
+opacity: 0;
+}
 
 </style>
 
@@ -92,11 +158,20 @@
 
 <script>
 
+
+var	width = 938,
+    height = 500,
+    country,
+    state;
+var topMargin = height * .02, 
+adjust = 52;
+
 //options needs to be created via looping through country files to determine types of content. For now created expressly
 var options = ["Read","Watch"];
 
+var featured = ["PHL"];
 
-/*function httpGet(theURL){
+function httpGet(theURL){
     var xmlHttp = null;
 		
     xmlHttp = new XMLHttpRequest();
@@ -104,48 +179,87 @@ var options = ["Read","Watch"];
     xmlHttp.send( null );
     return xmlHttp.responseText;
 };
-*/	
 
+function getHTTL () {
+	return "hello";
+};	
 
+var title = "50 Years of OFDA";
+var startText = "A selection of OFDA responces are highlighted in red below, click one.";
 
-var width = 938,
-    height = 500,
-    country,
-    state;
+d3.select("body").append("div")
+	.attr("id", "h1")
+	.attr("width", width)
+	.text(title);
+	
+d3.select("body").append("div")
+	.attr("width",width)
+	.attr("id","context")
+	.text(startText); 
 
-var graticule = d3.geo.graticule();
 
 var projection = d3.geo.cylindricalEqualArea()
-//var projection = d3.geo.mtFlatPolarQuartic()
-
 	.parallel(35.5)
-    .scale(190)
-    .translate([width / 2, height / 2]);
+    .scale(200)
+    .translate([(width)/2,( height)/ 1.9]);
 
 var trackWidth = .5;
 
-var color = d3.interpolateLab("#008000", "#c83a22");
+var color = d3.interpolateLab("#99d594", "#fc8d59");
 
 var path = d3.geo.path()
 	.projection(projection);
 
-var svg = d3.select("body").append("svg")
+d3.select("body")
+	.append("div")
+		.attr("id","mapFrame")
+		.attr("width", width)
+		.attr("height", height)
+	.append("div")
+		.attr("id","map");
+
+		
+
+var svg = d3.select("body").select("#map").append("svg")
 	.attr("width", width)
-	.attr("height", height);
+	.attr("height", height)
+	.style("margin-top", topMargin);
 
-//var checkcontent = function (i) {
-	
-
-//var options = d3.select("body").append
 
 svg.append("rect")
 	.attr("class", "background")
 	.attr("width", width)
 	.attr("height", height)
-	.on("click", country_clicked); 
+	.on("click", country_clicked)
+	
+svg.append("line")
+		.attr("id","seperator")
+		.attr("x1", 0)
+		.attr("y1", 0)
+		.attr("x2", width)
+		.attr("y2", 0);
+	
+svg.append("line")		
+		.attr("id","seperator")
+		.attr("x1", 0)
+		.attr("y1", height + 2)
+		.attr("x2", width)
+		.attr("y2", height + 2);
 
+
+	
+
+/*svg.append("rect")
+	.attr("class", "background")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+	.attr("clip-path","#clip")
+	.on("click", country_clicked);
+*/
 
 var g = svg.append("g");
+//	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
 
 /*svg.append("path")
 //	g.append("g")	
@@ -155,26 +269,52 @@ var g = svg.append("g");
 */
 
 d3.json("countries_min.topo.json", function(error, us) {
-//	svg.insert("path",".graticule")		
 		g.append("g")
 		.attr("id", "countries")
 		.selectAll("path")
 		.data(topojson.feature(us, us.objects.countries_min).features)
 		.enter()
 			.append("path")
+			.attr("class", function(d) {
+				var c = "";
+				if (featured.indexOf(d.id) > -1) {
+					c = "featured";
+					var centroid = path.centroid(d);
+					svg.append("image")
+						.attr("xlink:href","data/phl/face.png")
+						.attr("width", "40px")
+						.attr("height", "40px")
+						.attr("class", "face")	
+						.attr("x", centroid[0] + 5)
+						.attr("y", centroid[1] - 30) ; 
+					} else {
+					c = "country";
+					}
+					return c; 
+					})
 			.attr("id", function(d) { return d.id; })
+
 			.attr("d", path)
-			.on("click", country_clicked);
-	
+			.on("click", country_clicked);	
 		g.insert("g")
 			.datum(topojson.mesh(us, us.objects.countries_min, function(a, b) {
 			return a !== b; 
-		}))
-		.append("path")
-		.attr("class", "boundary")
-		.attr("d", path);
-		});
+			}))
+			.append("path")
+			.attr("class", "boundary")
+			.attr("d", path);
+		
+		g.insert("g")
+			.datum(topojson.mesh(us, us.objects.countries_min, function(a, b) {
+			return a === b;
+			}))
+			.append("path")
+			.attr("class", "coast")
+			.attr("d",path); 
 
+	
+
+		});
 function zoom(xyz) {
 	g.transition()
 		.duration(750)
@@ -185,9 +325,14 @@ function zoom(xyz) {
 		.attr("d", path.pointRadius(20.0 / xyz[2]));
 
 
-		g.selectAll(".boundary").classed("boundary_zoom",true);
+		g.select(".boundary").classed("boundary_zoom",true);
+		g.select(".boundary_zoom").classed("boundary",false);
+		g.select(".coast").classed("coast_zoom",true);
+		g.select(".coast_zoom").classed("coast",false);
+
 
 }
+
 
 function get_xyz(d) {
 	var bounds = path.bounds(d);
@@ -199,14 +344,12 @@ function get_xyz(d) {
 	return [x, y, z];
 }
 
-
-svg.append("image")
-	.attr("xlink:href","data/phl/face.png")
-	.attr("width", "40px")
-	.attr("height", "40px")
-	.attr("id", "face")
-	.attr("x", 800)
-	.attr("y", 175) ; 
+/*
+console.log(g.selectAll(".featured").each(function (d) {
+	var centroid = path.centroid(d);
+	return centroid;
+	}));
+*/
 
 
 function country_clicked(d) {
@@ -225,42 +368,82 @@ function country_clicked(d) {
 
 
 		if ( d.id == 'PHL') {
-		console.log(d)
-		console.log(path.centroid(d));
-		svg.selectAll("#face").remove();
+		svg.selectAll(".face").classed("faceOff",true);
+		svg.selectAll(".faceOff").classed("face",false);
 
-		d3.select("body").selectAll("div")
-			.append("div")
-			.attr("class","title")
-			.style({"height":"20px", "top":"10px"})
-			.html("watch");
-	
+		function getHTTP() {
 			
-
-
+			d3.select("#map").append("div")
+				.attr("id","swipeBox")
+				.attr("height", "0px")
+				.style("width",width + "px")
+				.attr("top", height + adjust +  "px")
+//				.attr("top", height)
+				.style("opacity", 0)
+				.html("<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"data/" + d.id.toLowerCase() + "/text.html\"></iframe>")
+				.transition()
+				.delay(800)
+				.style("height", height + "px")	
+				.style("top", (topMargin + adjust) + "px")
+//				.attr("top", 0)
+				.style('opacity', 1);
 	
-	/*	d3.select("body").selectAll("div")
+/*			d3.select("body").selectAll("#swipeBox")
+				.on("click", function () {
+					d3.select(this).exit().remove();
+			});		
+*/
+				
+			}
+			
+		var  dialogClosed = true;
+		d3.select("#map").selectAll("div")
 			.data(options)
 			.enter()
 			.append("div")
-			.attr("class","dialogBox")
+			.attr("class", "dialogBox")
+			.style('opacity', 0)
 			.transition()
-			.delay(50)
-			.each("start", function() {d3.select(this).style("height","10px");})
-			.style({"height":"20px", "left": function(d){
-				(((options.indexOf(d) * 100) + 2).toString() + "px" );
+			.ease("linear")
+			.delay(750)
+			.each("start", function() {d3.select(this).style("height",0);})
+			.style("height","36px")
+			.style('opacity', 1)
+			.style("left", function (d) { 
+				var lft = (options.indexOf(d) * 85 + 8);
+				return lft + "px"; 
+				})
+			.style("top",height)
+			.text(function (d) { return d; });
+
+		d3.select("#map").selectAll(".dialogBox")
+			.on("click", function () {
+				if (dialogClosed) {
+					getHTTP(); //put up information screen
+					d3.select(this).classed("selected", true);
+					dialogClosed = false //set global state to false
 				}
-			})
-*/
+				else {
+					d3.select("#map").select("#swipeBox").remove();
+					d3.select(this).classed("dialogBox",true);
+					dialogClosed = true	            					
+				}
+			});
+	
 
+
+
+
+		d3.select("#context").text("Typhoon Haiyan/Yolanda made landfall in the Philippines, bringing strong winds and heavy rains that resulted in flooding, landslides, and widespread damage.")
+
+
+
+
+
+		g.selectAll( "#" + country.id ).classed(".hide");
 			
-
-
-			g.selectAll( "#" + country.id ).classed(".hide");
-			
-				
-			d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
-				g.append("g")
+		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+			g.append("g")
           			.attr("id", "states")
           			.selectAll("path")
           			.data(topojson.feature(us, us.objects.states).features)
@@ -286,11 +469,12 @@ function country_clicked(d) {
 
   //      		g.selectAll("#" + d.id).style('display', 'none');
       		});      
+
 			
 
 			d3.json("data/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
-					var color_scale = d3.scale.quantile().domain([1,5]).range(colorbrewer.YlOrRd[5]);
+					var color_scale = d3.scale.quantile().domain([3,5]).range(colorbrewer.Reds[5]);
 					
 
 					var dateText = svg.append("text")
@@ -370,7 +554,6 @@ function country_clicked(d) {
         					.data(quad(sample(line(activatedTrack), 1)))
         					.enter().append("path")
           						.style("fill", function(d) { return color(d.t);})
-					//			.style("stroke-dasharray", "3,2")
           						.style("stroke", function(d) { return color(d.t); })
           						.attr("d", function(d) { return lineJoin(d[0], d[1], d[2], d[3], trackWidth); });
       					}
@@ -438,7 +621,7 @@ function country_clicked(d) {
       					y1 = c[1], y3 = a[1], y21 = d[1] - y1, y43 = b[1] - y3,
       					ua = (x43 * (y1 - y3) - y43 * (x1 - x3)) / (y43 * x21 - x43 * y21);
   					return [x1 + ua * x21, y1 + ua * y21];
-}
+				}
 
 				// Compute unit vector perpendicular to p01.
 				function perp(p0, p1) {
@@ -446,33 +629,29 @@ function country_clicked(d) {
       					u01d = Math.sqrt(u01x * u01x + u01y * u01y);
   					return [u01x / u01d, u01y / u01d];
 				}	
+   		} 
 
-   } 
+		else {		
 
-		else {
-  /*    zoom(xyz); */
+			zoom(xyz); 
 			return;
     	}
 	} else {
-		
-
-		g.selectAll(".boundary_zoom").classed("boundary", true);
-		g.selectAll( "#" + country.id ).classed(".feature");
 		d3.select("#dataTitle").remove()
 		d3.select("#hurr").remove()
 		d3.select("#icon").remove()
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
-    	zoom(xyz);   
- 		svg.append("image")
-			.attr("xlink:href","data/phl/face.png")
-			.attr("width", "40px")
-			.attr("height", "40px")
-			.attr("id", "face")
-			.attr("x", 800)
-			.attr("y", 175) ; 
-
-    
+    	zoom(xyz);
+		d3.select("#context").text(startText); 
+		d3.selectAll(".dialogBox").remove();
+		svg.selectAll(".faceOff").classed("face",true);
+		svg.selectAll(".face").classed("faceOff",false);
+ 		g.selectAll(".coast_zoom").classed("coast", true);
+		g.selectAll(".coast").classed("coast_zoom", false);  		
+		g.select(".boundary_zoom").classed("boundary", true);
+		g.select(".boundary").classed("boundary_zoom", false);
+		g.selectAll( "#" + country.id ).classed("feature", true); 
   	}
 }
 

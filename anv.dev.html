@@ -100,10 +100,17 @@ stroke-width: 2px;
 	font-family: "Arial", helvetica, sans-serif;
 	font-color: hsl(0,0%,100%);
 }
+.selected {
+	background-color: hsla(262,96%,83%,70);
+	border-style: solid;
+	border-color: hsla(178,50%,0%,80);
+	border-width: 2px;
+}
 
 #swipeBox {
-	background-color: hsla(360, 0%, 60%, .7);
+	background-color: hsla(0, 100%, 100%, .7);
 	outline: hsla(360, 0%, 40%, .7);
+	border-width: 2px; 
 	padding-top, padding-bottom, padding-left, padding-right: 10px;
 	white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
 	white-space: -pre-wrap;      /* Opera 4-6 */
@@ -113,6 +120,7 @@ stroke-width: 2px;
 	word-break: break-all;
 	white-space: normal;
 	position: absolute;
+	z-index:+1;
 	
 }
 
@@ -131,12 +139,6 @@ stroke-width: 2px;
 	stroke-width: .07px;
 }	
 
-.graticule {
-  fill: none;
-  stroke: #777;
-  stroke-width: .3px;
-  stroke-opacity: .9;
-} 
 
 .face {
 opacity: .8;
@@ -161,7 +163,9 @@ var	width = 938,
     height = 500,
     country,
     state;
-var topMargin = height * .05
+var topMargin = height * .02, 
+adjust = 52;
+
 //options needs to be created via looping through country files to determine types of content. For now created expressly
 var options = ["Read","Watch"];
 
@@ -368,48 +372,78 @@ function country_clicked(d) {
 		svg.selectAll(".faceOff").classed("face",false);
 
 		function getHTTP() {
-		//	var text =  httpGet("data/" + d.id.toLowerCase() + "/text.html");
-				
-			d3.select("body").append("div")
+			
+			d3.select("#map").append("div")
 				.attr("id","swipeBox")
 				.attr("height", "0px")
 				.style("width",width + "px")
-				.attr("top", height + topMargin + "px")
-				.html("<iframe width=\""width"\" height=\""height"\" src=\"data/" + d.id.toLowerCase() + "/text.html\"></iframe>")  
+				.attr("top", height + adjust +  "px")
+//				.attr("top", height)
+				.style("opacity", 0)
+				.html("<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"data/" + d.id.toLowerCase() + "/text.html\"></iframe>")
 				.transition()
-				.delay(1000)
+				.delay(800)
 				.style("height", height + "px")	
-				.style("top", topMargin + "px");
-		}
+				.style("top", (topMargin + adjust) + "px")
+//				.attr("top", 0)
+				.style('opacity', 1);
 	
+/*			d3.select("body").selectAll("#swipeBox")
+				.on("click", function () {
+					d3.select(this).exit().remove();
+			});		
+*/
+				
+			}
+			
+		var  dialogClosed = true;
 		d3.select("#map").selectAll("div")
 			.data(options)
 			.enter()
 			.append("div")
 			.attr("class", "dialogBox")
-			.on("click", getHTTP())
+			.style('opacity', 0)
 			.transition()
 			.ease("linear")
 			.delay(750)
 			.each("start", function() {d3.select(this).style("height",0);})
 			.style("height","36px")
+			.style('opacity', 1)
 			.style("left", function (d) { 
 				var lft = (options.indexOf(d) * 85 + 8);
 				return lft + "px"; 
 				})
 			.style("top",height)
 			.text(function (d) { return d; });
-		
-			d3.select("#context").text("Typhoon Haiyan/Yolanda made landfall in the Philippines, bringing strong winds and heavy rains that resulted in flooding, landslides, and widespread damage.")
+
+		d3.select("#map").selectAll(".dialogBox")
+			.on("click", function () {
+				if (dialogClosed) {
+					getHTTP(); //put up information screen
+					d3.select(this).classed("selected", true);
+					dialogClosed = false //set global state to false
+				}
+				else {
+					d3.select("#map").select("#swipeBox").remove();
+					d3.select(this).classed("dialogBox",true);
+					dialogClosed = true	            					
+				}
+			});
+	
+
+
+
+
+		d3.select("#context").text("Typhoon Haiyan/Yolanda made landfall in the Philippines, bringing strong winds and heavy rains that resulted in flooding, landslides, and widespread damage.")
 
 
 
 
 
-			g.selectAll( "#" + country.id ).classed(".hide");
+		g.selectAll( "#" + country.id ).classed(".hide");
 			
-			d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
-				g.append("g")
+		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+			g.append("g")
           			.attr("id", "states")
           			.selectAll("path")
           			.data(topojson.feature(us, us.objects.states).features)
