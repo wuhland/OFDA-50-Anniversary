@@ -8,27 +8,22 @@
 <style>
 
 
-#h1, #context {
+#heading, #context {
 font-family: "Yanone Kaffeesatz";
 text-rendering: optimizeLegibility;
 overflow-wrap: break-word;
+
+}
+
+
+#heading {
+font-size: 35px;
+font-weight: bold;
 }
 
 #context {
 font-size: 15px;
-margin-top: 0px;
-margin-bottom: 0px;
-margin-left: 0px;
-display: block;
-}
 
-#h1 {
-font-size: 25px;
-margin-top: 0px;
-margin-bottom: 0px;
-margin-right: 20px;
-display: inline-block;
-font-weight: bold;
 }
 
 #mapFrame {
@@ -86,29 +81,30 @@ stroke-width: 2px;
 	fill: none;
 	stroke: #C6C0AE;
 	stroke-width: .5px;
+	
 }
 
-.dialogBox {
-	background-color: hsla(0,0%,0%,.7);
-	margin-right: 2px;
-	position: absolute;
-	padding-left: 0px;
-	padding-right: 5px;
+.dialogBox, .selected {
+	margin-right: 6px;
+	padding: 5px 5px;
+	position: relative;
+	display: inline-block;
 	text-align:center;
-	align-content: space-around;
 	font-size: 30px;
-	font-family: "Arial", helvetica, sans-serif;
-	font-color: hsl(0,0%,100%);
+	font-family: 'GothicBoldCond', sans-serif;
 }
+.dialogBox {
+	color: hsla(0,0%,0%,1);
+	background-color: #EDEDDD;
+}
+
 .selected {
-	background-color: hsla(262,96%,83%,70);
-	border-style: solid;
-	border-color: hsla(178,50%,0%,80);
-	border-width: 2px;
+	color: hsla(0,0%,90%,1);	
+	background-color: hsla(0,0%,0%,1);
 }
 
 #swipeBox {
-	background-color: hsla(0, 100%, 100%, .7);
+	background-color: hsla(0, 0%, 90%, .95);
 	outline: hsla(360, 0%, 40%, .7);
 	border-width: 2px; 
 	padding-top, padding-bottom, padding-left, padding-right: 10px;
@@ -167,7 +163,7 @@ var topMargin = height * .02,
 adjust = 52;
 
 //options needs to be created via looping through country files to determine types of content. For now created expressly
-var options = ["Read","Watch"];
+var options = ["Story","Video"];
 
 var featured = ["PHL"];
 
@@ -180,23 +176,41 @@ function httpGet(theURL){
     return xmlHttp.responseText;
 };
 
-function getHTTL () {
-	return "hello";
-};	
 
 var title = "50 Years of OFDA";
 var startText = "A selection of OFDA responces are highlighted in red below, click one.";
 
 d3.select("body").append("div")
-	.attr("id", "h1")
-	.attr("width", width)
-	.text(title);
+	.attr("id", "heading-Block")
+	.style("margin-bottom","15px")
+	.style("display", "block")
+	.style("height", "30px")
+	.style("width", width + "px")
+	.append("div")
+		.attr("id","heading")
+		.style("position","relative")
+	//	.style("padding-right", "35px")
+		.style("width", (width * .3) + 'px')
+		.text( title )
+		.append("div")
+			.attr("id","context")
+			.style("display","inline-block")
+			.style("position","absolute")
+			.style("margin-left","40px")
+			.style("width", (width * .65) + "px")
+			.text(startText)
+		//	.style("vertical-align", "text-bottom")
+			.style("bottom", "2px")
+
+		
 	
-d3.select("body").append("div")
+
+	
+/*d3.select("body").append("div")
 	.attr("width",width)
 	.attr("id","context")
 	.text(startText); 
-
+*/
 
 var projection = d3.geo.cylindricalEqualArea()
 	.parallel(35.5)
@@ -232,7 +246,7 @@ svg.append("rect")
 	.attr("height", height)
 	.on("click", country_clicked)
 	
-svg.append("line")
+/*svg.append("line")
 		.attr("id","seperator")
 		.attr("x1", 0)
 		.attr("y1", 0)
@@ -245,9 +259,16 @@ svg.append("line")
 		.attr("y1", height + 2)
 		.attr("x2", width)
 		.attr("y2", height + 2);
+*/
 
-
-	
+d3.select('body').select('.background').insert("div")
+	.attr('id','seperator')
+	.style("width", width )
+	.attr('z-index',1)
+	.style("position","absolute")
+	.style("height", 1)
+	.style("background-color", "black")
+	.style("top", "0px");	
 
 /*svg.append("rect")
 	.attr("class", "background")
@@ -371,7 +392,7 @@ function country_clicked(d) {
 		svg.selectAll(".face").classed("faceOff",true);
 		svg.selectAll(".faceOff").classed("face",false);
 
-		function getHTTP() {
+		function getHTTP(id) {
 			
 			d3.select("#map").append("div")
 				.attr("id","swipeBox")
@@ -380,7 +401,18 @@ function country_clicked(d) {
 				.attr("top", height + adjust +  "px")
 //				.attr("top", height)
 				.style("opacity", 0)
-				.html("<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"data/" + d.id.toLowerCase() + "/text.html\"></iframe>")
+				.html(function () {
+						alert(id)
+						var text
+						if (id ===  "Video") {
+						 	text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
+						} else if (id === "Story") {
+							text = "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/stories/Jeremy_Konyndyk/text.html\"></iframe>";
+						}
+					return text;
+					alert (text);
+				 	})//put up information screen
+
 				.transition()
 				.delay(800)
 				.style("height", height + "px")	
@@ -393,39 +425,38 @@ function country_clicked(d) {
 					d3.select(this).exit().remove();
 			});		
 */
-				
 			}
 			
 		var  dialogClosed = true;
-		d3.select("#map").selectAll("div")
+		d3.select("#map").append("div")
+			.attr("id","dialogBoxContainer")
+			.selectAll("div")
 			.data(options)
 			.enter()
-			.append("div")
+			.insert("div")
 			.attr("class", "dialogBox")
 			.style('opacity', 0)
 			.transition()
 			.ease("linear")
 			.delay(750)
 			.each("start", function() {d3.select(this).style("height",0);})
+			.text(function (d) { return d; })
 			.style("height","36px")
 			.style('opacity', 1)
-			.style("left", function (d) { 
-				var lft = (options.indexOf(d) * 85 + 8);
-				return lft + "px"; 
-				})
-			.style("top",height)
-			.text(function (d) { return d; });
+			.attr('id', function(d) { return d; })
+			.style("top",height);
 
 		d3.select("#map").selectAll(".dialogBox")
 			.on("click", function () {
 				if (dialogClosed) {
-					getHTTP(); //put up information screen
-					d3.select(this).classed("selected", true);
+					var id = this.id;
+					getHTTP(id);
+					d3.select(this).classed("selected", true).classed("dialogBox",false);
 					dialogClosed = false //set global state to false
 				}
 				else {
 					d3.select("#map").select("#swipeBox").remove();
-					d3.select(this).classed("dialogBox",true);
+					d3.select(this).classed("dialogBox",true).classed("selected",false);
 					dialogClosed = true	            					
 				}
 			});
@@ -434,7 +465,7 @@ function country_clicked(d) {
 
 
 
-		d3.select("#context").text("Typhoon Haiyan/Yolanda made landfall in the Philippines, bringing strong winds and heavy rains that resulted in flooding, landslides, and widespread damage.")
+		d3.select("#context").text("Typhoon Haiyan/Yolanda made landfall in the Philippines, bringing strong winds and heavy rains that resulted in flooding, landslides, and widespread damage.");
 
 
 
