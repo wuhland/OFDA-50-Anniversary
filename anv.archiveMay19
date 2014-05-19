@@ -6,43 +6,43 @@
 <script src="//d3js.org/topojson.v1.min.js"></script>
 -->
 <head>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400' rel='stylesheet' type='text/css'>
+
 
 
 </head>
 <body>
 <style>
 #frame {
-//outline: #222 solid 2px;
+outline: #222 solid 2px;
 }
 
-#heading {
-	font-family: 'GothicBoldCond', sans-serif;
-	text-rendering: optimizeLegibility;
-	overflow-wrap: break-word;
-	color: hsl(50,20%,97%)
+#heading, #context {
+font-family: 'GothicBoldCond', sans-serif;
+text-rendering: optimizeLegibility;
+overflow-wrap: break-word;
+color: hsl(50,20%,97%)
 
 }
 #BH {
-	font-size: 25px;
-	font-weight: 400;
-	font-weight: bold;
+font-size: 25px;
+font-weight: 400;
+font-weight: bold;
 
 }
 #body {
-	font-size: 13px;
-	font-weight: 400;
+font-size: 13px;
+font-weight: 400;
 }
 
 #body #BH {
-	font-family: "skolar-1","skolar-2",georgia,serif;
+font-family: "skolar-1","skolar-2",georgia,serif;
 }
 
 #heading-Block {
-	background:#222;
-	padding: 8px 0px;
+background:#222;
+padding: 8px 0px;
+//padding-left: 10px;
 }
-
 #heading {
 font-size: 30px;
 font-weight: bold;
@@ -51,26 +51,23 @@ font-weight: bold;
 #context {
 font-size: 20px;
 padding-left: 8px;
-font-family: 'Open Sans', sans-serif;
-font-size: small;
-color: hsla(0,0%,40%,1);
 
 }
-
-
 #dataTitle {
 
 	width: 120px;
-	background-color: WhiteSmoke;
+	background-color: hsla(62,12%,62%,.1);
 	border: hsla(62,12%,15%,.1) solid 2px;
 	color: hsla(0,0%,30%,1);
-	padding: 3px;
+	padding: 5px;
 	margin: 10px;
 	border-radius: .2em;
 	text-align: center; 
+ 
 	font-family: 'GothicBoldCond', sans-serif;
+//	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 	font-weight: 300;
-	font-size: 15px;
+	font-size: 20px;
 
 }
 #category {
@@ -79,6 +76,11 @@ color: hsla(0,0%,40%,1);
 }
 	
 
+#seperator {
+stroke: hsla(0, 0%, 50%, 1);
+stroke-width: 2px; 
+}
+
 #hurr {
 	stroke-dasharray: 3,2;
 }
@@ -86,66 +88,62 @@ color: hsla(0,0%,40%,1);
 .icon {
 stroke: hsla(360,0%,20%,1);
 }
+
+#countries { fill: #F8F0D9; }
+
 .title {
 	fill: hsla(0,0%,5%,.5);
 	font: 20px arial, sans serif;
 }
 	
 .background {
-	fill: hsl(0,0%,80%);
+	fill: hsla(205, 100%, 98%, 1);
 	pointer-events: all;
-}
-.active {
-	fill: hsla(104,52%,94%,1);
-}
-
-#countries { fill: white; }
-
-.coast, .coast_zoom {
-	stroke: hsl(222, 15%, 82%);
-	fill: none;
 }
 
 .coast {
+	fill: none;
+	stroke: hsl(222, 100%, 80%);
 	stroke-width: .4;
 }
 
 .coast_zoom {
+	fill: none;
+	stroke: hsla(222, 100%, 50%, 1);
 	stroke-width: .1;
 }
 
-
-.boundary, .active_boundary, .boundary_zoom {
-	stroke: hsl(0,0%,82%);
-	fill: none;
+.active {
+	fill: hsla(0,67%,85%,1);
 }
+
 .active_boundary {
+	fill: none;
+	stroke: hsl(45,17%,73%);
 	stroke-width: .1px;
 }	
 
 .featured { 
-	fill: hsl(146,57%,40%);
+	fill: hsla(0,67%,56%,1);
 }
 
-#land {
-	fill: whitesmoke;
-}
 .boundary {
+	fill: none;
+	stroke: hsl(45,17%,73%);
 	stroke-width: 1px;
+	stroke-opacity: 1;
 }
 
 .boundary_zoom {
+	fill: none;
+	stroke: #C6C0AE;
 	stroke-width: .5px;
 }
 
-#dialogBoxUnit, .dialogBoxUnitOff{
-display:block;
-position:absolute;
-margin-right: 25px;
-top:0px;
-right:0px;
+.dialogBoxUnitOn{
+border:#222 solid 2px;
+background: hsl(50,54%,91%);
 }
-
 
 .dialogBoxUnitOff {
 }
@@ -153,38 +151,23 @@ right:0px;
 
 .dialogBox, .selected , .dialogBoxOff{
 	margin: 0px 5px;
-	padding: 3px 6px;
+	padding: 3px 3px;
 	position: relative;
 	display: inline-block;
 	text-align:center;
-	font-size: 15px;
-	font-family: 'Open Sans', sans-serif;
-	font-weight: bold;	
-	border-radius: .8em;
-	z-index:3;
-	box-shadow: 2px 2px 1.5px #888888;
-	
+	font-size: 25px;
+	font-family: 'GothicBoldCond', sans-serif;
+	color: 
 }
 
-
-.dialogBoxOff {
-	background-color: hsl(220,100%,39%);
-	color: hsl(50,54%,98%)
-}	
-
-
+.dialogBox, .dialogBoxOff {
+	color: hsl(0,0%,15%);
+	background-color: hsl(50,54%,98%);
+}
 
 .selected {
 	color: hsl(50,54%,90%);	
-background: #0042c7; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #0042c7 0%, #002a80 49%, #002a80 49%, #314b7f 52%, #0042c7 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#0042c7), color-stop(49%,#002a80), color-stop(49%,#002a80), color-stop(52%,#314b7f), color-stop(100%,#0042c7)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(-45deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(-45deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(-45deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* IE10+ */
-background: linear-gradient(135deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0042c7', endColorstr='#0042c7',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+	background-color: #222;
 }
 
 #swipeBox {
@@ -221,42 +204,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0042c7', end
 	
 }
 
+
+
 .hide {
 	fill: none;
 }
-	
-.pop {
-	padding: 8px;
-	border: hsl(0,0%,85%) solid 2px;
-	border-radius: .8em;    
-	opacity: 1e-6;
-    background:rgba(250,250,250,.7);
+
+.face {
+opacity: .8;
 }
 
-.tooltip {
-	width: 200px;
-	position: absolute;
-	z-index: 2;
+.faceOff {
+opacity: 0;
 }
-
-.popName {
-font-family: 'Open Sans', sans-serif;
-font-weight:800;
-font-size:large;
-}
-
-.popDetail {
-font-family: 'Open Sans', sans-serif;
-font-weight:400;
-font-size: small;
-}
-
-#tooltipImg {
-display: block;
-margin-right: auto;
-margin-left: auto;
-}
-
 </style>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -266,9 +226,9 @@ margin-left: auto;
 
 <script>
 //colors of text
-var alertContextColor = 'hsl(220,100%,25%)';
+var alertContextColor = 'hsl(3,100%,66%)';
 
-var mainTextColor = 'hsl(0,0%,40%)';
+var mainTextColor = 'hsl(50,20%,97%)';
 
 var contextColor = mainTextColor;
 
@@ -282,26 +242,7 @@ adjust = 52;
 //options needs to be created via looping through country files to determine types of content. For now created expressly
 var options = ["Story","Video", "Infographic"];
 
-var featuredJSON = {
-	"PHL":{
-		"fullname":"Philippines",
-		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage."
-	},
-	"JAM":{
-		"fullname":"Jamaica",
-		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since modern-day record keeping began in the late 1800s."
-		},
-	"SDS":{
-		"fullname":"South Sudan",
-		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity."
-		},
-	"HTI":{
-		"fullname":"Haiti",
-		"tagline":"In January 2012, a magnitude 7.0 earthquake left 316,000 dead and 1.5 million displaced. In total, 3 million people were affected."
-	}
-};
-var featured = ["PHL","JAM","SDS","HTI"];
-var featuredMap = d3.set(featured);
+var featured = ["PHL"];
 
 function httpGet(theURL){
     var xmlHttp = null;
@@ -311,11 +252,6 @@ function httpGet(theURL){
     xmlHttp.send( null );
     return xmlHttp.responseText;
 };
-
-//Tooptip variables
-var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip");
-
 
 
 var title = "50 Years of OFDA";
@@ -328,13 +264,32 @@ d3.select("body").append("div")
 		.style('overflow','hidden')
 		.attr("id", "heading-Block")
 		.style("display", "block")
-		.style("width", width + "px");
-
+		.style("width", width + "px")
+		/*	.append("div")
+			.attr("id","heading")
+			.style("vertical-align", "bottom")
+			.style("color", mainTextColor)	
+			.style("display","inline-block")
+			.style("position","relative")
+			.style("width", (width * .3) + 'px')
+			.text( title )
+		*/	.append("div") 
+				.attr("id","context")
+				.style("display","inline-block")
+				.style("position","relative")
+				.style('width',width)
+		//		.style("margin-left","30px")
+		//		.style("width", (width * .65) + "px")
+	//			.style("width", (width * .65) + "px")
+	//			.style("vertical-align", "bottom")
+				.append('span')
+					.text(startText)
+					.style("vertical-align", "bottom")
 
 var projection = d3.geo.cylindricalEqualArea()
-	.rotate([-20,0])
+	.rotate([-17,0])
 	.parallel(35.5)
-    .scale(255)
+    .scale(220)
     .translate([(width)/2,( height)/ 1.9]);
 
 var trackWidth = .5;
@@ -365,92 +320,62 @@ svg.append("rect")
 	.on("click", country_clicked)
 	
 
+
 var g = svg.append("g");
 
-d3.json("countries_min.topo.json", function(error, us) {	
-
+d3.json("countries_min.topo.json", function(error, us) {
 		g.append("g")
-		  	.datum(topojson.merge(us, us.objects.countries_min.geometries))
+		.attr("id", "countries")
+		.selectAll("path")
+		.data(topojson.feature(us, us.objects.countries_min).features)
+		.enter()
 			.append("path")
-			.attr("id","land")
-			.attr("d",path);
-
-		g.append("g")
-			.attr("id", "countries")
-			.selectAll("path")
-			.data(topojson.feature(us, us.objects.countries_min).features)
-			.enter()
-			.append("path")
-	
-	
 			.attr("class", function(d) {
 				var c = "";
-				if (featuredMap.has(d.id)) {
-					c = "featured";
+				if (featured.indexOf(d.id) > -1) {
+					c = "country featured";
+					var centroid = path.centroid(d);
+					svg.append("image")
+						.attr("xlink:href","data/countries/" + d.id.toLowerCase() + "/face.png")
+						.attr("width", "40px")
+						.attr('id', function() {
+							return d.id + "_face";
+							})
+						.attr("height", "40px")
+						.attr("class", "face")	
+						.attr("x", centroid[0] + 5)
+						.attr("y", centroid[1] - 30) 
+						.on("click", function (d) {
+							return country_clicked(d);
+							}) 
 					} else {
-					c = "notFeatured";
+					c = "country";
 					}
 					return c; 
 					})
 			.attr("id", function(d) { return d.id; })
 
 			.attr("d", path)
-			.on("click", country_clicked)
-			.on("mouseover", function(d) {
-				var selection = d.id;
-				d3.select(this)
-					.attr("stroke", "black")
-					.attr("stroke-width", 1)
-					.attr("fill-opacity", 1);
+			.on("click", country_clicked);	
+		g.insert("g")
+			.datum(topojson.mesh(us, us.objects.countries_min, function(a, b) {
+			return a !== b; 
+			}))
+			.append("path")
+			.attr("class", "boundary")
+			.attr("d", path);
+		
+		g.insert("g")
+			.datum(topojson.mesh(us, us.objects.countries_min, function(a, b) {
+			return a === b;
+			}))
+			.append("path")
+			.attr("class", "coast")
+			.attr("d",path); 
 
-				tooltip
-					.attr("class","tooltip pop")
-			    	.style("left", (d3.event.pageX + 5) + "px")
-			    	.style("top", (d3.event.pageY - 5) + "px")
-			    	.transition().duration(300)
-			    	.style("opacity", 1)
-			    	.style("display", "block");				
-				
-				tooltip.selectAll("div").remove();
-				tooltip.selectAll("img").remove();
-				tooltip.insert("div")
-					.append('span')
-					.text(function(d){
-						return featuredJSON[selection].fullname;})				
-					.attr("class", "popName");
-							
-				tooltip.append("img")
-					.attr("id", "tooltipImg")
-					.attr("height", 120)
-					.attr("width", 200)
-					.style("opacity", "1"); 
+	
 
-				var image = new Image();
-				image.onload = function(d){
-					document.getElementById("tooltipImg").src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';}
-				image.src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';
-			
-				
-				tooltip.insert("div")
-					.append('span')
-					.text(function(d){return featuredJSON[selection].tagline;}) 
-					.attr("class", "popDetail");
-
-
-				})
-
-			.on("mouseout", function(d){
-				d3.select(this)
-					.attr("stroke", "")
-					.attr("fill-opacity", function(d){return 1;})
-						
-					tooltip.transition().duration(700).style("opacity", 0);	
-			})
-		g.selectAll(".notFeatured").remove();
 		});
-
-
-
 function zoom(xyz) {
 	g.transition()
 		.duration(750)
@@ -464,7 +389,6 @@ function zoom(xyz) {
 		g.select(".boundary").classed("boundary_zoom",true);
 		g.select(".boundary_zoom").classed("boundary",false);
 		g.select(".coast").classed("coast_zoom",true).classed("coast",false);
-		g.selectAll(".featured").classed("hide",true);
 }
 
 
@@ -478,16 +402,7 @@ function get_xyz(d) {
 	return [x, y, z];
 }
 
-d3.select('#frame')
-			.append("div") 
-				.attr("id","context")
-				.style("display","inline-block")
-				.style("position","relative")
-				.style('width',width)
-				.append('span')
-					.text(startText)
-					.style("vertical-align", "bottom");
-
+//width=\"" + width + "\" height=\"" + height + "\" 
 
 function country_clicked(d) {
 	g.selectAll(["#states"]).remove();
@@ -530,6 +445,8 @@ function country_clicked(d) {
 
 				.transition()
 				.delay(800)
+		//		.style('width', width + 'px')
+	//			.style("height", height +  "px")	
 				.style("top",  "0px")
 				.style('opacity', 1);
 			}
@@ -537,12 +454,13 @@ function country_clicked(d) {
  
 
 	
-		d3.select("#map").append("div")
-	//		.attr("id","dialogBoxContainer")
-	//		.style("width", width + "px")
-	//		.style('text-align', 'right')
-//			.append("div")
+		d3.select("body").append("div")
+			.attr("id","dialogBoxContainer")
+			.style("width", width + "px")
+			.style('text-align', 'right')
+			.append("div")
 				.attr("id","dialogBoxUnit")
+				.style('display','inline-block')
 				.style('padding','5px 2px')
 				.selectAll("div")
 				.data(options)
@@ -550,19 +468,19 @@ function country_clicked(d) {
 				.insert("div")
 					.attr("class", "dialogBox dialogBoxOff")
 					.style('opacity', 0)
-					.style('display','absolute')
 					.transition()
 					.ease("linear")
 					.delay(750)
 					.each("start", function() {
-						d3.select(this).style({"opacity":0});
+						d3.select(this).style("height",0);
 						})
 					.text(function (d) { return d; })
-			//		.style("height","20px")
+					.style("height","30px")
 					.style('opacity', 1)
+		//			.attr("class", "dialogBox dialogBoxOff")
 					.attr('id', function(d) { return d; })
+					.style("top",height);
 		
-
 		d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
 
 		d3.select('body').selectAll('.dialogBox')
@@ -596,15 +514,15 @@ function country_clicked(d) {
 				} 
 			})
 			.on("mouseover", function (){
-				d3.select(this).style('box-shadow', '2px 2px 3px #888888')
+				d3.select(this).style('outline', 'hsl(224,73%,80%) dotted thin')
 				})
 			.on("mouseout", function () { 
-				d3.select(this).style('box-shadow', '1px 1px 1.5px #888888')
+				d3.select(this).style('outline', 'initial')
 				})
 					
 	
 
-		d3.select("#context").style('color', alertContextColor).transition().duration(700).text("Click anywhere off country to see some of our other responces.").style('color',contextColor);
+		d3.select("#context").style('color', alertContextColor).transition().duration(700).text("Typhoon Haiyan/Yolanda made landfall in the Philippines, bringing strong winds and heavy rains that resulted in flooding, landslides, and widespread damage.").style('color',contextColor);
 
 
 
@@ -654,26 +572,23 @@ function country_clicked(d) {
 */
 
 //					var dateText = svg.append("text")  //added
-				//	var dateText = map.append("div")
-					map.append("div")
+					var dateText = map.append("div")
 						.attr("id", "dataTitle")
-						.attr("class","pop")
 						.style('position','absolute')
 						.style('display','inline-block')
 						.style('top','0px')
-						.style('left','0px')
-        				.html("<p><b>2013</b><br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00<br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>")
-					//	.html("2013" + "<br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00 <br> Category: ") 
-						.attr("font-family", "sans-serif");
-				//		.attr("font-size", "20px")
-			/*			.append('span')
+						.style('right','0px')
+						.html("2013" + "<br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00 <br> Category: ") 
+						.attr("font-family", "sans-serif")
+						.attr("font-size", "20px");
+					/*	.append('span')
 							.attr('id','category')
 							.text(track[0].class)
 							.style("color", color_scale(track[0].class)); //added i
 */
 					var dateTextChange = map.select('#dataTitle');
 						
-					var cat = dateTextChange.select('#category');	
+					var cat = map.select('#category');	
 
 					var line = d3.svg.line()
 						.interpolate("cardinal")
@@ -716,22 +631,22 @@ function country_clicked(d) {
       					icon_g
         					.transition()
         					.ease("linear")							
-        					.duration(150) //changed from 1000
+        					.duration(500) //changed from 1000
         					.attr("transform", "translate(" + pt.x + "," + pt.y + "), scale("+(0.05*track[i].class)+"), rotate("+(i*15)+")");
       					icon
         					.transition()
         					.ease("linear")
-        					.duration(150) //changed from 1000
-
+        					.duration(500)
         					.attr("fill", color_scale(track[i].class));
 						
       					dateTextChange
-        					.html("<p><b>2013</b><br>" + track[i].month + " " + track[i].day + " " + track[i].hour + ":00<br>Category: <span id=\"category\" style=\"color:" + color_scale(track[i].class) + "\">" + track[i].class + "</span></p>");
-								
-
-//						cat.text(track[i].class).style("color", color_scale(track[i].class));
-							
-
+        					.html("2013" + "<br>" + track[i].month + " " + track[i].day + " " + track[i].hour + ":00 <br> Category: ");
+        				//	.attr("fill", color_scale(track[i].class));
+						
+					/*	cat
+							.text(track[i].class)
+							.style("color", color_scale(track[i].class));
+*/
       					//Draw the path, only when i > 0 in otder to have two points
       					if (i>0){
         					color0 = color_scale(track[i-1].class);
@@ -753,7 +668,7 @@ function country_clicked(d) {
 					      	i = i + 1;
           					if (i==track.length)
             					clearInterval(animation)
-  					},150);
+  					},500);
 				path_xyz = get_xyz(path_g);
 
 				});
@@ -838,17 +753,15 @@ function country_clicked(d) {
     	country = null;
 		d3.select("#dialogBoxContainer").remove();
     	zoom(xyz);
-		g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
 		d3.select("#context").text(startText); 
 		d3.selectAll(".dialogBox").remove();
 		svg.selectAll(".faceOff").classed("face",true).classed("faceOff",false);
  		g.selectAll(".coast_zoom").classed("coast", true).classed("coast_zoom", false);
 		g.select(".boundary_zoom").classed("boundary", true).classed("boundary_zoom", false);
-		
   	}
-
 }
+
 /*
 function state_clicked(d) {
   g.selectAll("#cities").remove();
