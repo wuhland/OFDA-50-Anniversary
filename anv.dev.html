@@ -96,7 +96,8 @@ stroke: hsla(360,0%,20%,1);
 	pointer-events: all;
 }
 .active {
-	fill: hsla(104,52%,94%,1);
+	//fill: hsla(104,52%,94%,1);
+	fill: hsl(146,57%,40%);
 }
 
 #countries { fill: white; }
@@ -266,7 +267,7 @@ margin-left: auto;
 
 <script>
 //colors of text
-var alertContextColor = 'hsl(220,100%,25%)';
+var alertContextColor = 'hsl(28,100%,47%)';
 
 var mainTextColor = 'hsl(0,0%,40%)';
 
@@ -278,6 +279,12 @@ var	width = 960,
     state;
 var topMargin = 0, 
 adjust = 52;
+
+
+function changeContext (text) {
+	 d3.select("#context").style('color', alertContextColor).transition().duration(1000).text(text).style('color',contextColor);
+	}
+
 
 //options needs to be created via looping through country files to determine types of content. For now created expressly
 var options = ["Story","Video", "Infographic"];
@@ -319,7 +326,7 @@ var tooltip = d3.select("body").append("div")
 
 
 var title = "50 Years of OFDA";
-var startText = "A selection of OFDA responces are highlighted in red below, click one.";
+var startText = "A selection of OFDA responses are highlighted in green above. Click one.";
 
 d3.select("body").append("div")
 	.attr('id','frame')
@@ -387,6 +394,19 @@ d3.json("countries_min.topo.json", function(error, us) {
 				var c = "";
 				if (featuredMap.has(d.id)) {
 					c = "featured";
+			/*		if (path.area(d) < 100) {
+						centroid = path.centroid(d)
+						g.append("circle")
+							.attr('cx', centroid[0])
+							.attr('cy', centroid[1])
+							.attr('r', 7)
+							.attr('fill', 'red')
+							.attr('id', function () {return d.id + "_circ"})
+							.on('click', 
+							
+					}
+		*/
+					console.log(d.id + ' centroid: ' + path.centroid(d))
 					} else {
 					c = "notFeatured";
 					}
@@ -538,10 +558,6 @@ function country_clicked(d) {
 
 	
 		d3.select("#map").append("div")
-	//		.attr("id","dialogBoxContainer")
-	//		.style("width", width + "px")
-	//		.style('text-align', 'right')
-//			.append("div")
 				.attr("id","dialogBoxUnit")
 				.style('padding','5px 2px')
 				.selectAll("div")
@@ -558,7 +574,6 @@ function country_clicked(d) {
 						d3.select(this).style({"opacity":0});
 						})
 					.text(function (d) { return d; })
-			//		.style("height","20px")
 					.style('opacity', 1)
 					.attr('id', function(d) { return d; })
 		
@@ -576,14 +591,6 @@ function country_clicked(d) {
 					
 					getHTTP(id);
 					if (id === "Story") { 						
-					/*	var cssLink = document.createElement("link")
-							cssLink.href = "story.css";
-							cssLink .rel = "stylesheet";
-							cssLink .type = "text/css"; 
-							frames['iframe1'].document.body.appendChild(cssLink);
-					*/
-		//			d3.select('iframe1').selectAll('#body')
-		//				.style({'font-size':'25px','font-family':'skolar-1'}); 
 					};
 					
 						
@@ -603,16 +610,12 @@ function country_clicked(d) {
 				})
 					
 	
-
-		d3.select("#context").style('color', alertContextColor).transition().duration(700).text("Click anywhere off country to see some of our other responces.").style('color',contextColor);
-
-
+		changeContext("Click anywhere off country to see some of our other responces.");
 
 		g.selectAll( "#" + country.id ).classed(".hide");
 
-			
 		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
-			g.append("g")
+				g.append("g")
           			.attr("id", "states")
           			.selectAll("path")
           			.data(topojson.feature(us, us.objects.states).features)
@@ -636,25 +639,22 @@ function country_clicked(d) {
 					.attr("d", path);
         		zoom(xyz);
 
-  //      		g.selectAll("#" + d.id).style('display', 'none');
-      		});      
+      		});     
 
+/*			var hurrZoomFactor = [1,1,.5];
+ 
+			for(var i=0; i < hurrZoomFactor.length; i++) {
+						xyz[i] = hurrZoomFactor[i] * xyz[i];
+					}
+        	zoom(xyz);
+*/
 			
 
 			d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
 	
-					var color_scale = d3.scale.quantile().domain([3,5]).range(colorbrewer.Reds[5])
-					;
-				/*	var d3.select('#map').append('div')
-						.attr('id', 'hurrTextural')
-						.style('display','absolute')
-						.style('background', 'white')
-						.text("2013" + " " + track[0].month + " " + track[0].day + " " + track[0].hour + ":00 class: " + track[0].class)
-*/
+					var color_scale = d3.scale.quantile().domain([3,5]).range(colorbrewer.Reds[5]);
 
-//					var dateText = svg.append("text")  //added
-				//	var dateText = map.append("div")
 					map.append("div")
 						.attr("id", "dataTitle")
 						.attr("class","pop")
@@ -840,7 +840,8 @@ function country_clicked(d) {
     	zoom(xyz);
 		g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
-		d3.select("#context").text(startText); 
+	//	d3.select("#context").text(startText); 
+		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
 		svg.selectAll(".faceOff").classed("face",true).classed("faceOff",false);
  		g.selectAll(".coast_zoom").classed("coast", true).classed("coast_zoom", false);

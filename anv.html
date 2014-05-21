@@ -266,7 +266,7 @@ margin-left: auto;
 
 <script>
 //colors of text
-var alertContextColor = 'hsl(220,100%,25%)';
+var alertContextColor = 'hsl(28,100%,47%)';
 
 var mainTextColor = 'hsl(0,0%,40%)';
 
@@ -319,7 +319,7 @@ var tooltip = d3.select("body").append("div")
 
 
 var title = "50 Years of OFDA";
-var startText = "A selection of OFDA responces are highlighted in red below, click one.";
+var startText = "A selection of OFDA responses are highlighted in red below, click one.";
 
 d3.select("body").append("div")
 	.attr('id','frame')
@@ -604,7 +604,7 @@ function country_clicked(d) {
 					
 	
 
-		d3.select("#context").style('color', alertContextColor).transition().duration(700).text("Click anywhere off country to see some of our other responces.").style('color',contextColor);
+		d3.select("#context").style('color', alertContextColor).transition().duration(1000).text("Click anywhere off country to see some of our other responces.").style('color',contextColor);
 
 
 
