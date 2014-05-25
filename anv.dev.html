@@ -39,8 +39,7 @@
 }
 
 #heading-Block {
-	background:#222;
-	padding: 8px 0px;
+
 }
 
 #heading {
@@ -142,7 +141,7 @@ stroke: hsla(360,0%,20%,1);
 #dialogBoxUnit, .dialogBoxUnitOff{
 display:block;
 position:absolute;
-margin-right: 25px;
+margin-right: 3px;
 top:0px;
 right:0px;
 }
@@ -151,6 +150,14 @@ right:0px;
 .dialogBoxUnitOff {
 }
 
+.popFront {
+position:absolute;
+top:0px; 
+left:0px;
+right:0px; 
+bottom :0px;
+
+}
 
 .dialogBox, .selected , .dialogBoxOff{
 	margin: 0px 5px;
@@ -176,7 +183,7 @@ right:0px;
 
 
 .selected {
-	color: hsl(50,54%,90%);	
+color: hsl(50,54%,90%);	
 background: #0042c7; /* Old browsers */
 background: -moz-linear-gradient(-45deg,  #0042c7 0%, #002a80 49%, #002a80 49%, #314b7f 52%, #0042c7 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#0042c7), color-stop(49%,#002a80), color-stop(49%,#002a80), color-stop(52%,#314b7f), color-stop(100%,#0042c7)); /* Chrome,Safari4+ */
@@ -189,7 +196,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0042c7', end
 }
 
 #swipeBox {
-	background-color: hsla(37, 2%, 98%,.98);
+	background-color: hsla(37, 2%, 98%,.70);
 //	outline: hsla(360, 0%, 40%, .7);
 	border-width: 2px;
 	white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
@@ -203,22 +210,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0042c7', end
     box-sizing: border-box;
 	white-space: normal;
 	position: absolute;
+	bottom:0px;
 	width: 100%;
-	height: 100%;	
+	height: 91.8%;	
 	z-index:+1;
 	
 }
 
-#iframe1 {
+#iframe1{ 
+    -webkit-box-shadow: inset 0px 4px 3px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    inset 0px 4px 3px rgba(50, 50, 50, 0.75);
+    box-shadow:         inset 0px 4px 3px rgba(50, 50, 50, 0.75);
+	background-color:white;
 	position: absolute;
 	width:100%;
 	height:100%;
+	bottom:0px;
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 	white-space: normal;
 	display: float;
-	padding: 10px;
 	
 }
 
@@ -235,7 +247,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0042c7', end
 }
 
 .tooltip {
-	width: 200px;
 	position: absolute;
 	z-index: 2;
 }
@@ -256,6 +267,9 @@ font-size: small;
 display: block;
 margin-right: auto;
 margin-left: auto;
+}
+
+.toolTipOn {
 }
 
 </style>
@@ -280,6 +294,8 @@ var	width = 960,
 var topMargin = 0, 
 adjust = 52;
 
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip");
 
 function changeContext (text) {
 	 d3.select("#context").style('color', alertContextColor).transition().duration(1000).text(text).style('color',contextColor);
@@ -320,9 +336,6 @@ function httpGet(theURL){
 };
 
 //Tooptip variables
-var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip");
-
 
 
 var title = "50 Years of OFDA";
@@ -417,13 +430,18 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.attr("d", path)
 			.on("click", country_clicked)
 			.on("mouseover", function(d) {
+
+
+
+
 				var selection = d.id;
 				d3.select(this)
 					.attr("stroke", "black")
 					.attr("stroke-width", 1)
 					.attr("fill-opacity", 1);
-
+				
 				tooltip
+					.style("width", "200px")
 					.attr("class","tooltip pop")
 			    	.style("left", (d3.event.pageX + 5) + "px")
 			    	.style("top", (d3.event.pageY - 5) + "px")
@@ -450,13 +468,25 @@ d3.json("countries_min.topo.json", function(error, us) {
 					document.getElementById("tooltipImg").src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';}
 				image.src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';
 			
-				
 				tooltip.insert("div")
-					.append('span')
+					
+					.append('span')					
 					.text(function(d){return featuredJSON[selection].tagline;}) 
 					.attr("class", "popDetail");
+				tooltip.append("div")
+					.attr("class","popFront")
+					.on("mouseout", function(d) {
+						tooltip.transition().duration(700).style("opacity", 0);
+						tooltip.transition().delay(705).each('start', function(){
+							d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
+							d3.select(this).style("opacity",0);
+						}).style("width","0px").style("height","0px")
+							
+					})
+				.on("click", function() {
+					country_clicked(d);
 
-
+					})
 				})
 
 			.on("mouseout", function(d){
@@ -464,8 +494,10 @@ d3.json("countries_min.topo.json", function(error, us) {
 					.attr("stroke", "")
 					.attr("fill-opacity", function(d){return 1;})
 						
-					tooltip.transition().duration(700).style("opacity", 0);	
+			//		tooltip.transition().duration(700).style("opacity", 0);	
+					
 			})
+	
 		g.selectAll(".notFeatured").remove();
 		});
 
@@ -479,8 +511,6 @@ function zoom(xyz) {
 		.style("stroke-width", 1.0 / xyz[2] + "px")
 		.selectAll(".city")
 		.attr("d", path.pointRadius(20.0 / xyz[2]));
-
-
 		g.select(".boundary").classed("boundary_zoom",true);
 		g.select(".boundary_zoom").classed("boundary",false);
 		g.select(".coast").classed("coast_zoom",true).classed("coast",false);
@@ -509,7 +539,9 @@ d3.select('#frame')
 					.style("vertical-align", "bottom");
 
 
-function country_clicked(d) {
+function country_clicked(d) {					
+	d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
+	d3.select(".tooltip").style("opacity",0).style("width","0px");	
 	g.selectAll(["#states"]).remove();
 	state = null;
 
@@ -521,8 +553,6 @@ function country_clicked(d) {
 	if (d && country !== d) {
 		var xyz = get_xyz(d);
 		country = d;
-
-
 
 		if ( d.id == 'PHL' || d.id == 'PHL_face') {
 		svg.selectAll(".face").classed("faceOff",true).classed('face',false);
@@ -550,7 +580,7 @@ function country_clicked(d) {
 
 				.transition()
 				.delay(800)
-				.style("top",  "0px")
+		//		.style("top",  "0px")
 				.style('opacity', 1);
 			}
 
