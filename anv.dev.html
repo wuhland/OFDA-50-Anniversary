@@ -159,6 +159,16 @@ bottom :0px;
 
 }
 
+#dialogBoxContainer{
+	position:absolute;
+	top:0px;
+	width:100%;
+	height: 35px;
+//	overflow:auto;
+	z-index:+1;
+}
+
+
 .dialogBox, .selected , .dialogBoxOff{
 	margin: 0px 5px;
 	padding: 3px 6px;
@@ -176,23 +186,29 @@ bottom :0px;
 
 
 .dialogBoxOff {
-	background-color: hsl(220,100%,39%);
-	color: hsl(50,54%,98%)
+	color: hsl(50,54%,98%);
+	background: rgba(65,115,191,1);
+	background: -moz-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(65,115,191,1)), color-stop(100%, rgba(0,42,108,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
+	background: linear-gradient(135deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4173bf', endColorstr='#002a6c', GradientType=1 );
 }	
 
 
 
 .selected {
-color: hsl(50,54%,90%);	
-background: #0042c7; /* Old browsers */
-background: -moz-linear-gradient(-45deg,  #0042c7 0%, #002a80 49%, #002a80 49%, #314b7f 52%, #0042c7 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#0042c7), color-stop(49%,#002a80), color-stop(49%,#002a80), color-stop(52%,#314b7f), color-stop(100%,#0042c7)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(-45deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(-45deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(-45deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* IE10+ */
-background: linear-gradient(135deg,  #0042c7 0%,#002a80 49%,#002a80 49%,#314b7f 52%,#0042c7 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0042c7', endColorstr='#0042c7',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+	color: hsl(50,54%,98%);
+	background: rgba(255,0,60,1);
+	background: -moz-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(255,0,60,1)), color-stop(100%, rgba(194,17,58,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
+	background: linear-gradient(135deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff003c', endColorstr='#c2113a', GradientType=1 );
 }
 
 #swipeBox {
@@ -212,9 +228,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0042c7', end
 	position: absolute;
 	bottom:0px;
 	width: 100%;
-	height: 91.8%;	
+	height: 92.5%;
 	z-index:+1;
 	
+}
+
+#swipeBack {
+background-color:hsla(0,0%,17%,.5);
+height:100%;
+width:100%;
+position:absolute;
+top:0px;	
 }
 
 #iframe1{ 
@@ -561,10 +585,12 @@ function country_clicked(d) {
 		function getHTTP(id) {
 			
 			d3.select("#map").append("div")
-				.attr("id","swipeBox")
-				.attr("height", "0px")
-				.style("opacity", 0)
-				.html(function () {
+				.attr("id","swipeBack")
+				.append("div")
+					.attr("id","swipeBox")
+					.attr("height", "0px")
+					.style("opacity", 0)
+					.html(function () {
 						var text
 						if (id ===  "Video") {
 						 	text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
@@ -577,10 +603,8 @@ function country_clicked(d) {
 						
 					return text;
 				 	})//put up information screen
-
 				.transition()
-				.delay(800)
-		//		.style("top",  "0px")
+				.duration(800)
 				.style('opacity', 1);
 			}
 
@@ -588,24 +612,26 @@ function country_clicked(d) {
 
 	
 		d3.select("#map").append("div")
-				.attr("id","dialogBoxUnit")
-				.style('padding','5px 2px')
-				.selectAll("div")
-				.data(options)
-				.enter()
-				.insert("div")
-					.attr("class", "dialogBox dialogBoxOff")
-					.style('opacity', 0)
-					.style('display','absolute')
-					.transition()
-					.ease("linear")
-					.delay(750)
-					.each("start", function() {
-						d3.select(this).style({"opacity":0});
-						})
-					.text(function (d) { return d; })
-					.style('opacity', 1)
-					.attr('id', function(d) { return d; })
+				.attr("id","dialogBoxContainer")
+				.append("div")
+					.attr("id","dialogBoxUnit")
+					.style('padding','5px 2px')
+					.selectAll("div")
+					.data(options)
+					.enter()
+					.insert("div")
+						.attr("class", "dialogBox dialogBoxOff")
+						.style('opacity', 0)
+						.style('display','absolute')
+						.transition()
+						.ease("linear")
+						.delay(750)
+						.each("start", function() {
+							d3.select(this).style({"opacity":0});
+							})
+						.text(function (d) { return d; })
+						.style('opacity', 1)
+						.attr('id', function(d) { return d; })
 		
 
 		d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
@@ -627,6 +653,7 @@ function country_clicked(d) {
 					d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
 				} else if(d3.select(this).classed("selected")) {
 					d3.select("#map").select("#swipeBox").remove();
+					d3.select("#map").select("#swipeBack").remove();
 						
 					d3.select(this).classed("dialogBoxOff",true).classed('selected',false);
 		
@@ -671,14 +698,6 @@ function country_clicked(d) {
 
       		});     
 
-/*			var hurrZoomFactor = [1,1,.5];
- 
-			for(var i=0; i < hurrZoomFactor.length; i++) {
-						xyz[i] = hurrZoomFactor[i] * xyz[i];
-					}
-        	zoom(xyz);
-*/
-			
 
 			d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
@@ -693,14 +712,7 @@ function country_clicked(d) {
 						.style('top','0px')
 						.style('left','0px')
         				.html("<p><b>2013</b><br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00<br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>")
-					//	.html("2013" + "<br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00 <br> Category: ") 
 						.attr("font-family", "sans-serif");
-				//		.attr("font-size", "20px")
-			/*			.append('span')
-							.attr('id','category')
-							.text(track[0].class)
-							.style("color", color_scale(track[0].class)); //added i
-*/
 					var dateTextChange = map.select('#dataTitle');
 						
 					var cat = dateTextChange.select('#category');	
