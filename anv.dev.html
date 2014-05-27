@@ -296,6 +296,15 @@ margin-left: auto;
 .toolTipOn {
 }
 
+#globe {
+position:absolute;
+top: 0px; 
+left:0px;
+z-index:2;
+height:40px;
+width:40px;
+}
+
 </style>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -606,6 +615,17 @@ function country_clicked(d) {
 				.transition()
 				.duration(800)
 				.style('opacity', 1);
+			
+			d3.select("#map").append("img")
+				.attr("id","globe")
+				.attr("opacity",1);
+
+				var globe = new Image();
+
+				globe.onload = function(d){
+					document.getElementById("globe").src = 'globe.png';
+				}
+				globe.src = 'globe.png';
 			}
 
  
