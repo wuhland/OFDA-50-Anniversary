@@ -285,6 +285,8 @@ font-size:large;
 font-family: 'Open Sans', sans-serif;
 font-weight:400;
 font-size: small;
+line-height:1;
+
 }
 
 #tooltipImg {
@@ -420,6 +422,34 @@ svg.append("rect")
 
 var g = svg.append("g");
 
+d3.select("#map").append("img")
+	.attr("id","globe")
+	.attr("opacity",1)
+	.on("click", function() {
+		d3.select("#dataTitle").remove()
+		d3.select("#hurr").remove()
+		d3.select("#icon").remove()
+		var xyz = [width / 2, height / 2, 1];
+    	country = null;
+		d3.select("#dialogBoxContainer").remove();
+		d3.select("#swipeBack").remove();
+    	zoom(xyz);
+		g.selectAll(".featured").classed("hide",false);
+		g.selectAll([".active", ".active_boundary"]).remove();
+		changeContext(startText);
+		d3.selectAll(".dialogBox").remove();
+ //		g.selectAll(".coast_zoom").classed("coast", true).classed("coast_zoom", false);
+//		g.select(".boundary_zoom").classed("boundary", true).classed("boundary_zoom", false);
+	});
+
+var globe = new Image();
+
+globe.onload = function(d){
+	document.getElementById("globe").src = 'globe.png';
+	}
+globe.src = 'globe.png';
+
+
 d3.json("countries_min.topo.json", function(error, us) {	
 
 		g.append("g")
@@ -440,18 +470,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 				var c = "";
 				if (featuredMap.has(d.id)) {
 					c = "featured";
-			/*		if (path.area(d) < 100) {
-						centroid = path.centroid(d)
-						g.append("circle")
-							.attr('cx', centroid[0])
-							.attr('cy', centroid[1])
-							.attr('r', 7)
-							.attr('fill', 'red')
-							.attr('id', function () {return d.id + "_circ"})
-							.on('click', 
-							
-					}
-		*/
 					console.log(d.id + ' centroid: ' + path.centroid(d))
 					} else {
 					c = "notFeatured";
@@ -616,16 +634,7 @@ function country_clicked(d) {
 				.duration(800)
 				.style('opacity', 1);
 			
-			d3.select("#map").append("img")
-				.attr("id","globe")
-				.attr("opacity",1);
 
-				var globe = new Image();
-
-				globe.onload = function(d){
-					document.getElementById("globe").src = 'globe.png';
-				}
-				globe.src = 'globe.png';
 			}
 
  
@@ -902,7 +911,6 @@ function country_clicked(d) {
     	zoom(xyz);
 		g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
-	//	d3.select("#context").text(startText); 
 		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
 		svg.selectAll(".faceOff").classed("face",true).classed("faceOff",false);
