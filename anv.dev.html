@@ -12,9 +12,6 @@
 </head>
 <body>
 <style>
-#frame {
-//outline: #222 solid 2px;
-}
 
 #heading {
 	font-family: 'GothicBoldCond', sans-serif;
@@ -63,11 +60,15 @@ color: hsla(0,0%,40%,1);
 	background-color: WhiteSmoke;
 	border: hsla(62,12%,15%,.1) solid 2px;
 	color: hsla(0,0%,30%,1);
-	padding: 3px;
+	padding: 1px;
 	margin: 10px;
+	position: absolute;
+	bottom:0px;
+	right: 0px;
+	display:inline-block;
 	border-radius: .2em;
 	text-align: center; 
-	font-family: 'GothicBoldCond', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	font-weight: 300;
 	font-size: 15px;
 
@@ -95,24 +96,10 @@ stroke: hsla(360,0%,20%,1);
 	pointer-events: all;
 }
 .active {
-	//fill: hsla(104,52%,94%,1);
 	fill: hsl(146,57%,40%);
 }
 
-#countries { fill: white; }
-
-.coast, .coast_zoom {
-	stroke: hsl(222, 15%, 82%);
-	fill: none;
-}
-
-.coast {
-	stroke-width: .4;
-}
-
-.coast_zoom {
-	stroke-width: .1;
-}
+//#countries { fill: white; }
 
 
 .boundary, .active_boundary, .boundary_zoom {
@@ -124,7 +111,8 @@ stroke: hsla(360,0%,20%,1);
 }	
 
 .featured { 
-	fill: hsl(146,57%,40%);
+	fill: #23C26B;
+	cursor:pointer;
 }
 
 #land {
@@ -156,6 +144,7 @@ top:0px;
 left:0px;
 right:0px; 
 bottom :0px;
+cursor:pointer;
 
 }
 
@@ -164,7 +153,7 @@ bottom :0px;
 	top:0px;
 	width:100%;
 	height: 35px;
-//	overflow:auto;
+	cursor:pointer;
 	z-index:+1;
 }
 
@@ -299,14 +288,30 @@ margin-left: auto;
 }
 
 #globe {
-position:absolute;
-top: 0px; 
-left:0px;
-z-index:2;
-height:40px;
-width:40px;
+	position:absolute;
+	top: 0px; 
+	left:0px;
+	margin-top: 3px;
+	margin-left: 3px;
+	z-index:2;
+	height:45px;
+	width:45px;
+	cursor:pointer;
+	border-radius:45px;
+//	border:1px solid #021a40; 
+	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136); 
+   -webkit-box-shadow: 1px 1px 2px rgb(136,136,136);
+   box-shadow:         1px 1px 2px rgb(15,15,15);
 }
 
+.dot {
+  fill: #c7141a;
+}
+
+.ring {
+  fill: none;
+  stroke: #c7141a;
+}
 </style>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -342,18 +347,27 @@ var options = ["Story","Video", "Infographic"];
 
 var featuredJSON = {
 	"PHL":{
+		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage."
 	},
 	"JAM":{
+		"type":"storm",
 		"fullname":"Jamaica",
 		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since modern-day record keeping began in the late 1800s."
 		},
 	"SDS":{
+		"type":"complex",
 		"fullname":"South Sudan",
 		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity."
 		},
 	"HTI":{
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":7,
+			"depth":25, //in kilometers
+			"epicenter":[72.571,18.443],//Longitude Latitude
+			},
 		"fullname":"Haiti",
 		"tagline":"In January 2012, a magnitude 7.0 earthquake left 316,000 dead and 1.5 million displaced. In total, 3 million people were affected."
 	}
@@ -438,9 +452,13 @@ d3.select("#map").append("img")
 		g.selectAll([".active", ".active_boundary"]).remove();
 		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
- //		g.selectAll(".coast_zoom").classed("coast", true).classed("coast_zoom", false);
-//		g.select(".boundary_zoom").classed("boundary", true).classed("boundary_zoom", false);
-	});
+	})
+	.on("mouseover", function() {
+		d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
+	})
+	.on("mouseout", function() {
+		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
+	})
 
 var globe = new Image();
 
@@ -510,7 +528,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 							
 				tooltip.append("img")
 					.attr("id", "tooltipImg")
-					.attr("height", 120)
 					.attr("width", 200)
 					.style("opacity", "1"); 
 
@@ -567,6 +584,79 @@ function zoom(xyz) {
 		g.select(".coast").classed("coast_zoom",true).classed("coast",false);
 		g.selectAll(".featured").classed("hide",true);
 }
+//get content from server
+function getHTTP(id, d) {
+	d3.select("#map").append("div")
+		.attr("id","swipeBack")
+		.append("div")
+			.attr("id","swipeBox")
+			.attr("height", "0px")
+			.style("opacity", 0)
+			.html(function () {
+				var text
+				if (id ===  "Video") {
+					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
+				} else if (id === "Story") {
+					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/stories/Jeremy_Konyndyk/blog.html\" seamless></iframe>";	
+				} else if (id === "Infographic") {
+					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
+				}	
+						
+				return text;
+		})//put up information screen
+		.transition()
+		.duration(800)
+		.style('opacity', 1);
+}
+
+function contentDialog(d) {		
+
+	d3.select("#map").append("div")
+		.attr("id","dialogBoxContainer")
+		.append("div")
+			.attr("id","dialogBoxUnit")
+			.style('padding','5px 2px')
+			.selectAll("div")
+			.data(options)
+			.enter()
+			.insert("div")
+				.attr("class", "dialogBox dialogBoxOff")
+				.style('opacity', 0)
+				.style('display','absolute')
+				.transition()
+				.ease("linear")
+				.delay(750)
+				.each("start", function() {
+					d3.select(this).style({"opacity":0});
+					})
+				.text(function (d) { return d; })
+				.style('opacity', 1)
+				.attr('id', function(d) { return d; });
+		
+
+	d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
+
+	d3.select('body').selectAll('.dialogBox')
+	.on("click", function () {
+		if (d3.select(this).classed("dialogBoxOff")) {
+			d3.select("body").select("#swipeBox").remove();
+			d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
+			var id = this.id;
+			getHTTP(id, d);
+			d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
+		} else if(d3.select(this).classed("selected")) {
+			d3.select("#map").select("#swipeBox").remove();
+			d3.select("#map").select("#swipeBack").remove();
+			d3.select(this).classed("dialogBoxOff",true).classed('selected',false);
+		} 
+	})
+	.on("mouseover", function (){
+		d3.select(this).style('box-shadow', '2px 2px 3px #888888')
+	})
+	.on("mouseout", function () { 
+		d3.select(this).style('box-shadow', '1px 1px 1.5px #888888')
+	});
+}
 
 
 function get_xyz(d) {
@@ -604,101 +694,14 @@ function country_clicked(d) {
 	if (d && country !== d) {
 		var xyz = get_xyz(d);
 		country = d;
-
-		if ( d.id == 'PHL' || d.id == 'PHL_face') {
-		svg.selectAll(".face").classed("faceOff",true).classed('face',false);
+		if ( featuredJSON[d.id].type == 'storm') {
 		
 
-		function getHTTP(id) {
-			
-			d3.select("#map").append("div")
-				.attr("id","swipeBack")
-				.append("div")
-					.attr("id","swipeBox")
-					.attr("height", "0px")
-					.style("opacity", 0)
-					.html(function () {
-						var text
-						if (id ===  "Video") {
-						 	text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
-						} else if (id === "Story") {
-							text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/stories/Jeremy_Konyndyk/blog.html\" seamless></iframe>";	
-
-						} else if (id === "Infographic") {
-							text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
-						}	
-						
-					return text;
-				 	})//put up information screen
-				.transition()
-				.duration(800)
-				.style('opacity', 1);
-			
-
-			}
-
- 
-
+		contentDialog(d);			
 	
-		d3.select("#map").append("div")
-				.attr("id","dialogBoxContainer")
-				.append("div")
-					.attr("id","dialogBoxUnit")
-					.style('padding','5px 2px')
-					.selectAll("div")
-					.data(options)
-					.enter()
-					.insert("div")
-						.attr("class", "dialogBox dialogBoxOff")
-						.style('opacity', 0)
-						.style('display','absolute')
-						.transition()
-						.ease("linear")
-						.delay(750)
-						.each("start", function() {
-							d3.select(this).style({"opacity":0});
-							})
-						.text(function (d) { return d; })
-						.style('opacity', 1)
-						.attr('id', function(d) { return d; })
-		
+		changeContext("Click anywhere off country to see some of our other responses.");
 
-		d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
-
-		d3.select('body').selectAll('.dialogBox')
-			.on("click", function () {
-				if (d3.select(this).classed("dialogBoxOff")) {
-					d3.select("body").select("#swipeBox").remove();
-					d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
-					
-						
-					var id = this.id;
-					
-					getHTTP(id);
-					if (id === "Story") { 						
-					};
-					
-						
-					d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
-				} else if(d3.select(this).classed("selected")) {
-					d3.select("#map").select("#swipeBox").remove();
-					d3.select("#map").select("#swipeBack").remove();
-						
-					d3.select(this).classed("dialogBoxOff",true).classed('selected',false);
-		
-				} 
-			})
-			.on("mouseover", function (){
-				d3.select(this).style('box-shadow', '2px 2px 3px #888888')
-				})
-			.on("mouseout", function () { 
-				d3.select(this).style('box-shadow', '1px 1px 1.5px #888888')
-				})
-					
-	
-		changeContext("Click anywhere off country to see some of our other responces.");
-
-		g.selectAll( "#" + country.id ).classed(".hide");
+		g.selectAll( "#" + d.id ).classed(".hide");
 
 		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
@@ -711,9 +714,9 @@ function country_clicked(d) {
           			.attr("class", "active")
           			.attr("d", path)
   					/*  .on("click", state_clicked);     */
-					var hurrZoomFactor = [1,1,.5];
-					for(var i=0; i < hurrZoomFactor.length; i++) {
-						xyz[i] = hurrZoomFactor[i] * xyz[i];
+					var zoomFactor = [1,1,.5];
+					for(var i=0; i < zoomFactor.length; i++) {
+						xyz[i] = zoomFactor[i] * xyz[i];
 					}
 
 				g.insert("g")
@@ -731,16 +734,13 @@ function country_clicked(d) {
 			d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
 	
-					var color_scale = d3.scale.quantile().domain([3,5]).range(colorbrewer.Reds[5]);
+					var color_scale = d3.scale.quantile().domain([3,5]).range(colorbrewer.YlGnBu[5]);
 
 					map.append("div")
 						.attr("id", "dataTitle")
 						.attr("class","pop")
-						.style('position','absolute')
-						.style('display','inline-block')
-						.style('top','0px')
-						.style('left','0px')
-        				.html("<p><b>2013</b><br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00<br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>")
+					
+        				.html("<p><span id=\"popYear\"</span><b>2013</b></span><br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00<br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>")
 						.attr("font-family", "sans-serif");
 					var dateTextChange = map.select('#dataTitle');
 						
@@ -893,7 +893,68 @@ function country_clicked(d) {
       					u01d = Math.sqrt(u01x * u01x + u01y * u01y);
   					return [u01x / u01d, u01y / u01d];
 				}	
-   		} 
+   		}
+
+		else if ( featuredJSON[d.id].type == 'quake') {		
+		
+			contentDialog(d);			
+	
+			changeContext("Click anywhere off country to see some of our other responses.");
+
+			g.selectAll( "#" + d.id ).classed(".hide");
+
+//needs some work here
+
+			d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+				g.append("g")
+          			.attr("id", "states")
+          			.selectAll("path")
+          			.data(topojson.feature(us, us.objects.states).features)
+          			.enter()
+          			.append("path")
+          			.attr("id", function(d) { return d.id; })
+          			.attr("class", "active")
+          			.attr("d", path)
+  					/*  .on("click", state_clicked);     */
+					var zoomFactor = [1,1,.5];
+					for(var i=0; i < zoomFactor.length; i++) {
+						xyz[i] = zoomFactor[i] * xyz[i];
+					}
+
+				g.insert("g")
+					.datum(topojson.mesh(us, us.objects.states, function(a, b) {
+						return a !== b; 
+					}))
+					.append("path")
+					.attr("class", "active_boundary")
+					.attr("d", path);
+        		zoom(xyz);
+
+      		}); 
+
+        	zoom(xyz);
+			g.append("circle")
+    			.attr("class", "dot")
+    			.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+    			.attr("r", 8);
+
+			var animation = setInterval(function() {
+  				svg.append("circle")
+      				.attr("class", "ring")
+      				.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+      				.attr("r", 6)
+      				.style("stroke-width", 3)
+      				.style("stroke", "red")
+    			.transition()
+      				.ease("linear")
+      				.duration(6000)
+      				.style("stroke-opacity", 1e-6)
+      				.style("stroke-width", 1)
+      				.style("stroke", "brown")
+      				.attr("r", 160)
+      				.remove();
+			}, 750);
+		}
 
 		else {		
 			g.selectAll([".active", ".active_boundary"]).remove();
@@ -902,6 +963,9 @@ function country_clicked(d) {
 			return;
     	}
 	} else {
+		
+		g.select(".dot").remove();
+		g.selectAll(".ring").remove();
 		d3.select("#dataTitle").remove()
 		d3.select("#hurr").remove()
 		d3.select("#icon").remove()
