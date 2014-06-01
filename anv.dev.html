@@ -304,9 +304,6 @@ margin-left: auto;
    box-shadow:         1px 1px 2px rgb(15,15,15);
 }
 
-.dot {
-  fill: #c7141a;
-}
 
 .ring {
   fill: none;
@@ -383,6 +380,7 @@ function httpGet(theURL){
     xmlHttp.send( null );
     return xmlHttp.responseText;
 };
+
 
 //Tooptip variables
 
@@ -905,7 +903,7 @@ function country_clicked(d) {
 
 //needs some work here
 
-			d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+	/*		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
           			.attr("id", "states")
           			.selectAll("path")
@@ -915,7 +913,6 @@ function country_clicked(d) {
           			.attr("id", function(d) { return d.id; })
           			.attr("class", "active")
           			.attr("d", path)
-  					/*  .on("click", state_clicked);     */
 					var zoomFactor = [1,1,.5];
 					for(var i=0; i < zoomFactor.length; i++) {
 						xyz[i] = zoomFactor[i] * xyz[i];
@@ -931,12 +928,17 @@ function country_clicked(d) {
         		zoom(xyz);
 
       		}); 
+*/
 
         	zoom(xyz);
-			g.append("circle")
+			svg.append("circle")
     			.attr("class", "dot")
+				.style("opacity",0)
     			.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
-    			.attr("r", 8);
+				.transition().delay(700)
+				.style("fill","#c7141a")
+    			.attr("r", 8)
+				.style("opacity",1);
 
 			var animation = setInterval(function() {
   				svg.append("circle")
@@ -954,6 +956,17 @@ function country_clicked(d) {
       				.attr("r", 160)
       				.remove();
 			}, 750);
+
+			d3.selectAll(".background, #globe")
+				.on("click.stop", function() {
+					clearInterval(animation);		
+					svg.select(".dot").remove();
+					svg.selectAll(".ring").remove();
+					d3.selectAll(".background, #globe")
+						.on("click.stop", null);
+					
+				})
+				
 		}
 
 		else {		
@@ -964,8 +977,8 @@ function country_clicked(d) {
     	}
 	} else {
 		
-		g.select(".dot").remove();
-		g.selectAll(".ring").remove();
+//		g.select(".dot").remove();
+//		g.selectAll(".ring").remove();
 		d3.select("#dataTitle").remove()
 		d3.select("#hurr").remove()
 		d3.select("#icon").remove()
