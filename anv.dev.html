@@ -344,21 +344,25 @@ var options = ["Story","Video", "Infographic"];
 
 var featuredJSON = {
 	"PHL":{
+		"options":["Story","Video", "Infographic"],
 		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage."
 	},
 	"JAM":{
+		"options":[],
 		"type":"storm",
 		"fullname":"Jamaica",
 		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since modern-day record keeping began in the late 1800s."
 		},
 	"SDS":{
+		"options":["Gallery"],
 		"type":"complex",
 		"fullname":"South Sudan",
 		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity."
 		},
 	"HTI":{
+		"options":[],
 		"type":"quake",
 		"disasterarray":{
 			"magnitude":7,
@@ -486,7 +490,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 				var c = "";
 				if (featuredMap.has(d.id)) {
 					c = "featured";
-					console.log(d.id + ' centroid: ' + path.centroid(d))
 					} else {
 					c = "notFeatured";
 					}
@@ -598,7 +601,11 @@ function getHTTP(id, d) {
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/stories/Jeremy_Konyndyk/blog.html\" seamless></iframe>";	
 				} else if (id === "Infographic") {
 					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
-				}	
+				} else if (id === "Gallery") {
+					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_gallery.html\" seamless></iframe>";
+				} 
+					
+					
 						
 				return text;
 		})//put up information screen
@@ -608,14 +615,16 @@ function getHTTP(id, d) {
 }
 
 function contentDialog(d) {		
-
 	d3.select("#map").append("div")
 		.attr("id","dialogBoxContainer")
 		.append("div")
 			.attr("id","dialogBoxUnit")
 			.style('padding','5px 2px')
 			.selectAll("div")
-			.data(options)
+	//		.data(options)
+			.data(function () {
+				return featuredJSON[d.id].options;
+			})
 			.enter()
 			.insert("div")
 				.attr("class", "dialogBox dialogBoxOff")
