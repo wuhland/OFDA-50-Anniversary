@@ -301,9 +301,14 @@ margin-left: auto;
 //	border:1px solid #021a40; 
 	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136); 
    -webkit-box-shadow: 1px 1px 2px rgb(136,136,136);
-   box-shadow:         1px 1px 2px rgb(136,136,136);
+   box-shadow:         1px 1px 2px rgb(15,15,15);
 }
 
+
+.ring {
+  fill: none;
+  stroke: #c7141a;
+}
 </style>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -338,29 +343,45 @@ function changeContext (text) {
 var options = ["Story","Video", "Infographic"];
 
 var featuredJSON = {
+	"KHM":{
+		"options":["Story"],
+		"type":"flood",
+		"fullname":"Cambodia",
+		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people and destroying nearly 10 percent of the nation's crops."
+	},
 	"PHL":{
+		"options":["Story","Video", "Infographic"],
 		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage."
 	},
 	"JAM":{
+		"options":[],
 		"type":"storm",
 		"fullname":"Jamaica",
 		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since modern-day record keeping began in the late 1800s."
 		},
 	"SDS":{
+		"options":["Gallery"],
 		"type":"complex",
 		"fullname":"South Sudan",
 		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity."
 		},
 	"HTI":{
+		"options":[],
 		"type":"quake",
+		"disasterarray":{
+			"magnitude":7,
+			"depth":25, //in kilometers
+			"epicenter":[72.571,18.443],//Longitude Latitude
+			},
 		"fullname":"Haiti",
 		"tagline":"In January 2012, a magnitude 7.0 earthquake left 316,000 dead and 1.5 million displaced. In total, 3 million people were affected."
 	}
 };
 var featured = ["PHL","JAM","SDS","HTI"];
-var featuredMap = d3.set(featured);
+//var featuredMap = d3.set(featured);
+var featuredMap = d3.map(featuredJSON);
 
 function httpGet(theURL){
     var xmlHttp = null;
@@ -370,6 +391,7 @@ function httpGet(theURL){
     xmlHttp.send( null );
     return xmlHttp.responseText;
 };
+
 
 //Tooptip variables
 
@@ -475,7 +497,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 				var c = "";
 				if (featuredMap.has(d.id)) {
 					c = "featured";
-					console.log(d.id + ' centroid: ' + path.centroid(d))
 					} else {
 					c = "notFeatured";
 					}
@@ -571,6 +592,89 @@ function zoom(xyz) {
 		g.select(".coast").classed("coast_zoom",true).classed("coast",false);
 		g.selectAll(".featured").classed("hide",true);
 }
+//get content from server
+function getHTTP(id, d) {
+	d3.select("#map").append("div")
+		.attr("id","swipeBack")
+		.append("div")
+			.attr("id","swipeBox")
+			.attr("height", "0px")
+			.style("opacity", 0)
+			.html(function () {
+				var text
+				if (id ===  "Video") {
+					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
+				} else if (id === "Story") {
+					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_story.html\" seamless></iframe>";	
+				} else if (id === "Infographic") {
+					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
+				} else if (id === "Gallery") {
+					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_gallery.html\" seamless></iframe>";
+				} 
+					
+					
+						
+				return text;
+		})//put up information screen
+		.transition()
+		.duration(800)
+		.style('opacity', 1);
+}
+
+function contentDialog(d) {
+	d3.select("#map").append("div")
+		.attr("id","dialogBoxContainer")
+		.append("div")
+			.attr("id","dialogBoxUnit")
+			.style('padding','5px 2px')
+			.selectAll("div")
+	//		.data(options)
+			.data(function () {
+				return featuredJSON[d.id].options;
+			})
+			.enter()
+			.insert("div")
+				.attr("class", "dialogBox dialogBoxOff")
+				.style('opacity', 0)
+				.style('display','absolute')
+				.transition()
+				.ease("linear")
+				.delay(750)
+				.each("start", function() {
+					d3.select(this).style({"opacity":0});
+				
+					})
+				.text(function (d) { 
+					return d; 
+					console.log(d); 
+				})
+				.style('opacity', 1)
+				.attr('id', function(d) { return d; });
+		
+
+	d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
+
+	d3.select('body').selectAll('.dialogBox')
+	.on("click", function () {
+		if (d3.select(this).classed("dialogBoxOff")) {
+			d3.select("body").select("#swipeBox").remove();
+			d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
+			var id = this.id;
+			getHTTP(id, d);
+			d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
+		} else if(d3.select(this).classed("selected")) {
+			d3.select("#map").select("#swipeBox").remove();
+			d3.select("#map").select("#swipeBack").remove();
+			d3.select(this).classed("dialogBoxOff",true).classed('selected',false);
+		} 
+	})
+	.on("mouseover", function (){
+		d3.select(this).style('box-shadow', '2px 2px 3px #888888')
+	})
+	.on("mouseout", function () { 
+		d3.select(this).style('box-shadow', '1px 1px 1.5px #888888')
+	});
+}
 
 
 function get_xyz(d) {
@@ -608,100 +712,14 @@ function country_clicked(d) {
 	if (d && country !== d) {
 		var xyz = get_xyz(d);
 		country = d;
-
-		if ( d.id == 'PHL') {
+		if ( featuredJSON[d.id].type == 'storm') {
 		
 
-		function getHTTP(id) {
-			
-			d3.select("#map").append("div")
-				.attr("id","swipeBack")
-				.append("div")
-					.attr("id","swipeBox")
-					.attr("height", "0px")
-					.style("opacity", 0)
-					.html(function () {
-						var text
-						if (id ===  "Video") {
-						 	text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
-						} else if (id === "Story") {
-							text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/stories/Jeremy_Konyndyk/blog.html\" seamless></iframe>";	
-
-						} else if (id === "Infographic") {
-							text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
-						}	
-						
-					return text;
-				 	})//put up information screen
-				.transition()
-				.duration(800)
-				.style('opacity', 1);
-			
-
-			}
-
- 
-
-	
-		d3.select("#map").append("div")
-				.attr("id","dialogBoxContainer")
-				.append("div")
-					.attr("id","dialogBoxUnit")
-					.style('padding','5px 2px')
-					.selectAll("div")
-					.data(options)
-					.enter()
-					.insert("div")
-						.attr("class", "dialogBox dialogBoxOff")
-						.style('opacity', 0)
-						.style('display','absolute')
-						.transition()
-						.ease("linear")
-						.delay(750)
-						.each("start", function() {
-							d3.select(this).style({"opacity":0});
-							})
-						.text(function (d) { return d; })
-						.style('opacity', 1)
-						.attr('id', function(d) { return d; })
-		
-
-		d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
-
-		d3.select('body').selectAll('.dialogBox')
-			.on("click", function () {
-				if (d3.select(this).classed("dialogBoxOff")) {
-					d3.select("body").select("#swipeBox").remove();
-					d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
-					
-						
-					var id = this.id;
-					
-					getHTTP(id);
-					if (id === "Story") { 						
-					};
-					
-						
-					d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
-				} else if(d3.select(this).classed("selected")) {
-					d3.select("#map").select("#swipeBox").remove();
-					d3.select("#map").select("#swipeBack").remove();
-						
-					d3.select(this).classed("dialogBoxOff",true).classed('selected',false);
-		
-				} 
-			})
-			.on("mouseover", function (){
-				d3.select(this).style('box-shadow', '2px 2px 3px #888888')
-				})
-			.on("mouseout", function () { 
-				d3.select(this).style('box-shadow', '1px 1px 1.5px #888888')
-				})
-					
+		contentDialog(d);			
 	
 		changeContext("Click anywhere off country to see some of our other responses.");
 
-		g.selectAll( "#" + country.id ).classed(".hide");
+		g.selectAll( "#" + d.id ).classed(".hide");
 
 		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
@@ -714,9 +732,9 @@ function country_clicked(d) {
           			.attr("class", "active")
           			.attr("d", path)
   					/*  .on("click", state_clicked);     */
-					var hurrZoomFactor = [1,1,.5];
-					for(var i=0; i < hurrZoomFactor.length; i++) {
-						xyz[i] = hurrZoomFactor[i] * xyz[i];
+					var zoomFactor = [1,1,.5];
+					for(var i=0; i < zoomFactor.length; i++) {
+						xyz[i] = zoomFactor[i] * xyz[i];
 					}
 
 				g.insert("g")
@@ -893,7 +911,93 @@ function country_clicked(d) {
       					u01d = Math.sqrt(u01x * u01x + u01y * u01y);
   					return [u01x / u01d, u01y / u01d];
 				}	
-   		} 
+   		}
+
+		else if ( featuredJSON[d.id].type == 'quake') {		
+		
+			contentDialog(d);			
+	
+			changeContext("Click anywhere off country to see some of our other responses.");
+
+			g.selectAll( "#" + d.id ).classed(".hide");
+
+//needs some work here
+
+	/*		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+				g.append("g")
+          			.attr("id", "states")
+          			.selectAll("path")
+          			.data(topojson.feature(us, us.objects.states).features)
+          			.enter()
+          			.append("path")
+          			.attr("id", function(d) { return d.id; })
+          			.attr("class", "active")
+          			.attr("d", path)
+					var zoomFactor = [1,1,.5];
+					for(var i=0; i < zoomFactor.length; i++) {
+						xyz[i] = zoomFactor[i] * xyz[i];
+					}
+
+				g.insert("g")
+					.datum(topojson.mesh(us, us.objects.states, function(a, b) {
+						return a !== b; 
+					}))
+					.append("path")
+					.attr("class", "active_boundary")
+					.attr("d", path);
+        		zoom(xyz);
+
+      		}); 
+*/
+
+        	zoom(xyz);
+			svg.append("circle")
+    			.attr("class", "dot")
+				.style("opacity",0)
+    			.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+				.transition().delay(700)
+				.style("fill","#c7141a")
+    			.attr("r", 8)
+				.style("opacity",1);
+
+			var animation = setInterval(function() {
+  				svg.append("circle")
+      				.attr("class", "ring")
+      				.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+      				.attr("r", 6)
+      				.style("stroke-width", 3)
+      				.style("stroke", "red")
+    			.transition()
+      				.ease("linear")
+      				.duration(6000)
+      				.style("stroke-opacity", 1e-6)
+      				.style("stroke-width", 1)
+      				.style("stroke", "brown")
+      				.attr("r", 160)
+      				.remove();
+			}, 750);
+
+			d3.selectAll(".background, #globe")
+				.on("click.stop", function() {
+					clearInterval(animation);		
+					svg.select(".dot").remove();
+					svg.selectAll(".ring").remove();
+					d3.selectAll(".background, #globe")
+						.on("click.stop", null);
+					
+				})
+				
+		}
+
+		else if ( featuredJSON[d.id].type == 'complex') {
+			contentDialog(d);			
+	
+			changeContext("Click anywhere off country to see some of our other responses.");
+
+			g.selectAll( "#" + d.id ).classed(".hide");
+			zoom(xyz);
+
+		}		
 
 		else {		
 			g.selectAll([".active", ".active_boundary"]).remove();
@@ -902,6 +1006,7 @@ function country_clicked(d) {
 			return;
     	}
 	} else {
+		
 		d3.select("#dataTitle").remove()
 		d3.select("#hurr").remove()
 		d3.select("#icon").remove()
