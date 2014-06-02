@@ -343,6 +343,12 @@ function changeContext (text) {
 var options = ["Story","Video", "Infographic"];
 
 var featuredJSON = {
+	"KHM":{
+		"options":["Story"],
+		"type":"flood",
+		"fullname":"Cambodia",
+		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people and destroying nearly 10 percent of the nation's crops."
+	},
 	"PHL":{
 		"options":["Story","Video", "Infographic"],
 		"type":"storm",
@@ -374,7 +380,8 @@ var featuredJSON = {
 	}
 };
 var featured = ["PHL","JAM","SDS","HTI"];
-var featuredMap = d3.set(featured);
+//var featuredMap = d3.set(featured);
+var featuredMap = d3.map(featuredJSON);
 
 function httpGet(theURL){
     var xmlHttp = null;
@@ -598,7 +605,7 @@ function getHTTP(id, d) {
 				if (id ===  "Video") {
 					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
 				} else if (id === "Story") {
-					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/stories/Jeremy_Konyndyk/blog.html\" seamless></iframe>";	
+					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_story.html\" seamless></iframe>";	
 				} else if (id === "Infographic") {
 					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
 				} else if (id === "Gallery") {
@@ -614,7 +621,7 @@ function getHTTP(id, d) {
 		.style('opacity', 1);
 }
 
-function contentDialog(d) {		
+function contentDialog(d) {
 	d3.select("#map").append("div")
 		.attr("id","dialogBoxContainer")
 		.append("div")
@@ -635,8 +642,12 @@ function contentDialog(d) {
 				.delay(750)
 				.each("start", function() {
 					d3.select(this).style({"opacity":0});
+				
 					})
-				.text(function (d) { return d; })
+				.text(function (d) { 
+					return d; 
+					console.log(d); 
+				})
 				.style('opacity', 1)
 				.attr('id', function(d) { return d; });
 		
@@ -978,6 +989,16 @@ function country_clicked(d) {
 				
 		}
 
+		else if ( featuredJSON[d.id].type == 'complex') {
+			contentDialog(d);			
+	
+			changeContext("Click anywhere off country to see some of our other responses.");
+
+			g.selectAll( "#" + d.id ).classed(".hide");
+			zoom(xyz);
+
+		}		
+
 		else {		
 			g.selectAll([".active", ".active_boundary"]).remove();
 
@@ -986,8 +1007,6 @@ function country_clicked(d) {
     	}
 	} else {
 		
-//		g.select(".dot").remove();
-//		g.selectAll(".ring").remove();
 		d3.select("#dataTitle").remove()
 		d3.select("#hurr").remove()
 		d3.select("#icon").remove()
