@@ -459,6 +459,7 @@ d3.select("#map").append("img")
 		d3.select("#icon").remove()
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
+		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
 		d3.select("#dialogBoxContainer").remove();
 		d3.select("#swipeBack").remove();
     	zoom(xyz);
@@ -1059,8 +1060,9 @@ function country_clicked(d) {
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
 		d3.select("#dialogBoxContainer").remove();
-    	zoom(xyz);
-		g.selectAll(".featured").classed("hide",false);
+    	zoom(xyz)
+		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
+	//	g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
 		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
