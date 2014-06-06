@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
+<!DOCTYPE html><meta charset="utf-8">
 
 <!--
 <script src="//d3js.org/d3.v3.min.js"></script>
@@ -12,46 +11,20 @@
 </head>
 <body>
 <style>
-
-#heading {
-	font-family: 'GothicBoldCond', sans-serif;
-	text-rendering: optimizeLegibility;
-	overflow-wrap: break-word;
-	color: hsl(50,20%,97%)
-
+@font-face{
+font-family: 'ssp';
+src: url('../.fonts/SourceSansPro-Regular.otf');
+src: format('opentype');
 }
-#BH {
-	font-size: 25px;
-	font-weight: 400;
-	font-weight: bold;
-
-}
-#body {
-	font-size: 13px;
-	font-weight: 400;
+@font-face{
+font-family: 'ssp';
+src:url('../.fonts/SourceSansPro-Bold.otf');
+src:format('opentype');
+font-weight:bold;
+src: format('opentype');
 }
 
-#body #BH {
-	font-family: "skolar-1","skolar-2",georgia,serif;
-}
 
-#heading-Block {
-
-}
-
-#heading {
-font-size: 30px;
-font-weight: bold;
-}
-
-#context {
-font-size: 20px;
-padding-left: 8px;
-font-family: 'Open Sans', sans-serif;
-font-size: small;
-color: hsla(0,0%,40%,1);
-
-}
 
 
 #dataTitle {
@@ -92,19 +65,15 @@ stroke: hsla(360,0%,20%,1);
 }
 	
 .background {
-	fill: hsl(0,0%,80%);
+	fill: whitesmoke;
 	pointer-events: all;
 }
 .active {
-	fill: #23C26B;
-	//fill: hsl(146,57%,40%);
+	fill: #FFCB36;
 }
 
-//#countries { fill: white; }
-
-
 .boundary, .active_boundary, .boundary_zoom {
-	stroke: hsl(0,0%,82%);
+	stroke: white;
 	fill: none;
 }
 .active_boundary {
@@ -118,12 +87,9 @@ stroke: hsla(360,0%,20%,1);
 	cursor:pointer;
 }
 .notFeatured {
-	fill: whitesmoke;
+	fill: #CFCDC9;
 }
 
-#land {
-	fill: whitesmoke;
-}
 .boundary {
 	stroke-width: 1px;
 }
@@ -260,9 +226,9 @@ z-index:0;
 }
 	
 .pop {
-	padding: 8px;
+	padding: 5px;
 //	border: hsl(0,0%,85%) solid 2px;
-	border-radius: .8em;    
+	border-radius: .4em;    
 	opacity: 1e-6;
     background:#16B0C1;
 }
@@ -270,17 +236,45 @@ z-index:0;
 .tooltip {
 	position: absolute;
 	z-index: 2;
+	visibility:hidden;
+}
+/*.tooltip:after {
+	box-sizing: border-box;
+  	display: inline;
+  	font-size: 20px;
+//	height:-20px;
+  	width: 100%;
+	//top:0%;
+  	line-height: 1;
+  	content: "\25BC";
+  	position: absolute;
+  	text-align: center;		
+    color:#16B0C1;
+}
+*/
+
+.tooltip:after {
+	width: 0;
+	height: 0;
+	content:"";
+	border-left: 20px solid transparent ;
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid #16B0C1;                                                                                  
+	position: absolute;
+	top:-20px;
+	left: 40%;
+	
 }
 
 .popName {
-font-family: 'Open Sans', sans-serif;
+font-family: 'ssp', sans-serif;
 font-weight:800;
 font-size:large;
 color:#002A6C;
 }
 
 .popDetail {
-font-family: 'Open Sans', sans-serif;
+font-family: 'ssp', sans-serif;
 font-weight:400;
 font-size: small;
 line-height:1;
@@ -294,8 +288,6 @@ margin-right: auto;
 margin-left: auto;
 }
 
-.toolTipOn {
-}
 
 #globe {
 	position:absolute;
@@ -308,7 +300,6 @@ margin-left: auto;
 	width:45px;
 	cursor:pointer;
 	border-radius:45px;
-//	border:1px solid #021a40; 
 	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136);
    -webkit-box-shadow: 1px 1px 2px rgb(136,136,136);
    box-shadow:        1px 1px 2px rgb(136,136,136);
@@ -344,9 +335,9 @@ adjust = 52;
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip");
 
-function changeContext (text) {
-	 d3.select("#context").style('color', alertContextColor).transition().duration(1000).text(text).style('color',contextColor);
-	}
+//function changeContext (text) {
+//	 d3.select("#context").style('color', alertContextColor).transition().duration(1000).text(text).style('color',contextColor);
+//	}
 
 
 //options needs to be created via looping through country files to determine types of content. For now created expressly
@@ -356,11 +347,15 @@ var featuredJSON = {
 	"KHM":{
 		"options":["Story"],
 		"type":"flood",
+		"story":[],
+		"video":[],
 		"fullname":"Cambodia",
 		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people and destroying nearly 10 percent of the nation's crops."
 	},
 	"PHL":{
 		"options":["Story","Video", "Infographic"],
+		"story":["story1","story2"],
+		"video":["www.youtube.com/embed/HaEbhGiCVT8"],
 		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage."
@@ -423,7 +418,7 @@ var projection = d3.geo.cylindricalEqualArea()
 	.rotate([-20,0])
 	.parallel(35.5)
     .scale(255)
-    .translate([(width)/2,( height)/ 1.9]);
+    .translate([(width)/2,( height)/ 2]);
 
 var trackWidth = .5;
 
@@ -470,7 +465,7 @@ d3.select("#map").append("img")
     	zoom(xyz);
 //		g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
-		changeContext(startText);
+//		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
 	})
 	.on("mouseover", function() {
@@ -490,12 +485,8 @@ globe.src = 'globe.png';
 
 d3.json("countries_min.topo.json", function(error, us) {	
 
-	/*	g.append("g")
-		  	.datum(topojson.merge(us, us.objects.countries_min.geometries))
-			.append("path")
-			.attr("id","land")
-			.attr("d",path);
-*/
+
+
 		g.append("g")
 			.attr("id", "countries")
 			.selectAll("path")
@@ -526,7 +517,8 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.on("mouseover", function(d) {
 			 			
 				if (featuredMap.has(d.id)) {
-				  	
+				  		var centroid = path.centroid(d);
+						console.log(centroid);	
 						var selection = d.id;
 						d3.select(this)
 							.attr("stroke", "#E89624")
@@ -535,13 +527,17 @@ d3.json("countries_min.topo.json", function(error, us) {
 						tooltip
 							.style("width", "200px")
 							.attr("class","tooltip pop")
-			    			.style("left", (d3.event.pageX + 5) + "px")
-			    			.style("top", (d3.event.pageY - 5) + "px")
+			    		//	.style("left", (d3.event.pageX - 100) + "px")
+			    		//	.style("bottom", (d3.event.pagY + 100) + "px")
+			    			.style("top", (centroid[1] + 29 ) + "px")
+			    			.style("left", (centroid[0] - 95) + "px")
 			    			.transition().duration(300)
 			    			.style("opacity", 1)
+							.style("visibility","visible")
 			    			.style("display", "block");				
 						tooltip.selectAll("div").remove();
 						tooltip.selectAll("img").remove();
+						
 						tooltip.insert("div")
 							.append('span')
 							.text(function(d){
@@ -590,7 +586,13 @@ d3.json("countries_min.topo.json", function(error, us) {
 	
 		//g.selectAll(".notFeatured").remove();
 	
-		
+		g.insert("g")
+		  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
+				return a !== b ; 
+			}))
+			.append("path")
+			.attr("class","boundary")
+			.attr("d",path);
 		
 
 });
@@ -620,7 +622,8 @@ function getHTTP(id, d) {
 			.html(function () {
 				var text
 				if (id ===  "Video") {
-					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//www.youtube.com/embed/HaEbhGiCVT8\" frameborder=\"0\" allowfullscreen></iframe>";
+
+					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//" + featuredJSON[d.id].video[0] + "\" frameborder=\"0\" allowfullscreen></iframe>";
 				} else if (id === "Story") {
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_story.html\" seamless></iframe>";	
 				} else if (id === "Infographic") {
@@ -738,7 +741,7 @@ function zoom2ADM (d, xyz) {
 }
 
 
-d3.select('#frame')
+/*d3.select('#frame')
 			.append("div") 
 				.attr("id","context")
 				.style("display","inline-block")
@@ -747,7 +750,7 @@ d3.select('#frame')
 				.append('span')
 					.text(startText)
 					.style("vertical-align", "bottom");
-
+*/
 
 function country_clicked(d) {
 	d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
@@ -768,7 +771,7 @@ function country_clicked(d) {
 
 		contentDialog(d);			
 	
-		changeContext("Click anywhere off country to see some of our other responses.");
+	//	changeContext("Click anywhere off country to see some of our other responses.");
 
 //		g.selectAll( "#" + d.id ).classed(".hide");
 		var zoomFactor = [1,1,.5];
@@ -969,7 +972,7 @@ function country_clicked(d) {
 		
 			contentDialog(d);			
 	
-			changeContext("Click anywhere off country to see some of our other responses.");
+		//	changeContext("Click anywhere off country to see some of our other responses.");
 
 	//		g.selectAll( "#" + d.id ).classed(".hide");
 	//		var zoomFactor = [1,1,.5];
@@ -1019,7 +1022,7 @@ function country_clicked(d) {
 		else if ( featuredJSON[d.id].type == 'complex') {
 			contentDialog(d);			
 	
-			changeContext("Click anywhere off country to see some of our other responses.");
+	//		changeContext("Click anywhere off country to see some of our other responses.");
 
 			g.selectAll( "#" + d.id ).classed(".hide");
 			zoom(xyz);
@@ -1044,7 +1047,7 @@ function country_clicked(d) {
 		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
 	//	g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
-		changeContext(startText);
+//		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
 		svg.selectAll(".faceOff").classed("face",true).classed("faceOff",false);
  		g.selectAll(".coast_zoom").classed("coast", true).classed("coast_zoom", false);

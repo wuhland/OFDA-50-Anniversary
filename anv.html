@@ -12,46 +12,20 @@
 </head>
 <body>
 <style>
-
-#heading {
-	font-family: 'GothicBoldCond', sans-serif;
-	text-rendering: optimizeLegibility;
-	overflow-wrap: break-word;
-	color: hsl(50,20%,97%)
-
+@font-face{
+font-family: 'ssp';
+src: url('../.fonts/SourceSansPro-Regular.otf');
+src: format('opentype');
 }
-#BH {
-	font-size: 25px;
-	font-weight: 400;
-	font-weight: bold;
-
-}
-#body {
-	font-size: 13px;
-	font-weight: 400;
+@font-face{
+font-family: 'ssp';
+src:url('../.fonts/SourceSansPro-Bold.otf');
+src:format('opentype');
+font-weight:bold;
+src: format('opentype');
 }
 
-#body #BH {
-	font-family: "skolar-1","skolar-2",georgia,serif;
-}
 
-#heading-Block {
-
-}
-
-#heading {
-font-size: 30px;
-font-weight: bold;
-}
-
-#context {
-font-size: 20px;
-padding-left: 8px;
-font-family: 'Open Sans', sans-serif;
-font-size: small;
-color: hsla(0,0%,40%,1);
-
-}
 
 
 #dataTitle {
@@ -92,32 +66,31 @@ stroke: hsla(360,0%,20%,1);
 }
 	
 .background {
-	fill: hsl(0,0%,80%);
+	fill: whitesmoke;
 	pointer-events: all;
 }
 .active {
-	fill: hsl(146,57%,40%);
+	fill: #FFCB36;
 }
 
-//#countries { fill: white; }
-
-
 .boundary, .active_boundary, .boundary_zoom {
-	stroke: hsl(0,0%,82%);
+	stroke: white;
 	fill: none;
 }
 .active_boundary {
-	stroke-width: .1px;
+	stroke-width: .02px;
+	stroke: WhiteSmoke;
+	
 }	
 
 .featured { 
-	fill: #23C26B;
+	fill: #FFCB36;
 	cursor:pointer;
 }
-
-#land {
-	fill: whitesmoke;
+.notFeatured {
+	fill: #CFCDC9;
 }
+
 .boundary {
 	stroke-width: 1px;
 }
@@ -129,9 +102,10 @@ stroke: hsla(360,0%,20%,1);
 #dialogBoxUnit, .dialogBoxUnitOff{
 display:block;
 position:absolute;
-margin-right: 3px;
+margin-right: 13px;
 top:0px;
 right:0px;
+z-index:2;
 }
 
 
@@ -217,7 +191,7 @@ cursor:pointer;
 	position: absolute;
 	bottom:0px;
 	width: 100%;
-	height: 92.5%;
+//	height: 92.5%;
 	z-index:+1;
 	
 }
@@ -227,7 +201,8 @@ background-color:hsla(0,0%,17%,.5);
 height:100%;
 width:100%;
 position:absolute;
-top:0px;	
+top:0px;
+z-index:0;	
 }
 
 #iframe1{ 
@@ -252,29 +227,59 @@ top:0px;
 }
 	
 .pop {
-	padding: 8px;
-	border: hsl(0,0%,85%) solid 2px;
-	border-radius: .8em;    
+	padding: 5px;
+//	border: hsl(0,0%,85%) solid 2px;
+	border-radius: .4em;    
 	opacity: 1e-6;
-    background:rgba(250,250,250,.7);
+    background:#16B0C1;
 }
 
 .tooltip {
 	position: absolute;
 	z-index: 2;
+	visibility:hidden;
+}
+/*.tooltip:after {
+	box-sizing: border-box;
+  	display: inline;
+  	font-size: 20px;
+//	height:-20px;
+  	width: 100%;
+	//top:0%;
+  	line-height: 1;
+  	content: "\25BC";
+  	position: absolute;
+  	text-align: center;		
+    color:#16B0C1;
+}
+*/
+
+.tooltip:after {
+	width: 0;
+	height: 0;
+	content:"";
+	border-left: 20px solid transparent ;
+	border-right: 20px solid transparent;
+	border-bottom: 20px solid #16B0C1;                                                                                  
+	position: absolute;
+	top:-20px;
+	left: 40%;
+	
 }
 
 .popName {
-font-family: 'Open Sans', sans-serif;
+font-family: 'ssp', sans-serif;
 font-weight:800;
 font-size:large;
+color:#002A6C;
 }
 
 .popDetail {
-font-family: 'Open Sans', sans-serif;
+font-family: 'ssp', sans-serif;
 font-weight:400;
 font-size: small;
 line-height:1;
+color:white;
 
 }
 
@@ -284,8 +289,6 @@ margin-right: auto;
 margin-left: auto;
 }
 
-.toolTipOn {
-}
 
 #globe {
 	position:absolute;
@@ -298,10 +301,9 @@ margin-left: auto;
 	width:45px;
 	cursor:pointer;
 	border-radius:45px;
-//	border:1px solid #021a40; 
-	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136); 
+	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136);
    -webkit-box-shadow: 1px 1px 2px rgb(136,136,136);
-   box-shadow:         1px 1px 2px rgb(15,15,15);
+   box-shadow:        1px 1px 2px rgb(136,136,136);
 }
 
 
@@ -325,7 +327,7 @@ var mainTextColor = 'hsl(0,0%,40%)';
 var contextColor = mainTextColor;
 
 var	width = 960,
-    height = 450,
+    height = 615,
     country,
     state;
 var topMargin = 0, 
@@ -334,9 +336,9 @@ adjust = 52;
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip");
 
-function changeContext (text) {
-	 d3.select("#context").style('color', alertContextColor).transition().duration(1000).text(text).style('color',contextColor);
-	}
+//function changeContext (text) {
+//	 d3.select("#context").style('color', alertContextColor).transition().duration(1000).text(text).style('color',contextColor);
+//	}
 
 
 //options needs to be created via looping through country files to determine types of content. For now created expressly
@@ -413,7 +415,7 @@ var projection = d3.geo.cylindricalEqualArea()
 	.rotate([-20,0])
 	.parallel(35.5)
     .scale(255)
-    .translate([(width)/2,( height)/ 1.9]);
+    .translate([(width)/2,( height)/ 2]);
 
 var trackWidth = .5;
 
@@ -454,12 +456,13 @@ d3.select("#map").append("img")
 		d3.select("#icon").remove()
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
+		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
 		d3.select("#dialogBoxContainer").remove();
 		d3.select("#swipeBack").remove();
     	zoom(xyz);
-		g.selectAll(".featured").classed("hide",false);
+//		g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
-		changeContext(startText);
+//		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
 	})
 	.on("mouseover", function() {
@@ -479,11 +482,7 @@ globe.src = 'globe.png';
 
 d3.json("countries_min.topo.json", function(error, us) {	
 
-		g.append("g")
-		  	.datum(topojson.merge(us, us.objects.countries_min.geometries))
-			.append("path")
-			.attr("id","land")
-			.attr("d",path);
+
 
 		g.append("g")
 			.attr("id", "countries")
@@ -491,8 +490,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.data(topojson.feature(us, us.objects.countries_min).features)
 			.enter()
 			.append("path")
-	
-	
 			.attr("class", function(d) {
 				var c = "";
 				if (featuredMap.has(d.id)) {
@@ -505,66 +502,76 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.attr("id", function(d) { return d.id; })
 
 			.attr("d", path)
-			.on("click", country_clicked)
+			.on("click", function(d) {
+				var c;
+				if (featuredMap.has(d.id)) {
+					c = country_clicked(d); 
+				} else {
+					c = null;
+				}
+				return c;
+				} )
 			.on("mouseover", function(d) {
-
-
-
-
-				var selection = d.id;
-				d3.select(this)
-					.attr("stroke", "black")
-					.attr("stroke-width", 1)
-					.attr("fill-opacity", 1);
-				
-				tooltip
-					.style("width", "200px")
-					.attr("class","tooltip pop")
-			    	.style("left", (d3.event.pageX + 5) + "px")
-			    	.style("top", (d3.event.pageY - 5) + "px")
-			    	.transition().duration(300)
-			    	.style("opacity", 1)
-			    	.style("display", "block");				
-				
-				tooltip.selectAll("div").remove();
-				tooltip.selectAll("img").remove();
-				tooltip.insert("div")
-					.append('span')
-					.text(function(d){
-						return featuredJSON[selection].fullname;})				
-					.attr("class", "popName");
+			 			
+				if (featuredMap.has(d.id)) {
+				  		var centroid = path.centroid(d);
+						console.log(centroid);	
+						var selection = d.id;
+						d3.select(this)
+							.attr("stroke", "#E89624")
+							.attr("stroke-width", .75)
+							.attr("fill-opacity", 1);
+						tooltip
+							.style("width", "200px")
+							.attr("class","tooltip pop")
+			    		//	.style("left", (d3.event.pageX - 100) + "px")
+			    		//	.style("bottom", (d3.event.pagY + 100) + "px")
+			    			.style("top", (centroid[1] + 29 ) + "px")
+			    			.style("left", (centroid[0] - 95) + "px")
+			    			.transition().duration(300)
+			    			.style("opacity", 1)
+							.style("visibility","visible")
+			    			.style("display", "block");				
+						tooltip.selectAll("div").remove();
+						tooltip.selectAll("img").remove();
+						
+						tooltip.insert("div")
+							.append('span')
+							.text(function(d){
+								return featuredJSON[selection].fullname;})				
+							.attr("class", "popName");
+						tooltip.append("img")
+							.attr("id", "tooltipImg")
+							.attr("width", 200)
+							.style("opacity", "1"); 
+						var image = new Image();
+						image.onload = function(d){
+							document.getElementById("tooltipImg").src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';}
+						image.src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';
+						tooltip.insert("div")
+							.append('span')					
+							.text(function(d){return featuredJSON[selection].tagline;}) 
+							.attr("class", "popDetail");
+						tooltip.append("div")
+							.attr("class","popFront")
+							.on("mouseout", function(d) {
+								tooltip.transition().duration(700).style("opacity", 0);
+								tooltip.transition().delay(705).each('start', function(){
+									d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
+									d3.select(this).style("opacity",0);
+								}).style("width","0px").style("height","0px")
 							
-				tooltip.append("img")
-					.attr("id", "tooltipImg")
-					.attr("width", 200)
-					.style("opacity", "1"); 
-
-				var image = new Image();
-				image.onload = function(d){
-					document.getElementById("tooltipImg").src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';}
-				image.src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';
-			
-				tooltip.insert("div")
-					
-					.append('span')					
-					.text(function(d){return featuredJSON[selection].tagline;}) 
-					.attr("class", "popDetail");
-				tooltip.append("div")
-					.attr("class","popFront")
-					.on("mouseout", function(d) {
-						tooltip.transition().duration(700).style("opacity", 0);
-						tooltip.transition().delay(705).each('start', function(){
-							d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
-							d3.select(this).style("opacity",0);
-						}).style("width","0px").style("height","0px")
-							
-					})
-				.on("click", function() {
-					country_clicked(d);
-
-					})
-				})
-
+							})
+							.on("click", function() {
+								country_clicked(d);
+							})
+						
+				} else {
+					 return	null;
+				}
+				
+		
+			})
 			.on("mouseout", function(d){
 				d3.select(this)
 					.attr("stroke", "")
@@ -574,9 +581,18 @@ d3.json("countries_min.topo.json", function(error, us) {
 					
 			})
 	
-		g.selectAll(".notFeatured").remove();
-		});
+		//g.selectAll(".notFeatured").remove();
+	
+		g.insert("g")
+		  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
+				return a !== b ; 
+			}))
+			.append("path")
+			.attr("class","boundary")
+			.attr("d",path);
+		
 
+});
 
 
 function zoom(xyz) {
@@ -590,7 +606,7 @@ function zoom(xyz) {
 		g.select(".boundary").classed("boundary_zoom",true);
 		g.select(".boundary_zoom").classed("boundary",false);
 		g.select(".coast").classed("coast_zoom",true).classed("coast",false);
-		g.selectAll(".featured").classed("hide",true);
+	//	g.selectAll(".featured").classed("hide",true);
 }
 //get content from server
 function getHTTP(id, d) {
@@ -609,7 +625,7 @@ function getHTTP(id, d) {
 				} else if (id === "Infographic") {
 					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
 				} else if (id === "Gallery") {
-					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_gallery.html\" seamless></iframe>";
+					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_gallery.html\" seamless></iframe>";
 				} 
 					
 					
@@ -618,7 +634,14 @@ function getHTTP(id, d) {
 		})//put up information screen
 		.transition()
 		.duration(800)
-		.style('opacity', 1);
+		.style('opacity', 1)
+		.style("top", function () {
+			if (id ===  "Video") { return "35px"; } 
+			else if (id === "Story") { return "35px"; }
+			else if (id === "Infographic") { return "35px"; }
+			else if (id === "Gallery") { return "0px"; }
+				 
+		})
 }
 
 function contentDialog(d) {
@@ -646,7 +669,6 @@ function contentDialog(d) {
 					})
 				.text(function (d) { 
 					return d; 
-					console.log(d); 
 				})
 				.style('opacity', 1)
 				.attr('id', function(d) { return d; });
@@ -687,7 +709,35 @@ function get_xyz(d) {
 	return [x, y, z];
 }
 
-d3.select('#frame')
+function zoom2ADM (d, xyz) {
+	
+	d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+				g.append("g")
+          			.attr("id", "states")
+          			.selectAll("path")
+          			.data(topojson.feature(us, us.objects.states).features)
+          			.enter()
+          			.append("path")
+          			.attr("id", function(d) { return d.id; })
+          			.attr("class", "active")
+          			.attr("d", path)
+
+
+				g.insert("g")
+					.datum(topojson.mesh(us, us.objects.states, function(a, b) {
+						return a !== b; 
+					}))
+					.append("path")
+					.attr("class", "active_boundary")
+					.attr("d", path);
+        		zoom(xyz);
+			//	console.log(d.id + " hello")
+				g.select("#" + d.id).classed("featured",false).classed("hide",true);
+	});
+}
+
+
+/*d3.select('#frame')
 			.append("div") 
 				.attr("id","context")
 				.style("display","inline-block")
@@ -696,9 +746,9 @@ d3.select('#frame')
 				.append('span')
 					.text(startText)
 					.style("vertical-align", "bottom");
+*/
 
-
-function country_clicked(d) {					
+function country_clicked(d) {
 	d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
 	d3.select(".tooltip").style("opacity",0).style("width","0px");	
 	g.selectAll(["#states"]).remove();
@@ -717,11 +767,16 @@ function country_clicked(d) {
 
 		contentDialog(d);			
 	
-		changeContext("Click anywhere off country to see some of our other responses.");
+	//	changeContext("Click anywhere off country to see some of our other responses.");
 
-		g.selectAll( "#" + d.id ).classed(".hide");
-
-		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+//		g.selectAll( "#" + d.id ).classed(".hide");
+		var zoomFactor = [1,1,.5];
+		for(var i=0; i < zoomFactor.length; i++) {
+				xyz[i] = zoomFactor[i] * xyz[i];
+		}
+		
+		zoom2ADM(d,xyz);
+/*		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
           			.attr("id", "states")
           			.selectAll("path")
@@ -731,11 +786,7 @@ function country_clicked(d) {
           			.attr("id", function(d) { return d.id; })
           			.attr("class", "active")
           			.attr("d", path)
-  					/*  .on("click", state_clicked);     */
-					var zoomFactor = [1,1,.5];
-					for(var i=0; i < zoomFactor.length; i++) {
-						xyz[i] = zoomFactor[i] * xyz[i];
-					}
+
 
 				g.insert("g")
 					.datum(topojson.mesh(us, us.objects.states, function(a, b) {
@@ -748,7 +799,7 @@ function country_clicked(d) {
 
       		});     
 
-
+*/
 			d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
 	
@@ -917,40 +968,15 @@ function country_clicked(d) {
 		
 			contentDialog(d);			
 	
-			changeContext("Click anywhere off country to see some of our other responses.");
+		//	changeContext("Click anywhere off country to see some of our other responses.");
 
-			g.selectAll( "#" + d.id ).classed(".hide");
+	//		g.selectAll( "#" + d.id ).classed(".hide");
+	//		var zoomFactor = [1,1,.5];
+	//		for(var i=0; i < zoomFactor.length; i++) {
+	//				xyz[i] = zoomFactor[i] * xyz[i];
+	//		}
+			zoom2ADM(d,xyz); 
 
-//needs some work here
-
-	/*		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
-				g.append("g")
-          			.attr("id", "states")
-          			.selectAll("path")
-          			.data(topojson.feature(us, us.objects.states).features)
-          			.enter()
-          			.append("path")
-          			.attr("id", function(d) { return d.id; })
-          			.attr("class", "active")
-          			.attr("d", path)
-					var zoomFactor = [1,1,.5];
-					for(var i=0; i < zoomFactor.length; i++) {
-						xyz[i] = zoomFactor[i] * xyz[i];
-					}
-
-				g.insert("g")
-					.datum(topojson.mesh(us, us.objects.states, function(a, b) {
-						return a !== b; 
-					}))
-					.append("path")
-					.attr("class", "active_boundary")
-					.attr("d", path);
-        		zoom(xyz);
-
-      		}); 
-*/
-
-        	zoom(xyz);
 			svg.append("circle")
     			.attr("class", "dot")
 				.style("opacity",0)
@@ -992,7 +1018,7 @@ function country_clicked(d) {
 		else if ( featuredJSON[d.id].type == 'complex') {
 			contentDialog(d);			
 	
-			changeContext("Click anywhere off country to see some of our other responses.");
+	//		changeContext("Click anywhere off country to see some of our other responses.");
 
 			g.selectAll( "#" + d.id ).classed(".hide");
 			zoom(xyz);
@@ -1013,10 +1039,11 @@ function country_clicked(d) {
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
 		d3.select("#dialogBoxContainer").remove();
-    	zoom(xyz);
-		g.selectAll(".featured").classed("hide",false);
+    	zoom(xyz)
+		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
+	//	g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
-		changeContext(startText);
+//		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
 		svg.selectAll(".faceOff").classed("face",true).classed("faceOff",false);
  		g.selectAll(".coast_zoom").classed("coast", true).classed("coast_zoom", false);
