@@ -129,10 +129,23 @@ cursor:pointer;
 	cursor:pointer;
 	z-index:+1;
 }
+.dialogBoxOptionContainer {
+position:absolute;
+top:100%;
+}
+.dialogBoxOption {
+position:relative;
+width: 60px;
+top:100%;
+padding:5px;
+background-color: salmon ;
+color: grey;
+display:block;
 
+}
 
 .dialogBox, .selected , .dialogBoxOff{
-	margin: 0px 5px;
+	margin: 1px 5px;
 	padding: 3px 6px;
 	position: relative;
 	display: inline-block;
@@ -341,21 +354,21 @@ var tooltip = d3.select("body").append("div")
 
 
 //options needs to be created via looping through country files to determine types of content. For now created expressly
-var options = ["Story","Video", "Infographic"];
 
 var featuredJSON = {
 	"KHM":{
 		"options":["Story"],
 		"type":"flood",
-		"story":[],
-		"video":[],
+		"Story":[],
+		"Video":[],
 		"fullname":"Cambodia",
 		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people and destroying nearly 10 percent of the nation's crops."
 	},
 	"PHL":{
 		"options":["Story","Video", "Infographic"],
-		"story":["story1","story2"],
-		"video":["www.youtube.com/embed/HaEbhGiCVT8"],
+		"Story":["story1","story2"],
+		"Video":["www.youtube.com/embed/HaEbhGiCVT8"],
+		"InfoGraphic":[],
 		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage."
@@ -518,7 +531,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 			 			
 				if (featuredMap.has(d.id)) {
 				  		var centroid = path.centroid(d);
-						console.log(centroid);	
 						var selection = d.id;
 						d3.select(this)
 							.attr("stroke", "#E89624")
@@ -679,15 +691,45 @@ function contentDialog(d) {
 		
 
 	d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
-
+	
 	d3.select('body').selectAll('.dialogBox')
 	.on("click", function () {
 		if (d3.select(this).classed("dialogBoxOff")) {
 			d3.select("body").select("#swipeBox").remove();
 			d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
 			var id = this.id;
-			getHTTP(id, d);
-			d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
+			if (featuredJSON[d.id][id] === null) {
+				console.log(featuredJSON[d.id][id]); 
+				var options = null;
+				getHTTP(id, d, options);
+				d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
+			} else {
+				var options = featuredJSON[d.id][id];
+				d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
+				console.log(this);
+				d3.select(this).append("div")
+					.attr("class","dialogBoxOptionContainer");
+
+				d3.select(".dialogBoxOptionContainer").selectAll(".dialogBoxOption")
+					.data(options)
+					.enter()
+					.append("div")
+					.attr("class","dialogBoxOption")
+					.style("background-color", function (d) {
+						color = options.indexOf(d) % 2
+						console.log(color)
+						if(color === 0){ return "#FFCB36"; }
+						else { return "#E89624"; }
+					})
+						
+					.attr("id", function(d) { return d; })
+					.text( function(d) { return d; }) 
+					.on("click", function() {
+						this.id = options;
+						console.log (options);
+						getHTTP(id, d, options);
+				 	})
+				}
 		} else if(d3.select(this).classed("selected")) {
 			d3.select("#map").select("#swipeBox").remove();
 			d3.select("#map").select("#swipeBack").remove();
@@ -700,6 +742,8 @@ function contentDialog(d) {
 	.on("mouseout", function () { 
 		d3.select(this).style('box-shadow', '1px 1px 1.5px #888888')
 	});
+	
+	
 }
 
 
@@ -735,7 +779,6 @@ function zoom2ADM (d, xyz) {
 					.attr("class", "active_boundary")
 					.attr("d", path);
         		zoom(xyz);
-			//	console.log(d.id + " hello")
 				g.select("#" + d.id).classed("featured",false).classed("hide",true);
 	});
 }
@@ -780,30 +823,7 @@ function country_clicked(d) {
 		}
 		
 		zoom2ADM(d,xyz);
-/*		d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
-				g.append("g")
-          			.attr("id", "states")
-          			.selectAll("path")
-          			.data(topojson.feature(us, us.objects.states).features)
-          			.enter()
-          			.append("path")
-          			.attr("id", function(d) { return d.id; })
-          			.attr("class", "active")
-          			.attr("d", path)
 
-
-				g.insert("g")
-					.datum(topojson.mesh(us, us.objects.states, function(a, b) {
-						return a !== b; 
-					}))
-					.append("path")
-					.attr("class", "active_boundary")
-					.attr("d", path);
-        		zoom(xyz);
-
-      		});     
-
-*/
 			d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
 	
