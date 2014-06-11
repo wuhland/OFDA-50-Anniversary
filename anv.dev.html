@@ -65,7 +65,7 @@ stroke: hsla(360,0%,20%,1);
 }
 	
 .background {
-	fill: whitesmoke;
+	fill: white;
 	pointer-events: all;
 }
 .active {
@@ -98,17 +98,14 @@ stroke: hsla(360,0%,20%,1);
 	stroke-width: .5px;
 }
 
-#dialogBoxUnit, .dialogBoxUnitOff{
+#dialogBoxUnit{
 display:block;
+//overflow:auto;
 position:absolute;
 margin-right: 13px;
 top:0px;
 right:0px;
 z-index:2;
-}
-
-
-.dialogBoxUnitOff {
 }
 
 .popFront {
@@ -125,35 +122,41 @@ cursor:pointer;
 	position:absolute;
 	top:0px;
 	width:100%;
-	height: 35px;
-	cursor:pointer;
+	height: 50px;
+//	cursor:pointer;
 	z-index:+1;
 }
 .dialogBoxOptionContainer {
 position:absolute;
 top:100%;
+left:0px;
 }
 .dialogBoxOption {
 position:relative;
 width: 60px;
 top:100%;
 padding:5px;
-background-color: salmon ;
-color: grey;
+background-color: #16B0C1 ;
+color: white;
 display:block;
+opacity:.8;
 
 }
 
+.event {
+	position:relative;
+	display:inline-block;
+}
 .dialogBox, .selected , .dialogBoxOff{
-	margin: 1px 5px;
-	padding: 3px 6px;
+	margin: 0px 1px;
+	padding: 5px 25px;
 	position: relative;
 	display: inline-block;
 	text-align:center;
 	font-size: 15px;
-	font-family: 'Open Sans', sans-serif;
-	font-weight: bold;	
-	border-radius: .8em;
+	font-family: 'ssp', sans-serif;
+//	font-family: 'Open Sans', sans-serif;
+//	font-weight: bold;	
 	z-index:3;
 	box-shadow: 2px 2px 1.5px #888888;
 	
@@ -161,29 +164,17 @@ display:block;
 
 
 .dialogBoxOff {
-	color: hsl(50,54%,98%);
-	background: rgba(65,115,191,1);
-	background: -moz-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
-	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(65,115,191,1)), color-stop(100%, rgba(0,42,108,1)));
-	background: -webkit-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
-	background: -o-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
-	background: -ms-linear-gradient(-45deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
-	background: linear-gradient(135deg, rgba(65,115,191,1) 0%, rgba(0,42,108,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4173bf', endColorstr='#002a6c', GradientType=1 );
+	color: white;
+	background: #16B0C1;
+	
 }	
 
 
 
 .selected {
-	color: hsl(50,54%,98%);
-	background: rgba(255,0,60,1);
-	background: -moz-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
-	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(255,0,60,1)), color-stop(100%, rgba(194,17,58,1)));
-	background: -webkit-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
-	background: -o-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
-	background: -ms-linear-gradient(-45deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
-	background: linear-gradient(135deg, rgba(255,0,60,1) 0%, rgba(194,17,58,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff003c', endColorstr='#c2113a', GradientType=1 );
+	color: grey;
+	background: whitesmoke;
+	border-left, border-right, border-top: medium solid grey;
 }
 
 #swipeBox {
@@ -251,20 +242,6 @@ z-index:0;
 	z-index: 2;
 	visibility:hidden;
 }
-/*.tooltip:after {
-	box-sizing: border-box;
-  	display: inline;
-  	font-size: 20px;
-//	height:-20px;
-  	width: 100%;
-	//top:0%;
-  	line-height: 1;
-  	content: "\25BC";
-  	position: absolute;
-  	text-align: center;		
-    color:#16B0C1;
-}
-*/
 
 .tooltip:after {
 	width: 0;
@@ -483,7 +460,7 @@ d3.select("#map").append("img")
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
 		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
-		d3.select("#dialogBoxContainer").remove();
+		d3.select("#dialogBoxUnit").remove();
 		d3.select("#swipeBack").remove();
     	zoom(xyz);
 //		g.selectAll(".featured").classed("hide",false);
@@ -632,18 +609,12 @@ function zoom(xyz) {
 function getHTTP(Media, Country, Name) {
 //	var Country = Country;
 
-	console.log(featuredJSON);
-	console.log(Country);
-	console.log(featuredJSON[Country]);
-	console.log(featuredJSON[Country][Media]);
 	var Thing = featuredJSON[Country][Media];
 	var ThingByName = {};
 	NameFunct = function(d) {return d.Button;};
 	Thing.forEach(function(d){ThingByName[NameFunct(d)] = d;})
 	console.log(ThingByName);
 	
-	
-
 	d3.select("#map").append("div")
 		.attr("id","swipeBack")
 		.append("div")
@@ -662,7 +633,6 @@ function getHTTP(Media, Country, Name) {
 					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_gallery.html\" seamless></iframe>";
 				} 
 					
-					
 						
 				return text;
 		})//put up information screen
@@ -670,10 +640,10 @@ function getHTTP(Media, Country, Name) {
 		.duration(800)
 		.style('opacity', 1)
 		.style("top", function () {
-			if (id ===  "Video") { return "35px"; } 
-			else if (id === "Story") { return "35px"; }
-			else if (id === "Infographic") { return "35px"; }
-			else if (id === "Gallery") { return "0px"; }
+			if (Media ===  "Video") { return "35px"; } 
+			else if (Media === "Story") { return "35px"; }
+			else if (Media === "Infographic") { return "35px"; }
+			else if (Media === "Gallery") { return "0px"; }
 				 
 		})
 }
@@ -681,17 +651,18 @@ function getHTTP(Media, Country, Name) {
 function contentDialog(d) {
 	var Country = d.id;
 	d3.select("#map").append("div")
-		.attr("id","dialogBoxContainer")
-		.append("div")
+//		.attr("id","dialogBoxContainer")
+//		.append("div")
 			.attr("id","dialogBoxUnit")
 			.style('padding','5px 2px')
 			.selectAll("div")
-	//		.data(options)
 			.data(function () {
 				return featuredJSON[Country].options;
 			})
 			.enter()
 			.insert("div")
+				.attr("class", "event")
+				.insert("div")
 				.attr("class", "dialogBox dialogBoxOff")
 				.style('opacity', 0)
 				.style('display','absolute')
@@ -709,24 +680,21 @@ function contentDialog(d) {
 				.attr('id', function(d) { return d; });
 		
 
-	d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
+//	d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
 	
 	d3.select('body').selectAll('.dialogBox')
 	.on("click", function () {
 		var Media = this.id;
 		var Country = d.id;
-		console.log(Media);;
-		console.log(Country);
-		console.log(featuredJSON[Country][Media].length);
 		if (d3.select(this).classed("dialogBoxOff")) {
 			d3.select("body").select("#swipeBox").remove();
 			d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
+			d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
 		//	var id = this.id;
 			if ((featuredJSON[Country][Media]).length === 1) {
 		//		var options = null;
 				var Name = featuredJSON[Country][Media][0].Button;//;
 				getHTTP(Media, Country, Name);
-				d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
 			return;
 			} else {
 				return;
@@ -738,6 +706,8 @@ function contentDialog(d) {
 		} 
 	})
 	.on("mouseover", function (){
+	
+	//	d3.select(".dialogBoxOptionContainer").remove();
 		d3.select(this).style('box-shadow', '2px 2px 3px #888888')
 				
 	//	var id = this.id;
@@ -747,34 +717,37 @@ function contentDialog(d) {
 			return null;
 		} else {	
 			var options = featuredJSON[Country][Media];
-			d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
+	//		d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
 		//	console.log(this);
 			d3.select(this).append("div")
-				.attr("class","dialogBoxOptionContainer");
+				.attr("class","dialogBoxOptionContainer")				
+	/*				.on("mouseout", function () {
+					d3.select(".dialogBoxOptionContainer").remove();
+				})*/;
 
-			d3.select(".dialogBoxOptionContainer").selectAll(".dialogBoxOption")
+			d3.select(".dialogBoxOptionContainer").selectAll(".dialogBoxOption")				
 				.data(options)
 				.enter()
 				.append("div")
 				.attr("class","dialogBoxOption")
-				.style("background-color", function (d) {
-					color = options.indexOf(d) % 2
-					console.log(color)
-					if(color === 0){ return "#FFCB36"; }
-					else { return "#E89624"; }
-				})
+				.style("background-color", "#16B0C1")
 			//	.attr("id", function(d) { return d; })
 				.text( function(d) { return d.Button; }) 
 				.on("click", function(d) {
+
+					d3.select("#" + Media).classed("selected", true).classed("dialogBoxOff",false);
 					Name = d.Button;
-					console.log (Name);
+					console.log("Media = " + Media + "Country = " + Country + "Name = " + Name);
 					
-					getHTTP(Country, Media, Name);
+					getHTTP(Media, Country, Name);
 				})
+				.on("mouseover", function () {d3.select(this).style("background-color","#B2DCDD").style("color","grey");})
+				.on("mouseout", function () {d3.select(this).style("background-color","#16B0C1").style("color","white");})
+
 			}
 	})
 	.on("mouseout", function () { 
-		d3.select(this).style('box-shadow', '1px 1px 1.5px #888888')
+		d3.select(this).style('box-shadow', '1px 1px 1.5px #888888');
 	});
 	
 	
