@@ -136,10 +136,10 @@ position:relative;
 width: 60px;
 top:100%;
 padding:5px;
-background-color: #16B0C1 ;
-color: white;
+background-color: whitesmoke;
+color: grey;
 display:block;
-opacity:.8;
+opacity:.92;
 
 }
 
@@ -149,16 +149,17 @@ opacity:.8;
 }
 .dialogBox, .selected , .dialogBoxOff{
 	margin: 0px 1px;
-	padding: 5px 25px;
+	padding: 4px 25px;
 	position: relative;
 	display: inline-block;
 	text-align:center;
-	font-size: 15px;
+	font-size: 13px;
 	font-family: 'ssp', sans-serif;
-//	font-family: 'Open Sans', sans-serif;
-//	font-weight: bold;	
+	font-weight: 600;
+//	letter-spacing: .3px;	
 	z-index:3;
 	box-shadow: 2px 2px 1.5px #888888;
+	width:100px;
 	
 }
 
@@ -344,8 +345,8 @@ var featuredJSON = {
 	},
 	"PHL":{
 		"options":["Story","Video", "Infographic"],
-		"Story":[{"Button":"story1","Name":"story1location"},{"Button":"story2","Name":"story2location"}],
-		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"}],
+		"Story":[{"Button":"story1","Name":"phl_story.html"},{"Button":"story2","Name":"story2location"}],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"},{"Button":"Kermit","URL":"www.youtube.com/embed/hpiIWMWWVco"}],
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Philippines",
@@ -365,6 +366,7 @@ var featuredJSON = {
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
+		"Gallery":[{"Button":"Potatoes","Name":"sds_gallery.html"}],
 		"type":"complex",
 		"fullname":"South Sudan",
 		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity."
@@ -450,6 +452,13 @@ svg.append("rect")
 
 var g = svg.append("g");
 
+function testDialog (dialogOptionBoolean, Media) {
+	if (dialogOptionBoolean === 0) {
+		d3.select("#" + Media).style("background-color","#16B0C1").style("color","white");	
+		d3.selectAll(".dialogBoxOptionContainer").remove(); 
+	}
+}
+
 d3.select("#map").append("img")
 	.attr("id","globe")
 	.attr("opacity",1)
@@ -465,7 +474,6 @@ d3.select("#map").append("img")
     	zoom(xyz);
 //		g.selectAll(".featured").classed("hide",false);
 		g.selectAll([".active", ".active_boundary"]).remove();
-//		changeContext(startText);
 		d3.selectAll(".dialogBox").remove();
 	})
 	.on("mouseover", function() {
@@ -613,8 +621,6 @@ function getHTTP(Media, Country, Name) {
 	var ThingByName = {};
 	NameFunct = function(d) {return d.Button;};
 	Thing.forEach(function(d){ThingByName[NameFunct(d)] = d;})
-	console.log(ThingByName);
-	
 	d3.select("#map").append("div")
 		.attr("id","swipeBack")
 		.append("div")
@@ -626,11 +632,12 @@ function getHTTP(Media, Country, Name) {
 				if (Media ===  "Video") {
 					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//" + ThingByName[Name].URL + "\" frameborder=\"0\" allowfullscreen></iframe>";
 				} else if (Media === "Story") {
-					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";	
+					
+					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} else if (Media === "Infographic") {
-					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + d.id.toLowerCase() + "/graphic.jpg\">";
+					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\">";
 				} else if (Media === "Gallery") {
-					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + d.id.toLowerCase() + "/" + d.id.toLowerCase() + "_gallery.html\" seamless></iframe>";
+					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} 
 					
 						
@@ -647,8 +654,9 @@ function getHTTP(Media, Country, Name) {
 				 
 		})
 }
-
+var dialogOptionBoolean;
 function contentDialog(d) {
+	dialogOptionBoolean = 0;
 	var Country = d.id;
 	d3.select("#map").append("div")
 //		.attr("id","dialogBoxContainer")
@@ -674,7 +682,7 @@ function contentDialog(d) {
 				
 					})
 				.text(function (d) { 
-					return d; 
+					return d.toUpperCase(); 
 				})
 				.style('opacity', 1)
 				.attr('id', function(d) { return d; });
@@ -687,18 +695,17 @@ function contentDialog(d) {
 		var Media = this.id;
 		var Country = d.id;
 		if (d3.select(this).classed("dialogBoxOff")) {
-			d3.select("body").select("#swipeBox").remove();
+			d3.select("body").select("#swipeBack").remove();
 			d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
 			d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
-		//	var id = this.id;
 			if ((featuredJSON[Country][Media]).length === 1) {
 		//		var options = null;
 				var Name = featuredJSON[Country][Media][0].Button;//;
 				getHTTP(Media, Country, Name);
-			return;
+	//		return;
 			} else {
-				return;
 			}
+		
 		} else if(d3.select(this).classed("selected")) {
 			d3.select("#map").select("#swipeBox").remove();
 			d3.select("#map").select("#swipeBack").remove();
@@ -706,52 +713,61 @@ function contentDialog(d) {
 		} 
 	})
 	.on("mouseover", function (){
-	
-	//	d3.select(".dialogBoxOptionContainer").remove();
-		d3.select(this).style('box-shadow', '2px 2px 3px #888888')
+		dialogOptionBoolean += 1;
+		d3.select(this).style({'box-shadow':'2px 2px 3px #888888','background-color':'whitesmoke','color':'grey'});
 				
-	//	var id = this.id;
-		var Media = this.id
-		var Country = d.id
+		var Media = this.id;
+		var Country = d.id;
 		if (featuredJSON[Country][Media].length === 1) {
-			return null;
+			return;
 		} else {	
 			var options = featuredJSON[Country][Media];
 	//		d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
-		//	console.log(this);
 			d3.select(this).append("div")
-				.attr("class","dialogBoxOptionContainer")				
-	/*				.on("mouseout", function () {
-					d3.select(".dialogBoxOptionContainer").remove();
-				})*/;
+				.attr("class","dialogBoxOptionContainer");
 
 			d3.select(".dialogBoxOptionContainer").selectAll(".dialogBoxOption")				
 				.data(options)
 				.enter()
 				.append("div")
 				.attr("class","dialogBoxOption")
-				.style("background-color", "#16B0C1")
-			//	.attr("id", function(d) { return d; })
+				.attr("id", function(d, i) { return "option_" + i ; })
 				.text( function(d) { return d.Button; }) 
 				.on("click", function(d) {
-
+						
 					d3.select("#" + Media).classed("selected", true).classed("dialogBoxOff",false);
+					d3.select("body").select("#swipeBack").remove();
+
 					Name = d.Button;
-					console.log("Media = " + Media + "Country = " + Country + "Name = " + Name);
-					
 					getHTTP(Media, Country, Name);
+				
 				})
-				.on("mouseover", function () {d3.select(this).style("background-color","#B2DCDD").style("color","grey");})
-				.on("mouseout", function () {d3.select(this).style("background-color","#16B0C1").style("color","white");})
+				.on("click.stop", function() {d3.event.stopPropagation(); })
+				.on("mouseover", function () {
+					dialogOptionBoolean += 1;
+					d3.select(this).style("background-color","#CFCDC9").style("color","grey");
+					})
+				.on("mouseover.stop", function() {d3.event.stopPropagation(); })
+				.on("mouseout.change", function () {
+					dialogOptionBoolean -=1;
+					d3.select(this).style("background-color","whitesmoke").style("color","grey");
+					setTimeout(function() {testDialog(dialogOptionBoolean, Media)}, 0);
+					})
+				.on("mouseout.stop", function() {d3.event.stopPropagation(); });
+
 
 			}
 	})
-	.on("mouseout", function () { 
-		d3.select(this).style('box-shadow', '1px 1px 1.5px #888888');
+	.on("mouseout", function () {
+		var Media = this.id;
+		dialogOptionBoolean -= 1;
+		d3.select(this).style({'box-shadow':'1px 1px 1.5px #888888'});//,'background-color':'#16B0C1','color':'whitesmoke'});
+		setTimeout(function() {testDialog(dialogOptionBoolean, Media)}, 0);
 	});
 	
 	
 }
+
 
 
 function get_xyz(d) {
