@@ -285,16 +285,16 @@ top:30px;
 	position:absolute;
 //	top: 0px; 
 	left:0px;
-//	margin-top: 3px;
+	margin-top: 3px;
 	margin-left: 3px;
 	z-index:2;
-	height:17px;
-	width:17px;
-//	cursor:pointer;
-//	border-radius:45px;
-//	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136);
-//   -webkit-box-shadow: 1px 1px 2px rgb(136,136,136);
-//   box-shadow:        1px 1px 2px rgb(136,136,136);
+	height:20px;
+	width:20px;
+	cursor:pointer;
+	border-radius:45px;
+	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136);
+   -webkit-box-shadow: 1px 1px 2px rgb(136,136,136);
+   box-shadow:        1px 1px 2px rgb(136,136,136);
 }
 
 #globeContainer {
@@ -324,7 +324,7 @@ var mainTextColor = 'hsl(0,0%,40%)';
 var contextColor = mainTextColor;
 
 var	width = 960,
-    height = 800,
+    height = 700,
     country,
     state;
 var topMargin = 0, 
@@ -482,10 +482,9 @@ d3.select("#map").append("div")
 			d3.select("#dialogBoxUnit").remove();
 			d3.select("#swipeBack").remove();
     		zoom(xyz);
+//			g.selectAll(".featured").classed("hide",false);
 			g.selectAll([".active", ".active_boundary"]).remove();
 			d3.selectAll(".dialogBox").remove();
-			console.log(xyz[2]);
-			isGlobal(xyz,null);
 	})
 	.on("mouseover", function() {
 		d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
@@ -506,17 +505,16 @@ globe.onload = function(d){
 globe.src = 'globe.png';
 
 
-d3.json("countries.topo.json", function(error, us) {	
+d3.json("countries_min.topo.json", function(error, us) {	
 
 
 		g.append("g")
 			.attr("id", "countries")
 			.selectAll("path")
-			.data(topojson.feature(us, us.objects.countries).features)
+			.data(topojson.feature(us, us.objects.countries_min).features)
 			.enter()
 			.append("path")
 			.attr("class", function(d) {
-				console.log(d);
 				var c = "";
 				if (featuredMap.has(d.id)) {
 					c = "featured";
@@ -591,100 +589,43 @@ d3.json("countries.topo.json", function(error, us) {
 					 return	null;
 				}
 				
-
+		
 			})
+		/*	.on("mouseout", function(d){
+				
+				if(featuredMap.has(d.id)) {
+					d3.select(this)
+						.style("fill","#FFCB36")
+						.attr("fill-opacity", function(d){return 1;})
+	
+				} else {
+					return null;
+				}
+			})	
+		*/				
+			//		tooltip.transition().duration(700).style("opacity", 0);	
 					
 			
 			g.insert("g")
-		  	.datum(topojson.mesh(us, us.objects.countries, function (a, b)  {
+		  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
 				return a !== b ; 
 			}))
 			.append("path")
 			.attr("class","boundary")
 			.attr("d",path);
+		//g.selectAll(".notFeatured").remove();
+	
+
+		
 
 });
 
-function isGlobal (xyz, FC) {
-	if (xyz[2] === 1) {
-		console.log("isGlobal");
-//		d3.select("#" + FC.id).style("opacity",1)	
-		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1)
-		.on("click", function(d){ country_clicked(d) } )
-		.on("mouseover", function (d) {
-			var centroid = path.centroid(d);
-			var selection = d.id;
-			d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
-					//		.attr("fill", "#E89624")
-					//		.attr("fill-opacity", 1);
-			tooltip
-				.style("width", "200px")
-				.attr("class","tooltip pop")
-			    .style("top", (centroid[1] + 29 ) + "px")
-			    .style("left", (centroid[0] - 95) + "px")
-			    .transition().duration(300)
-			    .style("opacity", 1)
-				.style("visibility","visible")
-			    			.style("display", "block");				
-						tooltip.selectAll("div").remove();
-						tooltip.selectAll("img").remove();
-						tooltip.insert("div")
-							.append('span')
-							.text(function(){
-								return featuredJSON[selection].fullname;})				
-							.attr("class", "popName");
-						tooltip.append("img")
-							.attr("id", "tooltipImg")
-							.attr("width", 200)
-							.style("opacity", "1"); 
-						var image = new Image();
-						image.onload = function(){
-							document.getElementById("tooltipImg").src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';}
-						image.src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';
-						tooltip.insert("div")
-							.append('span')					
-							.text(function(d){return featuredJSON[selection].tagline;}) 
-							.attr("class", "popDetail");
-						tooltip.append("div")
-							.attr("class","popFront")
-							.on("mouseout", function() {
-								tooltip.transition().duration(700).style("opacity", 0);
-								tooltip.transition().delay(705).each('start', function(){
-									d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
-									d3.select(this).style("opacity",0);
-								}).style("width","0px").style("height","0px")
-							
-							})
-							.on("click", function() {
-								country_clicked(d);
-							})
-		})
-		.on("mouseout", function (d) {
-			d3.select("#" + d.id)
-				.style("fill","#FFCB36")
-				.attr("fill-opacity", function(d){return 1;})
-			
-		}) 
-	} else if (xyz[2] > 1) {
-		console.log("hello " + xyz[2]);
-		d3.selectAll(".featured").style("fill","#CFCDC9").style("cursor","default")
-			.on("click", null )
-			.on("mouseover", null )
-			.on("mouseout", null )
-		d3.select("#" + FC.id).style("opacity",0)	
-	} else {
-		return;
-	}	
-}	
 
 function zoom(xyz) {
 	g.transition()
 		.duration(750)
 		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
 		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
-
-	
-
 }
 //get content from server
 function getHTTP(Media, Country, Name) {
@@ -728,7 +669,6 @@ function getHTTP(Media, Country, Name) {
 		})
 }
 var dialogOptionBoolean;
-
 function contentDialog(d) {
 	dialogOptionBoolean = 0;
 	var Country = d.id;
@@ -737,10 +677,10 @@ function contentDialog(d) {
 //		.append("div")
 			.attr("id","dialogBoxUnit")
 	//		.style('padding','5px 2px')
+			.selectAll("div")
 			.on("mouseover", function () {
 				d3.selectAll("dialogBoxOption").remove();
 			})
-			.selectAll("div")
 			.data(function () {
 				return featuredJSON[Country].options;
 			})
@@ -763,11 +703,7 @@ function contentDialog(d) {
 				})
 				.style('opacity', 1)
 				.attr('id', function(d) { return d; });
-
-					
 		
-
-
 
 //	d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
 	
@@ -848,19 +784,9 @@ function contentDialog(d) {
 		dialogOptionBoolean -= 1;
 		d3.select(this).style({'box-shadow':'1px 1px 1.5px #888888'});//,'background-color':'#16B0C1','color':'whitesmoke'});
 		setTimeout(function() {testDialog(dialogOptionBoolean, Media)}, 0);
-	})
-	.append("img")
-		.attr("class","hash")
-		.attr("src", "hash.png")
-		.attr("id", function (i) { return "image_" + i });
+	});
 	
-/*	var hash = new Image();
-
-	hash.onload = function(d){
-		document.getElementByClassName("hash").src = 'hash.png';
-		}
-	hash.src = 'hash.png';
-*/
+	
 }
 
 
@@ -876,7 +802,7 @@ function get_xyz(d) {
 }
 
 function zoom2ADM (d, xyz) {
-	var FC = d;
+	
 	d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
           			.attr("id", "states")
@@ -897,8 +823,7 @@ function zoom2ADM (d, xyz) {
 					.attr("class", "active_boundary")
 					.attr("d", path);
         		zoom(xyz);
-				isGlobal(xyz,FC);
-				console.log("z is " + xyz[2] );	
+				g.select("#" + d.id).classed("featured",false).classed("hide",true);
 	});
 }
 
@@ -1164,6 +1089,7 @@ function country_clicked(d) {
 	//		changeContext("Click anywhere off country to see some of our other responses.");
 
 			g.selectAll( "#" + d.id ).classed(".hide");
+		//	zoom(xyz);
 			zoom2ADM(d,xyz);
 
 		}		
@@ -1177,6 +1103,7 @@ function country_clicked(d) {
 			contentDialog(d);			
 	
 			g.selectAll( "#" + d.id ).classed(".hide");
+		//	zoom(xyz);
 			zoom2ADM(d,xyz);
 			return;
     	}
@@ -1189,7 +1116,8 @@ function country_clicked(d) {
     	country = null;
 		d3.select("#dialogBoxContainer").remove();
     	zoom(xyz)
-		isGlobal(xyz, null); 
+		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
+		g.selectAll([".active", ".active_boundary"]).remove();
 		d3.selectAll(".dialogBox").remove();
 		
   	}

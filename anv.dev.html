@@ -159,6 +159,7 @@ cursor:pointer;
 	z-index:3;
 	box-shadow: 2px 2px 1.5px #888888;
 	width:100px;
+	vertical-align:middle;
 }
 
 
@@ -281,20 +282,18 @@ top:30px;
 }
 
 
-#globe {
+#globe, .hash {
 	position:absolute;
-//	top: 0px; 
 	left:0px;
-	margin-top: 3px;
-	margin-left: 3px;
-	z-index:2;
-	height:20px;
-	width:20px;
-	cursor:pointer;
-	border-radius:45px;
-	 -moz-box-shadow: 1px 1px 2px rgb(136,136,136);
-   -webkit-box-shadow: 1px 1px 2px rgb(136,136,136);
-   box-shadow:        1px 1px 2px rgb(136,136,136);
+	margin-left: 5px;
+	z-index:4;
+	height:17px;
+	width:17px;
+}
+
+.hash {
+left:5px;
+top:4px;
 }
 
 #globeContainer {
@@ -324,7 +323,7 @@ var mainTextColor = 'hsl(0,0%,40%)';
 var contextColor = mainTextColor;
 
 var	width = 960,
-    height = 700,
+    height = 800,
     country,
     state;
 var topMargin = 0, 
@@ -482,10 +481,8 @@ d3.select("#map").append("div")
 			d3.select("#dialogBoxUnit").remove();
 			d3.select("#swipeBack").remove();
     		zoom(xyz);
-//			g.selectAll(".featured").classed("hide",false);
 			g.selectAll([".active", ".active_boundary"]).remove();
 			d3.selectAll(".dialogBox").remove();
-			console.log(xyz[2]);
 			isGlobal(xyz,null);
 	})
 	.on("mouseover", function() {
@@ -507,13 +504,13 @@ globe.onload = function(d){
 globe.src = 'globe.png';
 
 
-d3.json("countries_min.topo.json", function(error, us) {	
+d3.json("countries.topo.json", function(error, us) {	
 
 
 		g.append("g")
 			.attr("id", "countries")
 			.selectAll("path")
-			.data(topojson.feature(us, us.objects.countries_min).features)
+			.data(topojson.feature(us, us.objects.countries).features)
 			.enter()
 			.append("path")
 			.attr("class", function(d) {
@@ -596,7 +593,7 @@ d3.json("countries_min.topo.json", function(error, us) {
 					
 			
 			g.insert("g")
-		  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
+		  	.datum(topojson.mesh(us, us.objects.countries, function (a, b)  {
 				return a !== b ; 
 			}))
 			.append("path")
@@ -607,7 +604,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 
 function isGlobal (xyz, FC) {
 	if (xyz[2] === 1) {
-		console.log("isGlobal");
 //		d3.select("#" + FC.id).style("opacity",1)	
 		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1)
 		.on("click", function(d){ country_clicked(d) } )
@@ -666,7 +662,6 @@ function isGlobal (xyz, FC) {
 			
 		}) 
 	} else if (xyz[2] > 1) {
-		console.log("hello " + xyz[2]);
 		d3.selectAll(".featured").style("fill","#CFCDC9").style("cursor","default")
 			.on("click", null )
 			.on("mouseover", null )
@@ -737,10 +732,10 @@ function contentDialog(d) {
 //		.append("div")
 			.attr("id","dialogBoxUnit")
 	//		.style('padding','5px 2px')
-			.selectAll("div")
 			.on("mouseover", function () {
 				d3.selectAll("dialogBoxOption").remove();
 			})
+			.selectAll("div")
 			.data(function () {
 				return featuredJSON[Country].options;
 			})
@@ -763,7 +758,11 @@ function contentDialog(d) {
 				})
 				.style('opacity', 1)
 				.attr('id', function(d) { return d; });
+
+					
 		
+
+
 
 //	d3.select('body').select('#dialogBoxUnit').classed('dialogBoxUnitOn',true).classed('dialogBoxUnit',false);
 	
@@ -794,7 +793,6 @@ function contentDialog(d) {
 		d3.selectAll(".dialogBox").style("background-color","#16B0C1").style("color","white").on("mouseover.kill", function(){
 			d3.selectAll(".dialogBoxOption").remove();
 		});
-		//console.log(dialogOptionBoolean);
 		d3.select(this).style({'box-shadow':'2px 2px 3px #888888','background-color':'whitesmoke','color':'grey'}).on("mouseover.kill", null);
 				
 		var Media = this.id;
@@ -846,7 +844,24 @@ function contentDialog(d) {
 		setTimeout(function() {testDialog(dialogOptionBoolean, Media)}, 0);
 	});
 	
+	d3.select("body").selectAll(".event").append("img")
+		.attr("class","hash")
+		.attr("src", "hash.png")
+		.attr("id", function (i) { 
+			console.log("this is " + i);
+			return "image_" + i 
+			})
+		.style("height","17px")
+		.style("width","17px")
+		.attr("z-index",4);
 	
+/*	var hash = new Image();
+
+	hash.onload = function(d){
+		document.getElementByClassName("hash").src = 'hash.png';
+		}
+	hash.src = 'hash.png';
+*/
 }
 
 
@@ -884,7 +899,6 @@ function zoom2ADM (d, xyz) {
 					.attr("d", path);
         		zoom(xyz);
 				isGlobal(xyz,FC);
-				console.log("z is " + xyz[2] );	
 	});
 }
 
