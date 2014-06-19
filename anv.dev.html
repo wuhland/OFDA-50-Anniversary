@@ -485,6 +485,8 @@ d3.select("#map").append("div")
 //			g.selectAll(".featured").classed("hide",false);
 			g.selectAll([".active", ".active_boundary"]).remove();
 			d3.selectAll(".dialogBox").remove();
+			console.log(xyz[2]);
+			isGlobal(xyz,null);
 	})
 	.on("mouseover", function() {
 		d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
@@ -589,7 +591,7 @@ d3.json("countries_min.topo.json", function(error, us) {
 					 return	null;
 				}
 				
-		
+
 			})
 					
 			
@@ -605,13 +607,13 @@ d3.json("countries_min.topo.json", function(error, us) {
 
 function isGlobal (xyz, FC) {
 	if (xyz[2] === 1) {
-
-		d3.select("#" + FC.id).style("opacity",1)	
-		d3.selectAll(".featured").style("fill","#CFCDC0").style("cursor","pointer")
-		.on("click", function(FC){ country_clicked(FC) } )
-		.on("mouseover", function (FC) {
-			var centroid = path.centroid(FC);
-			var selection = FC.id;
+		console.log("isGlobal");
+//		d3.select("#" + FC.id).style("opacity",1)	
+		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1)
+		.on("click", function(d){ country_clicked(d) } )
+		.on("mouseover", function (d) {
+			var centroid = path.centroid(d);
+			var selection = d.id;
 			d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
 					//		.attr("fill", "#E89624")
 					//		.attr("fill-opacity", 1);
@@ -654,11 +656,11 @@ function isGlobal (xyz, FC) {
 							
 							})
 							.on("click", function() {
-								country_clicked(FC);
+								country_clicked(d);
 							})
 		})
-		.on("mouseout", function (FC) {
-			d3.select("#" + FC.id)
+		.on("mouseout", function (d) {
+			d3.select("#" + d.id)
 				.style("fill","#FFCB36")
 				.attr("fill-opacity", function(d){return 1;})
 			
@@ -1148,7 +1150,6 @@ function country_clicked(d) {
 	//		changeContext("Click anywhere off country to see some of our other responses.");
 
 			g.selectAll( "#" + d.id ).classed(".hide");
-		//	zoom(xyz);
 			zoom2ADM(d,xyz);
 
 		}		
@@ -1162,7 +1163,6 @@ function country_clicked(d) {
 			contentDialog(d);			
 	
 			g.selectAll( "#" + d.id ).classed(".hide");
-		//	zoom(xyz);
 			zoom2ADM(d,xyz);
 			return;
     	}
@@ -1175,8 +1175,7 @@ function country_clicked(d) {
     	country = null;
 		d3.select("#dialogBoxContainer").remove();
     	zoom(xyz)
-		g.selectAll(".hide").classed("featured",true).classed("hide",false);;
-		g.selectAll([".active", ".active_boundary"]).remove();
+		isGlobal(xyz, null); 
 		d3.selectAll(".dialogBox").remove();
 		
   	}
