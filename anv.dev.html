@@ -383,7 +383,7 @@ var mainTextColor = 'hsl(0,0%,40%)';
 var contextColor = mainTextColor;
 
 var	width = 960,
-    height = 800,
+    height = 775,
     country,
     state;
 var topMargin = 0, 
@@ -416,7 +416,9 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Philippines",
-		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage."
+		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage.",
+		"ovTagline":"November 8, 2013 Typhoon Haiyan",
+		"ovElements":[["affected","16 MILLION"],["displaced","4.1 MILLION"],["killed","6,201"]],
 	},
 	"JAM":{
 		"options":[],		
@@ -449,7 +451,7 @@ var featuredJSON = {
 		"disasterarray":{
 			"magnitude":7,
 			"depth":25, //in kilometers
-			"epicenter":[72.571,18.443],//Longitude Latitude
+			"epicenter":[72.533,18.457],//Longitude Latitude
 			},
 		"fullname":"Haiti",
 		"tagline":"In January 2012, a magnitude 7.0 earthquake left 316,000 dead and 1.5 million displaced. In total, 3 million people were affected."
@@ -535,12 +537,13 @@ d3.select("#map").append("div")
 		.attr("id","globeContainer")
 		.text("GLOBE")
 		.on("click", function() {
-			d3.select("#dataTitle").remove()
-			d3.select("#hurr").remove()
-			d3.select("#icon").remove()
+			d3.select("#ovContainer").remove();
+			d3.select("#dataTitle").remove();
+			d3.select("#hurr").remove();
+			d3.select("#icon").remove();
 			var xyz = [width / 2, height / 2, 1];
     		country = null;
-			g.selectAll(".hide").classed("featured",true).classed("hide",false);;
+			g.selectAll(".hide").classed("featured",true).classed("hide",false);
 			d3.select("#dialogBoxUnit").remove();
 			d3.select("#swipeBack").remove();
     		zoom(xyz);
@@ -927,6 +930,67 @@ function contentDialog(d) {
 */
 }
 
+function ov(feature) {
+			d3.select("#map").append("div")
+				.attr("id","ovContainer")
+				.style("height","100px")
+				.style("z-index",4)
+//				.append("div")
+//					.attr("id","ovFlex")
+				.append("div")
+					.attr("id","ovLine")
+					.style("left","0px")
+					.style("width","5px")
+					.style("height","100%")
+					.style("margin-right","5px")
+					.style("background-color","#16B0C1");
+
+			d3.select("#map").select("#ovContainer").append("div")
+				.attr("id","ovHead")
+				.text(function () {  return featuredJSON[feature.id].fullname; } )
+				.append("span")
+					.style("display","inline-block")
+					.attr("class","nmTeal")
+					.style("margin-left","3px")
+					.style("font-size","small")
+					.style("font-size","400")
+					.attr("id","ovSubHead")
+					.text(function () {  return featuredJSON[feature.id].ovTagline; } ); 
+				
+			d3.select("#map").select("#ovContainer")
+			//	.append("div")
+			//		.attr("id","ovElementGroup")
+			//		.attr("position","absolute")
+					.selectAll(".ovElement")
+					.data(function () { return featuredJSON[feature.id].ovElements; })
+					.enter()				
+					.append("div")
+						.attr("class","ovElement")
+						.style("border-left", function (d,i) { 
+							var border;
+							if (i === 0) {
+								border = "0px solid hsla(0,0%,0%,0)";
+							} else {
+								border = "1px solid #CFCDC9";
+							}
+								return border;
+						})
+						.html(function (d) {	
+								var text;
+								if (d[0] === "displaced") {
+									text = "people displaced";
+								} else if (d[0] === "famine") {
+									text = "people at risk for famine";
+								} else if (d[0] === "humanitarian") {
+									text = "in need of humanitarian aid";
+								} else if (d[0] === "affected") {
+									text = "people affected";
+								} else if (d[0] === "killed") {
+									text = "people killed";
+								} 
+								return "<span class=nmTeal style=font-size:large;font-weight:bold>" + d[1] + "</span><br><span class=nmTeal style=font-size:small;font-weight:400;line-height:80%>" +  text + "</span>";
+							})
+}
 
 
 function get_xyz(d) {
@@ -985,7 +1049,8 @@ function country_clicked(d) {
 		
 
 		contentDialog(d);			
-	
+		
+		ov(d);
 	//	changeContext("Click anywhere off country to see some of our other responses.");
 
 //		g.selectAll( "#" + d.id ).classed(".hide");
@@ -1161,7 +1226,10 @@ function country_clicked(d) {
    		}
 
 		else if ( featuredJSON[d.id].type == 'quake') {		
-		
+		var zoomFactor = [1,1,.5];
+		for(var i=0; i < zoomFactor.length; i++) {
+				xyz[i] = zoomFactor[i] * xyz[i];
+		}	
 			contentDialog(d);			
 
 			zoom2ADM(d,xyz); 
@@ -1192,12 +1260,12 @@ function country_clicked(d) {
       				.remove();
 			}, 750);
 
-			d3.selectAll(".background, #globe")
+			d3.selectAll(".background, #globeContainer")
 				.on("click.stop", function() {
 					clearInterval(animation);		
 					svg.select(".dot").remove();
 					svg.selectAll(".ring").remove();
-					d3.selectAll(".background, #globe")
+					d3.selectAll(".background, #globeContainer")
 						.on("click.stop", null);
 					
 				})
@@ -1210,86 +1278,9 @@ function country_clicked(d) {
 			var feature = d;	
 			g.selectAll( "#" + d.id ).classed(".hide");
 			zoom2ADM(d,xyz);
-			d3.select("#map").append("div")
-				.attr("id","ovContainer")
-				.style("height","100px")
-				.style("z-index",4)
-//				.append("div")
-//					.attr("id","ovFlex")
-				.append("div")
-					.attr("id","ovLine")
-					.style("left","0px")
-					.style("width","5px")
-					.style("height","100%")
-					.style("margin-right","5px")
-					.style("background-color","#16B0C1");
 
-			d3.select("#map").select("#ovContainer").append("div")
-				.attr("id","ovHead")
-				.text(function () {  return featuredJSON[feature.id].fullname; } )
-				.append("span")
-					.style("display","inline-block")
-					.attr("class","nmTeal")
-					.style("margin-left","3px")
-					.style("font-size","small")
-					.style("font-size","400")
-					.attr("id","ovSubHead")
-					.text(function () {  return featuredJSON[feature.id].ovTagline; } ); 
-				
-			d3.select("#map").select("#ovContainer")
-			//	.append("div")
-			//		.attr("id","ovElementGroup")
-			//		.attr("position","absolute")
-					.selectAll(".ovElement")
-					.data(function () { return featuredJSON[feature.id].ovElements; })
-					.enter()				
-					.append("div")
-						.attr("class","ovElement")
-						.style("border-left", function (d,i) { 
-							var border;
-							if (i === 0) {
-								border = "0px solid hsla(0,0%,0%,0)";
-							} else {
-								border = "1px solid #CFCDC9";
-							}
-								return border;
-						})
-						.html(function (d) {	
-								var text;
-								if (d[0] === "displaced") {
-									text = "people displaced";
-								} else if (d[0] === "famine") {
-									text = "people at risk for famine";
-								} else if (d[0] === "humanitarian") {
-									text = "in need of humanitarian aid";
-								}
-								return "<span class=nmTeal style=font-size:large;font-weight:bold>" + d[1] + "</span><br><span class=nmTeal style=font-size:small;font-weight:400;line-height:80%>" +  text + "</span>";
-							})
-			/*			.append("div")
-						.attr("class","ovElemHead")
-						.attr("class","nmTeal")
-						.style("font-size","large")
-						.style("font-weight","bold")
-						.text( function(d) { return d[1];})
-						.append("div")
-							.attr("class","ovElemSubHead")
-							.attr("class","nmTeal")
-							.text(function(d) { 
-								var text;
-								if (d[0] === "displaced") {
-									text = "people displaced";
-								} else if (d[0] === "famine") {
-									text = "people at risk for famine";
-								} else if (d[0] === "humanitarian") {
-									text = "in need of humanitarian aid";
-								}
-								return text;
-							})
-			*/		
-
+			ov(d);
 					
-	
-
 		}		
 
 		else {		
@@ -1305,14 +1296,14 @@ function country_clicked(d) {
 			return;
     	}
 	} else {
-		
-		d3.select("#dataTitle").remove()
-		d3.select("#hurr").remove()
-		d3.select("#icon").remove()
+		d3.select("#ovContainer").remove();
+		d3.select("#dataTitle").remove();
+		d3.select("#hurr").remove();
+		d3.select("#icon").remove();
 		var xyz = [width / 2, height / 2, 1];
     	country = null;
 		d3.select("#dialogBoxContainer").remove();
-    	zoom(xyz)
+    	zoom(xyz);
 		isGlobal(xyz, null); 
 		d3.selectAll(".dialogBox").remove();
 		
