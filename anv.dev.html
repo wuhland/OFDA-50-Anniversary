@@ -266,7 +266,6 @@ color:#002A6C;
 font-family: 'ssp', sans-serif;
 font-weight:400;
 font-size: small;
-line-height:1;
 color:white;
 line-height:100%;
 
@@ -307,6 +306,67 @@ top:4px;
   fill: none;
   stroke: #c7141a;
 }
+
+
+
+#ovContainer {
+	position:absolute;
+	bottom:10px;
+	left:10px;
+	background-color:whitesmoke;
+}
+
+
+#ovHead {
+	color:#002A6C;
+	position:relative;
+	bottom:94px;
+//	left:5px;	
+	margin-left:9px;
+	font-family: 'ssp', sans-serif;
+	font-weight:bold;
+	font-size: large;
+	line-height:100%;
+	white-space:nowrap;
+}
+
+#ovSubHead{
+	display:inline-block;
+	margin:5px;
+	margin-right:10px;
+}
+
+.nmTeal {
+	color:#16B0C1;
+	font-family: 'ssp', sans-serif;
+//	font-weight:400;
+//	font-size: small;
+	line-height:100%;
+	
+}
+/*#ovElementGroup {
+	top: px;
+	display:inline-block;
+	position:absolute;
+}
+*/
+.ovElement {
+	position:relative;
+	display:inline-block;
+	width:110px;
+	height: 50px;
+	bottom:90px;
+	vertical-align:text-top;
+	text-align:center;
+	line-height:80%;
+}
+.ovElemHead {
+	position:absolute;
+	top:0px;
+	
+}	
+
+
 </style>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -375,7 +435,10 @@ var featuredJSON = {
 		"Gallery":[{"Button":"Potatoes","Name":"sds_gallery.html"}],
 		"type":"complex",
 		"fullname":"South Sudan",
-		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity."
+		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity.", 
+		"ovTagline":"Conflict broke out in December 2013",
+		"ovElements":[["famine","1 MILLION"],["displaced","1.4 MILLION"],["humanitarian","4 MILLION"]]  
+	
 		},
 	"HTI":{
 		"options":[],	
@@ -903,16 +966,6 @@ function zoom2ADM (d, xyz) {
 }
 
 
-/*d3.select('#frame')
-			.append("div") 
-				.attr("id","context")
-				.style("display","inline-block")
-				.style("position","relative")
-				.style('width',width)
-				.append('span')
-					.text(startText)
-					.style("vertical-align", "bottom");
-*/
 
 function country_clicked(d) {
 	d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
@@ -1110,14 +1163,7 @@ function country_clicked(d) {
 		else if ( featuredJSON[d.id].type == 'quake') {		
 		
 			contentDialog(d);			
-	
-		//	changeContext("Click anywhere off country to see some of our other responses.");
 
-	//		g.selectAll( "#" + d.id ).classed(".hide");
-	//		var zoomFactor = [1,1,.5];
-	//		for(var i=0; i < zoomFactor.length; i++) {
-	//				xyz[i] = zoomFactor[i] * xyz[i];
-	//		}
 			zoom2ADM(d,xyz); 
 
 			svg.append("circle")
@@ -1158,13 +1204,91 @@ function country_clicked(d) {
 				
 		}
 
-		else if ( featuredJSON[d.id].type == 'complex') {
-			contentDialog(d);			
-	
-	//		changeContext("Click anywhere off country to see some of our other responses.");
-
+		else if ( featuredJSON[d.id].type == "complex") {
+			contentDialog(d);
+						
+			var feature = d;	
 			g.selectAll( "#" + d.id ).classed(".hide");
 			zoom2ADM(d,xyz);
+			d3.select("#map").append("div")
+				.attr("id","ovContainer")
+				.style("height","100px")
+				.style("z-index",4)
+//				.append("div")
+//					.attr("id","ovFlex")
+				.append("div")
+					.attr("id","ovLine")
+					.style("left","0px")
+					.style("width","5px")
+					.style("height","100%")
+					.style("margin-right","5px")
+					.style("background-color","#16B0C1");
+
+			d3.select("#map").select("#ovContainer").append("div")
+				.attr("id","ovHead")
+				.text(function () {  return featuredJSON[feature.id].fullname; } )
+				.append("span")
+					.style("display","inline-block")
+					.attr("class","nmTeal")
+					.style("margin-left","3px")
+					.style("font-size","small")
+					.style("font-size","400")
+					.attr("id","ovSubHead")
+					.text(function () {  return featuredJSON[feature.id].ovTagline; } ); 
+				
+			d3.select("#map").select("#ovContainer")
+			//	.append("div")
+			//		.attr("id","ovElementGroup")
+			//		.attr("position","absolute")
+					.selectAll(".ovElement")
+					.data(function () { return featuredJSON[feature.id].ovElements; })
+					.enter()				
+					.append("div")
+						.attr("class","ovElement")
+						.style("border-left", function (d,i) { 
+							var border;
+							if (i === 0) {
+								border = "0px solid hsla(0,0%,0%,0)";
+							} else {
+								border = "1px solid #CFCDC9";
+							}
+								return border;
+						})
+						.html(function (d) {	
+								var text;
+								if (d[0] === "displaced") {
+									text = "people displaced";
+								} else if (d[0] === "famine") {
+									text = "people at risk for famine";
+								} else if (d[0] === "humanitarian") {
+									text = "in need of humanitarian aid";
+								}
+								return "<span class=nmTeal style=font-size:large;font-weight:bold>" + d[1] + "</span><br><span class=nmTeal style=font-size:small;font-weight:400;line-height:80%>" +  text + "</span>";
+							})
+			/*			.append("div")
+						.attr("class","ovElemHead")
+						.attr("class","nmTeal")
+						.style("font-size","large")
+						.style("font-weight","bold")
+						.text( function(d) { return d[1];})
+						.append("div")
+							.attr("class","ovElemSubHead")
+							.attr("class","nmTeal")
+							.text(function(d) { 
+								var text;
+								if (d[0] === "displaced") {
+									text = "people displaced";
+								} else if (d[0] === "famine") {
+									text = "people at risk for famine";
+								} else if (d[0] === "humanitarian") {
+									text = "in need of humanitarian aid";
+								}
+								return text;
+							})
+			*/		
+
+					
+	
 
 		}		
 
