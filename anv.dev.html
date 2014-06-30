@@ -481,10 +481,7 @@ function httpGet(theURL){
     return xmlHttp.responseText;
 };
 
-
 //Tooptip variables
-
-
 
 d3.select("body").append("div")
 	.attr('id','frame')
@@ -583,8 +580,6 @@ globe.src = 'globe.png';
 
 
 d3.json("countries.topo.json", function(error, us) {	
-
-
 		g.append("g")
 			.attr("id", "countries")
 			.selectAll("path")
