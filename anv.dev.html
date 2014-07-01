@@ -153,7 +153,7 @@ cursor:pointer;
 	position: relative;
 	display: inline-block;
 	text-align:left;
-	font-size: 13px;
+	font-size: 13pt;
 	font-family: 'ssp', sans-serif;
 	font-weight: 600;
 	z-index:3;
@@ -282,18 +282,19 @@ top:30px;
 
 
 #globe, .hash {
+	top:6px;	
 	position:absolute;
 	left:0px;
 	margin-left: 5px;
 	z-index:4;
 	height:17px;
 	width:17px;
-	margin-right: 5px;
+//	margin-right: 10px;
 }
 
 .hash {
 left:5px;
-top:4px;
+//top:4px;
 }
 
 #globeContainer {
@@ -312,7 +313,7 @@ top:4px;
 
 #ovContainer {
 	position:absolute;
-	height:85px;
+	height:95px;
 	bottom:10px;
 	left:10px;
 	background-color:whitesmoke;
@@ -323,19 +324,20 @@ top:4px;
 #ovHead {
 	color:#002A6C;
 	position:relative;
-	bottom:84px;
+	bottom:93px;
 	margin-left:9px;
 	font-family: 'ssp', sans-serif;
 	font-weight:bold;
 	line-height:100%;
 	white-space:nowrap;
+	font-size:17pt;
 }
 
 #ovSubHead{
 	display:inline-block;
 	margin:5px;
 	margin-right:10px;
-	font-size:12px;
+	font-size:12pt;
 	font-weight:normal;
 }
 
@@ -345,17 +347,11 @@ top:4px;
 	line-height:100%;
 	
 }
-/*#ovElementGroup {
-	top: px;
-	display:inline-block;
-	position:absolute;
-}
-*/
 .ovElement {
 	position:relative;
 	display:inline-block;
 	height: 50px;
-	bottom:80px;
+	bottom:88px;
 	vertical-align:text-top;
 	text-align:left;
 	line-height:80%;
@@ -627,7 +623,8 @@ d3.select("#map").append("div")
 		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
 	})		
 	.insert("span")
-		.text("MAP")
+		.text("Map")
+		.style("padding-left","3px")
 		
 	.append("img")
 		.attr("id","globe")
@@ -882,9 +879,10 @@ function contentDialog(d) {
 				.attr('id', function(d) { return d; })
 				.append('span') 
 				.text(function (d) { 
-					return d.toUpperCase(); 
+				//	return d.toUpperCase(); 
+					return d; 
 				})
-				.style("margin-left","5px");
+				.style("margin-left","8px");
 			/*	.transition()
 				.ease("linear")
 				.delay(750)
@@ -995,9 +993,6 @@ function contentDialog(d) {
 function ov(feature) {
 			d3.select("#map").append("div")
 				.attr("id","ovContainer")
-//				.style("z-index",4)
-//				.append("div")
-//					.attr("id","ovFlex")
 				.append("div")
 					.attr("id","ovLine")
 					.style("left","0px")
@@ -1012,15 +1007,11 @@ function ov(feature) {
 				.append("span")
 					.style("display","inline-block")
 					.attr("class","nmTeal")
-					.style("margin-left","3px")
-		//			.style("font-size","17px")
+					.style("margin-left","5pt")
 					.attr("id","ovSubHead")
 					.text(function () {  return featuredJSON[feature.id].ovTagline; } ); 
 				
 			d3.select("#map").select("#ovContainer")
-			//	.append("div")
-			//		.attr("id","ovElementGroup")
-			//		.attr("position","absolute")
 					.selectAll(".ovElement")
 					.data(function () { return featuredJSON[feature.id].ovElements; })
 					.enter()				
@@ -1048,7 +1039,7 @@ function ov(feature) {
 								} else if (d[0] === "killed") {
 									text = "people killed";
 								} 
-								return "<span class=nmTeal style=font-size:22px;font-weight:bold>" + d[1] +  "</span>" + "<span class=nmTeal style=font-size:11px;font-weight:bold>" + d[2] + "</span><br><span class=nmTeal style=font-size:11px;font-weight:400;line-height:80%>" +  text + "</span>";
+								return "<span class=nmTeal style=font-size:22pt;font-weight:bold>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-weight:bold>" + d[2] + "</span><br><span class=nmTeal style=font-size:11pt;font-weight:400;line-height:80%>" +  text + "</span>";
 							})
 }
 
@@ -1110,7 +1101,7 @@ function country_clicked(d) {
 
 		contentDialog(d);			
 		
-		ov(d);
+//		ov(d);
 	//	changeContext("Click anywhere off country to see some of our other responses.");
 
 //		g.selectAll( "#" + d.id ).classed(".hide");

@@ -153,7 +153,7 @@ cursor:pointer;
 	position: relative;
 	display: inline-block;
 	text-align:left;
-	font-size: 13px;
+	font-size: 13pt;
 	font-family: 'ssp', sans-serif;
 	font-weight: 600;
 	z-index:3;
@@ -282,18 +282,19 @@ top:30px;
 
 
 #globe, .hash {
+	top:6px;	
 	position:absolute;
 	left:0px;
 	margin-left: 5px;
 	z-index:4;
 	height:17px;
 	width:17px;
-	margin-right: 5px;
+//	margin-right: 10px;
 }
 
 .hash {
 left:5px;
-top:4px;
+//top:4px;
 }
 
 #globeContainer {
@@ -312,7 +313,7 @@ top:4px;
 
 #ovContainer {
 	position:absolute;
-	height:85px;
+	height:95px;
 	bottom:10px;
 	left:10px;
 	background-color:whitesmoke;
@@ -323,19 +324,20 @@ top:4px;
 #ovHead {
 	color:#002A6C;
 	position:relative;
-	bottom:84px;
+	bottom:93px;
 	margin-left:9px;
 	font-family: 'ssp', sans-serif;
 	font-weight:bold;
 	line-height:100%;
 	white-space:nowrap;
+	font-size:17pt;
 }
 
 #ovSubHead{
 	display:inline-block;
 	margin:5px;
 	margin-right:10px;
-	font-size:12px;
+	font-size:12pt;
 	font-weight:normal;
 }
 
@@ -345,17 +347,11 @@ top:4px;
 	line-height:100%;
 	
 }
-/*#ovElementGroup {
-	top: px;
-	display:inline-block;
-	position:absolute;
-}
-*/
 .ovElement {
 	position:relative;
 	display:inline-block;
 	height: 50px;
-	bottom:80px;
+	bottom:88px;
 	vertical-align:text-top;
 	text-align:left;
 	line-height:80%;
@@ -418,7 +414,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Philippines",
-		"tagline":"In November 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines, bringing flooding, landslides, and widespread damage.",
+		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
 		"ovTagline":"November 8, 2013 Typhoon Haiyan",
 		"ovElements":[["affected","16", "MILLION"],["displaced","4.1", "MILLION"],["killed","6,201", ""]],
 	},
@@ -429,7 +425,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Jamaica",
-		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since modern-day record keeping began in the late 1800s."
+		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan-- which hit in September 2004-- is among the most damaging storms in the island's recorded history."
 		},
 	"SDS":{
 		"options":["Gallery"],		
@@ -439,7 +435,7 @@ var featuredJSON = {
 		"Gallery":[{"Button":"Potatoes","Name":"sds_gallery.html"}],
 		"type":"complex",
 		"fullname":"South Sudan",
-		"tagline":"Since the start of the conflict in late 2013, more than a million people have been forced from their homes and millions more are at risk of severe food insecurity.", 
+		"tagline":"Since conflict erupted in December 2013, more than 1.4 million people have been forced from their homes, up to one million are at risk of famine, and many more are affected by infectious disease outbreaks such as cholera.", 
 		"ovTagline":"Conflict broke out in December 2013",
 		"ovElements":[["famine","1", "MILLION"],["displaced","1.4", "MILLION"],["humanitarian","4", "MILLION"]]  
 	
@@ -456,7 +452,7 @@ var featuredJSON = {
 			"epicenter":[-72.533,18.457],//Longitude Latitude
 			},
 		"fullname":"Haiti",
-		"tagline":"In January 2012, a magnitude 7.0 earthquake left 316,000 dead and 1.5 million displaced. In total, 3 million people were affected."
+		"tagline":"On January 12, 2010, a magnitude 7.0 earthquake shook Haiti, killing 316,000 people and displacing 1.5 million others. The quake also created enough rubble to fill dump trucks lined up from Maine to Florida, twice."
 	},
 	"CHL":{
 		"options":[],
@@ -466,6 +462,69 @@ var featuredJSON = {
 		"type":"quake",
 		"fullname":"Chile",
 		"tagline":"So far with this amount of text it look like the popup box extends a little beyond the bottom of the map. There are a lot of ways we can get around this from limiting the amount of text we put in these boxes to having carl set the frame he allots to us to a height a little longer than the frame of the map to accomodate the extra popup box length. As for antarctica I think it is usefull for framing the map but if we are going to have Carl extend the frame it might be nice to take it out because we might not want something framing the bottom of the map if we are going to have a bunch of blank space underneath it anyways."
+		},	
+	"CRI":{
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"volcano",
+		"fullname":"Costa Rica",
+		"tagline":"The devastating destruction caused by the 1963 Irazu volcano eruption was witnessed by President John F. Kennedy and paved the way for OFDA's creation by underscoring the need for a lead U.S. agency to oversee foreign disaster response. Now, Costa Rica is home to one of OFDA's regional offices and is a hub for disaster risk reduction work in the region."
+		},
+	"GTM":{
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"fullname":"Guatemala",
+		"tagline":"On February 4, 1976, a magnitude 7.6 earthquake shook Guatemala city and surrounding areas. Affecting more than 4.9 million people, it proved to be one of the worst natural disasters in Central America's modern history."
+		},
+	"JPN":{
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"fullname":"Japan",
+		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most serious nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis."
+		},
+	"MKD":{
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"fullname":"Macedonia",
+		"tagline":"The magnitude 6.0 earthquake in 1963 that killed over 1,000 people and destroyed 75% of the city of Skopje revealed coordination challenges in providing disaster assistance that eventually lead to the establishment of OFDA."
+		},
+	"NZL":{
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"fullname":"New Zealand",
+		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's second largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate international search efforts."
+		},
+	"RWA":{
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Rwanda",
+		"tagline":"During a 100 day span in 1994, one of the worst genocides in history claimed the lives of an estimated 800,000 Rwandans."
+		},
+	"THA":{
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"flood",
+		"fullname":"Thailand",
+		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities."
 		}
 };
 //var featured = ["PHL","JAM","SDS","HTI"];
@@ -564,7 +623,8 @@ d3.select("#map").append("div")
 		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
 	})		
 	.insert("span")
-		.text("MAP")
+		.text("Map")
+		.style("padding-left","3px")
 		
 	.append("img")
 		.attr("id","globe")
@@ -819,9 +879,10 @@ function contentDialog(d) {
 				.attr('id', function(d) { return d; })
 				.append('span') 
 				.text(function (d) { 
-					return d.toUpperCase(); 
+				//	return d.toUpperCase(); 
+					return d; 
 				})
-				.style("margin-left","5px");
+				.style("margin-left","8px");
 			/*	.transition()
 				.ease("linear")
 				.delay(750)
@@ -932,9 +993,6 @@ function contentDialog(d) {
 function ov(feature) {
 			d3.select("#map").append("div")
 				.attr("id","ovContainer")
-//				.style("z-index",4)
-//				.append("div")
-//					.attr("id","ovFlex")
 				.append("div")
 					.attr("id","ovLine")
 					.style("left","0px")
@@ -949,15 +1007,11 @@ function ov(feature) {
 				.append("span")
 					.style("display","inline-block")
 					.attr("class","nmTeal")
-					.style("margin-left","3px")
-		//			.style("font-size","17px")
+					.style("margin-left","5pt")
 					.attr("id","ovSubHead")
 					.text(function () {  return featuredJSON[feature.id].ovTagline; } ); 
 				
 			d3.select("#map").select("#ovContainer")
-			//	.append("div")
-			//		.attr("id","ovElementGroup")
-			//		.attr("position","absolute")
 					.selectAll(".ovElement")
 					.data(function () { return featuredJSON[feature.id].ovElements; })
 					.enter()				
@@ -985,7 +1039,7 @@ function ov(feature) {
 								} else if (d[0] === "killed") {
 									text = "people killed";
 								} 
-								return "<span class=nmTeal style=font-size:22px;font-weight:bold>" + d[1] +  "</span>" + "<span class=nmTeal style=font-size:11px;font-weight:bold>" + d[2] + "</span><br><span class=nmTeal style=font-size:11px;font-weight:400;line-height:80%>" +  text + "</span>";
+								return "<span class=nmTeal style=font-size:22pt;font-weight:bold>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-weight:bold>" + d[2] + "</span><br><span class=nmTeal style=font-size:11pt;font-weight:400;line-height:80%>" +  text + "</span>";
 							})
 }
 
