@@ -527,6 +527,13 @@ var featuredJSON = {
 		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities."
 		}
 };
+
+var warehouse = [
+	["miami",[-80.224, 25.7877]],
+	["pisa",[10.4, 43.716]],
+	["dubai",[55.333,24.95]]
+]
+
 //var featured = ["PHL","JAM","SDS","HTI"];
 //var featuredMap = d3.set(featured);
 var featuredMap = d3.map(featuredJSON);
@@ -594,6 +601,10 @@ function testDialog (dialogOptionBoolean, Media) {
 		d3.selectAll(".dialogBoxOptionContainer").remove(); 
 	}
 }
+
+
+
+
 
 d3.select("#map").append("div")
 	.attr("id","cdContainer")
@@ -733,7 +744,25 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.attr("class","boundary")
 			.attr("d",path);
 
+
+for (i=0; i < warehouse.length; i++) {
+
+			g.append("circle")
+    			.attr("class", "warehouse")
+    			.attr("transform", "translate(" + projection(warehouse[i][1]) + ")")
+		//		.attr("cx", projection(warehouse[i][1])[0])
+		//		.attr("cy",projection(warehouse[i][1])[1])
+				.style("fill","#002A6C")
+    			.attr("r", 3)
+				.attr("id", function () {return warehouse[i][0];});
+console.log(projection(warehouse[i][1]));
+		
+}
+
 });
+
+
+
 
 function isGlobal (xyz, FC) {
 	if (xyz[2] === 1) {
@@ -804,6 +833,7 @@ function isGlobal (xyz, FC) {
 		return;
 	}	
 }	
+
 
 function zoom(xyz) {
 	g.transition()
