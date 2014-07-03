@@ -248,7 +248,7 @@ cursor:pointer;
 	visibility:hidden;
 }
 
-.tooltip:after {
+/*.tooltip:after {
 	width: 0;
 	height: 0;
 	content:"";
@@ -260,7 +260,7 @@ cursor:pointer;
 	left: 40%;
 	
 }
-
+*/
 .popName {
 font-family: 'ssp_bold', sans-serif;
 font-weight:800;
@@ -692,15 +692,33 @@ d3.json("countries_min.topo.json", function(error, us) {
 				if (featuredMap.has(d.id)) {
 				  		var centroid = path.centroid(d);
 						var selection = d.id;
-					
+						var arrow = {};
+						var offsets = [];
+						console.log (centroid);
+						if (centroid[0] >= .8 * width) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
+							offsets = [230,-90];
+							
+						} else if (centroid[1] >= .8 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
+							offsets = [95,29];
+						} else if (centroid[0] <= .2 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
+							offsets = [-30,-90];
+						} else {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
+							offsets = [95,29];
+						}
+	 
+						console.log(arrow + "  " + offsets);	
 						d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
 					//		.attr("fill", "#E89624")
 					//		.attr("fill-opacity", 1);
 						tooltip
 							.style("width", "200px")
 							.attr("class","tooltip pop")
-			    			.style("top", (centroid[1] + 29 ) + "px")
-			    			.style("left", (centroid[0] - 95) + "px")
+			    			.style("top", (centroid[1] + offsets[1] ) + "px")
+			    			.style("left", (centroid[0] - offsets[0]) + "px")
 			    			.transition().duration(300)
 			    			.style("opacity", 1)
 							.style("visibility","visible")
@@ -738,7 +756,7 @@ d3.json("countries_min.topo.json", function(error, us) {
 								country_clicked(d);
 							});
 						tooltip.append("div")
-							.style({"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid red"})
+							.style(arrow)
 							.style("position","absolute")
 							.style("bottom","-20px");;
 						

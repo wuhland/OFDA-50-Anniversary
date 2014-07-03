@@ -12,18 +12,24 @@
 <body>
 <style>
 @font-face{
-font-family: 'ssp';
+font-family: 'ssp_reg';
 src: url('../.fonts/SourceSansPro-Regular.otf');
 src: format('opentype');
 }
 @font-face{
-font-family: 'ssp';
+font-family: 'ssp_bold';
 src:url('../.fonts/SourceSansPro-Bold.otf');
+src:format('opentype');
+font-weight:normal;
+src: format('opentype');
+}
+@font-face{
+font-family: 'ssp_semibold';
+src:url('../.fonts/SourceSansPro-Semibold.otf');
 src:format('opentype');
 font-weight:bold;
 src: format('opentype');
 }
-
 #dataTitle {
 
 	width: 100px;
@@ -38,7 +44,7 @@ src: format('opentype');
 	display:inline-block;
 	border-radius: .2em;
 	text-align: center; 
-	font-family: 'ssp', sans-serif;
+	font-family: 'ssp_reg', sans-serif;
 	font-weight: 300;
 	font-size: 15px;
 }
@@ -154,7 +160,7 @@ cursor:pointer;
 	display: inline-block;
 	text-align:left;
 	font-size: 13pt;
-	font-family: 'ssp', sans-serif;
+	font-family: 'ssp_reg', sans-serif;
 	font-weight: 600;
 	z-index:3;
 	box-shadow: 2px 2px 1.5px #888888;
@@ -242,7 +248,7 @@ cursor:pointer;
 	visibility:hidden;
 }
 
-.tooltip:after {
+/*.tooltip:after {
 	width: 0;
 	height: 0;
 	content:"";
@@ -254,16 +260,16 @@ cursor:pointer;
 	left: 40%;
 	
 }
-
+*/
 .popName {
-font-family: 'ssp', sans-serif;
+font-family: 'ssp_bold', sans-serif;
 font-weight:800;
 font-size:large;
 color:#002A6C;
 }
 
 .popDetail {
-font-family: 'ssp', sans-serif;
+font-family: 'ssp_reg', sans-serif;
 font-weight:400;
 font-size: small;
 color:white;
@@ -313,7 +319,7 @@ left:5px;
 
 #ovContainer {
 	position:absolute;
-	height:95px;
+	height:110px;
 	bottom:10px;
 	left:10px;
 	background-color:whitesmoke;
@@ -324,9 +330,9 @@ left:5px;
 #ovHead {
 	color:#002A6C;
 	position:relative;
-	bottom:93px;
+	bottom:105px;
 	margin-left:9px;
-	font-family: 'ssp', sans-serif;
+	font-family: 'ssp_bold', sans-serif;
 	font-weight:bold;
 	line-height:100%;
 	white-space:nowrap;
@@ -339,11 +345,12 @@ left:5px;
 	margin-right:10px;
 	font-size:12pt;
 	font-weight:normal;
+	padding-left:5px;
 }
 
 .nmTeal {
 	color:#16B0C1;
-	font-family: 'ssp', sans-serif;
+	font-family: 'ssp_semibold', sans-serif;
 	line-height:100%;
 	
 }
@@ -351,7 +358,7 @@ left:5px;
 	position:relative;
 	display:inline-block;
 	height: 50px;
-	bottom:88px;
+	bottom:100px;
 	vertical-align:text-top;
 	text-align:left;
 	line-height:80%;
@@ -425,7 +432,9 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Jamaica",
-		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan-- which hit in September 2004-- is among the most damaging storms in the island's recorded history."
+		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan-- which hit in September 2004-- is among the most damaging storms in the island's recorded history.",
+		"ovTagline":"Something Something Something",
+		"ovElements":[["famine","temp", "temp"],["displaced","temp", "temp"]]
 		},
 	"SDS":{
 		"options":["Gallery"],		
@@ -527,6 +536,13 @@ var featuredJSON = {
 		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities."
 		}
 };
+
+var warehouse = [
+	["miami",[-80.224, 25.7877]],
+	["pisa",[10.4, 43.716]],
+	["dubai",[55.333,24.95]]
+]
+
 //var featured = ["PHL","JAM","SDS","HTI"];
 //var featuredMap = d3.set(featured);
 var featuredMap = d3.map(featuredJSON);
@@ -594,6 +610,10 @@ function testDialog (dialogOptionBoolean, Media) {
 		d3.selectAll(".dialogBoxOptionContainer").remove(); 
 	}
 }
+
+
+
+
 
 d3.select("#map").append("div")
 	.attr("id","cdContainer")
@@ -672,14 +692,33 @@ d3.json("countries_min.topo.json", function(error, us) {
 				if (featuredMap.has(d.id)) {
 				  		var centroid = path.centroid(d);
 						var selection = d.id;
+						var arrow = {};
+						var offsets = [];
+						console.log (centroid);
+						if (centroid[0] >= .8 * width) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
+							offsets = [230,-90];
+							
+						} else if (centroid[1] >= .8 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
+							offsets = [95,29];
+						} else if (centroid[0] <= .2 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
+							offsets = [-30,-90];
+						} else {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
+							offsets = [95,29];
+						}
+	 
+						console.log(arrow + "  " + offsets);	
 						d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
 					//		.attr("fill", "#E89624")
 					//		.attr("fill-opacity", 1);
 						tooltip
 							.style("width", "200px")
 							.attr("class","tooltip pop")
-			    			.style("top", (centroid[1] + 29 ) + "px")
-			    			.style("left", (centroid[0] - 95) + "px")
+			    			.style("top", (centroid[1] + offsets[1] ) + "px")
+			    			.style("left", (centroid[0] - offsets[0]) + "px")
 			    			.transition().duration(300)
 			    			.style("opacity", 1)
 							.style("visibility","visible")
@@ -715,8 +754,14 @@ d3.json("countries_min.topo.json", function(error, us) {
 							})
 							.on("click", function() {
 								country_clicked(d);
-							})
+							});
+						tooltip.append("div")
+							.style(arrow)
+							.style("position","absolute")
+							.style("bottom","-20px");;
 						
+	
+					//	tooltip.select("tooltip:after").style("border-bottom","red");	
 				} else {
 					 return	null;
 				}
@@ -733,11 +778,33 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.attr("class","boundary")
 			.attr("d",path);
 
+
+for (i=0; i < warehouse.length; i++) {
+
+			g.append("g")
+    			.attr("class", "warehouse")
+    			.attr("transform", "translate(" + projection(warehouse[i][1]) + ")")
+				.attr("id", function () {return warehouse[i][0];})
+				.append("path")
+					.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
+
+					.style("fill","#002A6C")
+					.attr("transform", "translate(-5,-7) scale(.5)")
+					.style("stroke","#B2D0C1")
+					.style("stroke-width","2px");	
+
+    	//		.attr("r", 3)
+		
+}
+
 });
 
+
+
+
 function isGlobal (xyz, FC) {
-	if (xyz[2] === 1) {
-//		d3.select("#" + FC.id).style("opacity",1)	
+	if (xyz[2] === 1) {	
+		d3.selectAll(".earthquake").remove();	
 		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1)
 		.on("click", function(d){ country_clicked(d) } )
 		.on("mouseover", function (d) {
@@ -799,18 +866,19 @@ function isGlobal (xyz, FC) {
 			.on("click", null )
 			.on("mouseover", null )
 			.on("mouseout", null )
-		d3.select("#" + FC.id).style("opacity",0)	
+		d3.select("#" + FC.id).style("fill","#FFCB36")	
 	} else {
 		return;
 	}	
 }	
+
 
 function zoom(xyz) {
 	g.transition()
 		.duration(750)
 		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
 		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
-	
+		
 
 }
 //get content from server
@@ -1006,7 +1074,9 @@ function ov(feature) {
 				.text(function () {  return featuredJSON[feature.id].fullname; } )
 				.append("span")
 					.style("display","inline-block")
-					.attr("class","nmTeal")
+			//		.attr("class","nmTeal")
+					.style("font-family","ssp_reg, sans-serif")
+					.style("color","#16B0C1")
 					.style("margin-left","5pt")
 					.attr("id","ovSubHead")
 					.text(function () {  return featuredJSON[feature.id].ovTagline; } ); 
@@ -1039,7 +1109,7 @@ function ov(feature) {
 								} else if (d[0] === "killed") {
 									text = "people killed";
 								} 
-								return "<span class=nmTeal style=font-size:22pt;font-weight:bold>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-weight:bold>" + d[2] + "</span><br><span class=nmTeal style=font-size:11pt;font-weight:400;line-height:80%>" +  text + "</span>";
+								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:140%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
 							})
 }
 
@@ -1056,7 +1126,7 @@ function get_xyz(d) {
 
 function zoom2ADM (d, xyz) {
 	var FC = d;
-	d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
+/*	d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
           			.attr("id", "states")
           			.selectAll("path")
@@ -1075,9 +1145,10 @@ function zoom2ADM (d, xyz) {
 					.append("path")
 					.attr("class", "active_boundary")
 					.attr("d", path);
+*/
         		zoom(xyz);
 				isGlobal(xyz,FC);
-	});
+//	});
 }
 
 
@@ -1105,13 +1176,13 @@ function country_clicked(d) {
 	//	changeContext("Click anywhere off country to see some of our other responses.");
 
 //		g.selectAll( "#" + d.id ).classed(".hide");
-		var zoomFactor = [1,1,.5];
+/*		var zoomFactor = [1,1,.5];
 		for(var i=0; i < zoomFactor.length; i++) {
 				xyz[i] = zoomFactor[i] * xyz[i];
 		}
-		
-		zoom2ADM(d,xyz);
+*/		 xyz[2] = 6;  
 
+		zoom2ADM(d,xyz);
 			d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
 	
@@ -1315,16 +1386,6 @@ function country_clicked(d) {
       				.attr("r", 160 / xyz[2] )
       				.remove();
 			}, 800);
-			},200);
-
-
-
-
-			
-	
-
-			console.log(xyz);
-
 			d3.selectAll(".background, #globeContainer")
 				.on("click.stop", function() {
 					clearInterval(animation);		
@@ -1334,7 +1395,9 @@ function country_clicked(d) {
 						.on("click.stop", null);
 					
 				})
-				
+
+			},200);
+
 		}
 
 		else if ( featuredJSON[d.id].type == "complex") {
