@@ -378,11 +378,7 @@ left:5px;
 
 <script>
 //colors of text
-var alertContextColor = 'hsl(28,100%,47%)';
 
-var mainTextColor = 'hsl(0,0%,40%)';
-
-var contextColor = mainTextColor;
 
 var	width = 960,
     height = 850,
@@ -402,6 +398,16 @@ var tooltip = d3.select("body").append("div")
 //options needs to be created via looping through country files to determine types of content. For now created expressly
 
 var featuredJSON = {
+	"AGO":{
+		"year":1975,
+		"options":[],
+		"type":"complex",
+		"Story":[],
+		"Infographic":[],
+		"Video":[],
+		"fullname":"Angola",
+		"tagline":"After obtaining its independence from Portugal in November 1975, Angola plunged into 27 years of civil war that killed more than 500,000 people and displaced millions more." 
+	},
 	"KHM":{
 		"year":0,
 		"options":[],
@@ -410,61 +416,8 @@ var featuredJSON = {
 		"Infographic":[],
 		"Video":[],
 		"fullname":"Cambodia",
-		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people and destroying nearly 10 percent of the nation's crops."
-	},
-	"PHL":{
-		"year":2013,
-		"options":["Story","Video", "Infographic"],
-		"Story":[{"Button":"old story","Name":"phl_story.html"},{"Button":"new story","Name":"phl_story2.html"},{"Button":"newest story","Name":"phl_story3.html"}],
-		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"},{"Button":"Kermit","URL":"www.youtube.com/embed/hpiIWMWWVco"}],
-		"Infographic":[],
-		"type":"storm",
-		"fullname":"Philippines",
-		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
-		"ovTagline":"November 8, 2013 Typhoon Haiyan",
-		"ovElements":[["affected","16", "MILLION"],["displaced","4.1", "MILLION"],["killed","6,201", ""]],
-	},
-	"JAM":{
-		"year":0,
-		"options":[],		
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"storm",
-		"fullname":"Jamaica",
-		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan-- which hit in September 2004-- is among the most damaging storms in the island's recorded history.",
-		"ovTagline":"Something Something Something",
-		"ovElements":[["famine","temp", "temp"],["displaced","temp", "temp"]]
-		},
-	"SDS":{
-		"year":0,
-		"options":["Gallery"],		
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"Gallery":[{"Button":"Potatoes","Name":"sds_gallery.html"}],
-		"type":"complex",
-		"fullname":"South Sudan",
-		"tagline":"Since conflict erupted in December 2013, more than 1.4 million people have been forced from their homes, up to one million are at risk of famine, and many more are affected by infectious disease outbreaks such as cholera.", 
-		"ovTagline":"Conflict broke out in December 2013",
-		"ovElements":[["famine","1", "MILLION"],["displaced","1.4", "MILLION"],["humanitarian","4", "MILLION"]]  
-	
-		},
-	"HTI":{
-		"year":0,
-		"options":[],	
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"quake",
-		"disasterarray":{
-			"magnitude":7,
-			"depth":25, //in kilometers
-			"epicenter":[-72.533,18.457],//Longitude Latitude
-			},
-		"fullname":"Haiti",
-		"tagline":"On January 12, 2010, a magnitude 7.0 earthquake shook Haiti, killing 316,000 people and displacing 1.5 million others. The quake also created enough rubble to fill dump trucks lined up from Maine to Florida, twice."
-	},
+		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people" 
+	},	
 	"CHL":{
 		"year":0,
 		"options":[],
@@ -494,6 +447,45 @@ var featuredJSON = {
 		"type":"quake",
 		"fullname":"Guatemala",
 		"tagline":"On February 4, 1976, a magnitude 7.6 earthquake shook Guatemala city and surrounding areas. Affecting more than 4.9 million people, it proved to be one of the worst natural disasters in Central America's modern history."
+		},	
+	"HTI":{
+		"year":0,
+		"options":[],	
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":7,
+			"depth":25, //in kilometers
+			"epicenter":[-72.533,18.457],//Longitude Latitude
+			},
+		"fullname":"Haiti",
+		"tagline":"On January 12, 2010, a magnitude 7.0 earthquake shook Haiti, killing 316,000 people and displacing 1.5 million others. The quake also created enough rubble to fill dump trucks lined up from Maine to Florida, twice."
+	},	
+	"HND":{
+		"year":0,
+		"options":[],		
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"storm",
+		"fullname":"Honduras",
+		"tagline":"Hurricane Mitch was the most powerful and destructive hurricane of the 1998 Atlantic Hurricane Season, killing nearly 10,000 people and destroying nearly 100,000 homes.",
+		"ovTagline":"Something Something Something",
+		"ovElements":[["killed","10", "THOUSAND"],["displaced","temp", "temp"]]
+		},
+	"JAM":{
+		"year":0,
+		"options":[],		
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"storm",
+		"fullname":"Jamaica",
+		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan?which hit in September 2004?is among the most damaging storms in the island's recorded history.",
+		"ovTagline":"Something Something Something",
+		"ovElements":[["famine","temp", "temp"],["displaced","temp", "temp"]]
 		},
 	"JPN":{
 		"year":0,
@@ -523,8 +515,20 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"quake",
 		"fullname":"New Zealand",
-		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's second largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate international search efforts."
+		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's 2'nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate international search efforts."
 		},
+	"PHL":{
+		"year":2013,
+		"options":["Story","Video", "Infographic"],
+		"Story":[{"Button":"old story","Name":"phl_story.html"},{"Button":"new story","Name":"phl_story2.html"},{"Button":"newest story","Name":"phl_story3.html"}],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"},{"Button":"Kermit","URL":"www.youtube.com/embed/hpiIWMWWVco"}],
+		"Infographic":[],
+		"type":"storm",
+		"fullname":"Philippines",
+		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
+		"ovTagline":"November 8, 2013 Typhoon Haiyan",
+		"ovElements":[["affected","16", "MILLION"],["displaced","4.1", "MILLION"],["killed","6,201", ""]],
+	},
 	"RWA":{
 		"year":0,
 		"options":[],
@@ -535,6 +539,23 @@ var featuredJSON = {
 		"fullname":"Rwanda",
 		"tagline":"During a 100 day span in 1994, one of the worst genocides in history claimed the lives of an estimated 800,000 Rwandans."
 		},
+
+	"SDS":{
+		"year":0,
+		"options":["Gallery"],		
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"Gallery":[{"Button":"Potatoes","Name":"sds_gallery.html"}],
+		"type":"complex",
+		"fullname":"South Sudan",
+		"tagline":"Since conflict erupted in December 2013, more than 1.4 million people have been forced from their homes, up to one million are at risk of famine, and many more are affected by infectious disease outbreaks such as cholera.", 
+		"ovTagline":"Conflict broke out in December 2013",
+		"ovElements":[["famine","1", "MILLION"],["displaced","1.4", "MILLION"],["humanitarian","4", "MILLION"]]  
+	
+		},
+
+
 	"THA":{
 		"year":0,
 		"options":[],
@@ -775,7 +796,18 @@ d3.json("countries_min.topo.json", function(error, us) {
 				
 
 			})
-					
+	d3.json("data/json/FLA.json", function (error, fla) { 
+	g.append("g")
+		.attr("id","florida")
+		.selectAll("path")
+		.data(fla.features)
+		.enter()
+		.append("path")
+		.attr("d",path)
+		.style("fill","#FFCB36");
+
+
+	});				
 			
 			g.insert("g")
 		  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
@@ -786,27 +818,104 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.attr("d",path);
 
 
-for (i=0; i < warehouse.length; i++) {
 
-			g.append("g")
-    			.attr("class", "warehouse")
-    			.attr("transform", "translate(" + projection(warehouse[i][1]) + ")")
-				.attr("id", function () {return warehouse[i][0];})
+setTimeout(function() {
+//for (i=0; i < warehouse.length; i++) {
+
+			g.append("g").selectAll(".warehouse")
+//	d3.select("#map").selectAll(".warehouse")
+		.data(warehouse)
+		.enter()
+		.append("g")
+    		//	.attr("class", "warehouse")
+    			.attr("transform", function(d) {
+				//	console.log(d);
+					return "translate(" + projection(d[1]) + ")";
+				})
+				
+				.attr("id", function (d) {return d[0];})
 				.append("path")
 					.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
 
 					.style("fill","#002A6C")
 					.attr("transform", "translate(-5,-7) scale(.5)")
 					.style("stroke","#B2D0C1")
-					.style("stroke-width","2px");	
+					.style("stroke-width","2px")
+					.on("mouseover", function(d) {
+						console.log(d);
+						var centroid = path.centroid(d);
+						var selection = d[0];
+						var arrow = {};
+						var offsets = [];
+						if (centroid[0] >= .8 * width) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
+							offsets = [230,-90];
+							
+						} else if (centroid[1] >= .8 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
+							offsets = [95,29];
+						} else if (centroid[0] <= .2 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
+							offsets = [-30,-90];
+						} else {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
+							offsets = [95,29];
+						}
+	 
+						d3.select(this).style("fill","#0A68FF0").transition().duration(2000).style("fill","#002A6C");
+					//		.attr("fill", "#E89624")
+					//		.attr("fill-opacity", 1);
+						tooltip
+							.style("width", "200px")
+							.attr("class","tooltip pop")
+			    			.style("top", (centroid[1] + offsets[1] ) + "px")
+			    			.style("left", (centroid[0] - offsets[0]) + "px")
+			    			.transition().duration(300)
+			    			.style("opacity", 1)
+							.style("visibility","visible")
+			    			.style("display", "block");				
+						tooltip.selectAll("div").remove();
+						tooltip.selectAll("img").remove();
+						tooltip.insert("div")
+							.append('span')
+							.text(function(d){
+								return selection})				
+							.attr("class", "popName");
+						tooltip.append("img")
+							.attr("id", "tooltipImg")
+							.attr("width", 200)
+							.style("opacity", "1"); 
+						var image = new Image();
+						image.onload = function(d){
+							document.getElementById("tooltipImg").src = 'data/warehouse/' + selection + '/popimg.jpg';}
+						image.src = 'data/warehouse/' + selection + '/popimg.jpg';
+						tooltip.insert("div")
+							.append('span')					
+							.text(function(d){return warehouse[selection].tagline;}) 
+							.attr("class", "popDetail");
+						tooltip.append("div")
+							.attr("class","popFront")
+							.on("mouseout", function(d) {
+								tooltip.transition().duration(700).style("opacity", 0);
+								tooltip.transition().delay(705).each('start', function(){
+									d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
+									d3.select(this).style("opacity",0);
+								}).style("width","0px").style("height","0px")
+							
+							})
+						tooltip.append("div")
+							.style(arrow)
+							.style("position","absolute");
+					});	
 
     	//		.attr("r", 3)
 		
-}
+//}
+},75);
 
 });
 
-
+	
 
 
 function isGlobal (xyz, FC) {
