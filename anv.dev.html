@@ -137,13 +137,15 @@ cursor:pointer;
 }
 .dialogBoxOption {
 	position:relative;
-	width: 60px;
+	width: 295px;
 	top:100%;
 	padding:5px;
 	background-color: whitesmoke;
 	color: grey;
 	display:block;
 	opacity:.92;
+	font-size: 11pt;
+	font-family: 'ssp_reg', sans-serif;
 }
 
 .event {
@@ -381,7 +383,7 @@ left:5px;
 
 
 var	width = 960,
-    height = 850,
+    height = 800,
     country,
     state;
 var topMargin = 0, 
@@ -416,7 +418,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"Video":[],
 		"fullname":"Cambodia",
-		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people" 
+		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011. Floodwaters spread across 18 of 24 provinces, affecting 1.5 million people and destroying nearly 10 percent of the nation's crops." 
 	},	
 	"CHL":{
 		"year":0,
@@ -483,7 +485,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Jamaica",
-		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan, which hit in September 2004?is among the most damaging storms in the island's recorded history.",
+		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan, which hit in September 2004, is among the most damaging storms in the island's recorded history.",
 		"ovTagline":"Something Something Something",
 		"ovElements":[["famine","temp", "temp"],["displaced","temp", "temp"]]
 		},
@@ -515,18 +517,18 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"quake",
 		"fullname":"New Zealand",
-		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's 2nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate international search efforts."
+		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's 2nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate internatil search efforts."
 		},
 	"PHL":{
 		"year":2013,
 		"options":["Story","Video", "Infographic"],
-		"Story":[{"Button":"new story","Name":"phl_story.html"},{"Button":"old story","Name":"phl_story3.html"}],
-		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"},{"Button":"Kermit","URL":"www.youtube.com/embed/hpiIWMWWVco"}],
+		"Story":[{"Button":"Strengthening the Philippines through USAID relief","Name":"phl_final.html"},{"Button":"old story","Name":"phl_story.html"}],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"}],
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
-		"ovTagline":"November 8, 2013 Typhoon Haiyan",
+		"ovTagline":"Typhoon Haiyan struck on November 8, 2013",
 		"ovElements":[["affected","16", "MILLION"],["displaced","4.1", "MILLION"],["killed","6,201", ""]],
 	},
 	"RWA":{
@@ -580,11 +582,11 @@ var warehouse2 = {
 	},
 	"pisa":{
 		"coord":[10.4, 43.716],
-		"tagline":"Not Yet"
+		"tagline":"Pisa is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
 	},
 	"dubai":{
 		"coord":[55.333,24.95],
-		"tagline":"Not Yet"
+		"tagline":"Dubai is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
 	}
 }
 //var featured = ["PHL","JAM","SDS","HTI"];
@@ -664,7 +666,6 @@ d3.select("#map").append("div")
 	.style("width", width + "px")
 		.append("div") 
 		.attr("id","globeContainer")
-
 		.on("click", function() {
 			d3.select("#ovContainer").remove();
 			d3.select("#dataTitle").remove();
