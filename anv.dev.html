@@ -146,6 +146,7 @@ cursor:pointer;
 	opacity:.92;
 	font-size: 11pt;
 	font-family: 'ssp_reg', sans-serif;
+	font-weight: normal;
 }
 
 .event {
@@ -570,25 +571,62 @@ var featuredJSON = {
 		}
 };
 
-var warehouse = [
-	["miami",[-80.224, 25.7877]],
-	["pisa",[10.4, 43.716]],
-	["dubai",[55.333,24.95]]
+var  points = [
+	["Miami",[-80.224, 25.7877]],
+	["Pisa",[10.4, 43.716]],
+	["Dubai",[55.333,24.95]]
 ]
-var warehouse2 = {
-	"miami":{
+var points2 = {
+	"Miami":{
+		"fullname":"Miami, Florida (Warehouse)",
+		"type":"warehouse",
 		"coord":[-80.224, 25.7877],
 		"tagline":"Miami is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
 	},
-	"pisa":{
+	"Pisa":{
+		"fullname":"Pisa, Italy (Warehouse)",		
+		"type":"warehouse",
 		"coord":[10.4, 43.716],
 		"tagline":"Pisa is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
 	},
-	"dubai":{
+	"Dubai":{
+		"fullname":"Dubai, United Arab Emirates (Warehouse)",
+		"type":"warehouse",
 		"coord":[55.333,24.95],
 		"tagline":"Dubai is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
+	},
+	"SanJose":{
+		"fullname":"San Jose, Costa Rica",
+		"type":"office",
+		"coord":[-84.0833,9.93333],
+		"tagline":"San Jose, Costa Rica is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in Latin America and the Caribbean." 
+	},	
+	"Budapest":{
+		"fullname":"Budapest, Hungary",
+		"type":"office",
+		"coord":[19.051389,47.4925],
+		"tagline":"Budapest, Hungary is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in Europe, Middle East, and Central Asia." 
+	},
+	"Dakar":{
+		"fullname":"Dakar, Senegal",
+		"type":"office",
+		"coord":[-17.44666,14.692778],
+		"tagline":"Dakar, Senegal is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in West Africa." 
+	},
+	"Nairobi":{
+		"fullname":"Nairobi, Kenya",
+		"type":"office",
+		"coord":[36.81666,-1.28333],
+		"tagline":"Nairobi, Kenya is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in East and Central Africa." 
+	},
+	"Pretoria":{
+		"fullname":"Pretoria, South Africa",
+		"type":"office",
+		"coord":[28.188056,-25.746111],
+		"tagline":"Nairobi, Kenya is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in East and Central Africa." 
 	}
 }
+
 //var featured = ["PHL","JAM","SDS","HTI"];
 //var featuredMap = d3.set(featured);
 var featuredMap = d3.map(featuredJSON);
@@ -836,26 +874,19 @@ d3.json("countries_min.topo.json", function(error, us) {
 
 
 setTimeout(function() {
-//for (i=0; i < warehouse.length; i++) {
 
-			g.append("g").selectAll(".warehouse")
-//	d3.select("#map").selectAll(".warehouse")
-		.data(warehouse)
+	g.append("g").selectAll(".warehouse")
+		.data(points)
 		.enter()
 		.append("g")
-    		//	.attr("class", "warehouse")
     			.attr("transform", function(d) {
-				//	console.log(d);
 					return "translate(" + projection(d[1]) + ")";
 				})
-				
 				.attr("id", function (d) {return d[0];})
 				
 					.on("mouseover", function(d) {
 						var centroid = projection(d[1]);
-						console.log(projection(d[1]));
 						
-					//	console.log(path.centroid(d3.select(this)));
 						var selection = d[0];
 						var arrow = {};
 						var offsets = [];
@@ -891,7 +922,7 @@ setTimeout(function() {
 						tooltip.insert("div")
 							.append('span')
 							.text(function(d){
-								return selection})				
+								return points2[selection].fullname})				
 							.attr("class", "popName");
 						tooltip.append("img")
 							.attr("id", "tooltipImg")
@@ -903,7 +934,7 @@ setTimeout(function() {
 						image.src = 'data/warehouse/' + selection + '/popimg.jpg';
 						tooltip.insert("div")
 							.append('span')					
-							.text(function(d){return warehouse2[selection].tagline;}) 
+							.text(function(d){return points2[selection].tagline;}) 
 							.attr("class", "popDetail");
 						tooltip.append("div")
 							.attr("class","popFront")
@@ -920,23 +951,21 @@ setTimeout(function() {
 							.style("position","absolute")
 							.attr("id","arrow");
 					})
-					.append("path")
-					.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
-
+					.append("circle")
+					.attr("r",4)
 					.style("fill","#002A6C")
-					.attr("transform", "translate(-5,-7) scale(.5)")
-					.style("stroke","#B2D0C1")
+		//			.style("stroke","#B2D0C1")
 					.style("stroke-width","2px");	
 
-    	//		.attr("r", 3)
 		
 //}
 },75);
 
 });
 
-	
-
+/*	.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
+					.attr("transform", "translate(-5,-7) scale(.5)")
+*/
 
 function isGlobal (xyz, FC) {
 	if (xyz[2] === 1) {	
