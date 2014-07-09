@@ -13,19 +13,19 @@
 <style>
 @font-face{
 font-family: 'ssp_reg';
-src: url('../.fonts/SourceSansPro-Regular.otf');
+src: url('.fonts/SourceSansPro-Regular.otf');
 src: format('opentype');
 }
 @font-face{
 font-family: 'ssp_bold';
-src:url('../.fonts/SourceSansPro-Bold.otf');
+src:url('.fonts/SourceSansPro-Bold.otf');
 src:format('opentype');
 font-weight:normal;
 src: format('opentype');
 }
 @font-face{
 font-family: 'ssp_semibold';
-src:url('../.fonts/SourceSansPro-Semibold.otf');
+src:url('.fonts/SourceSansPro-Semibold.otf');
 src:format('opentype');
 font-weight:bold;
 src: format('opentype');
@@ -414,7 +414,7 @@ var featuredJSON = {
 		"ovElements":[["killed","500,000",""],["displaced","1","MILLION+"]]
 	},
 	"KHM":{
-		"year":0,
+		"year":2011,
 		"options":[],
 		"type":"flood",
 		"Story":[],
@@ -426,7 +426,7 @@ var featuredJSON = {
 		"ovElements":[["affected","1.5","MILLION"],["provinces","18 out of 24",""],["crops","10%",""]]
 	},	
 	"CHL":{
-		"year":0,
+		"year":2010,
 		"options":[],
 		"Story":[],
 		"Video":[],
@@ -438,30 +438,38 @@ var featuredJSON = {
 		"ovElements":[["affected","1.8","MILLION"],["killed","486",""],["house","190,000",""]]
 		},	
 	"CRI":{
-		"year":0,
+		"year":1963,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"volcano",
 		"fullname":"Costa Rica",
-		"tagline":"The devastating destruction caused by the 1963 Irazu volcano eruption was witnessed by President John F. Kennedy and paved the way for OFDA's creation by underscoring the need for a lead U.S. agency to oversee foreign disaster response. Now, Costa Rica is home to one of OFDA's regional offices and is a hub for disaster risk reduction work in the region."
+		"tagline":"The devastating destruction caused by the 1963 Irazu volcano eruption was witnessed by President John F. Kennedy and paved the way for OFDA's creation by underscoring the need for a lead U.S. agency to oversee foreign disaster response. Now, Costa Rica is home to one of OFDA's regional offices and is a hub for disaster risk reduction work in the region.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
 		},
 	"GTM":{
-		"year":0,
+		"year":1976,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"quake",
+		"disasterarray":{
+			"magnitude":7.5,
+			"depth":5, //in km
+			"epicenter":[-89.1,15.32],//Long Lat
+			},
 		"fullname":"Guatemala",
 		"tagline":"On February 4, 1976, a magnitude 7.6 earthquake shook Guatemala City and surrounding areas. Affecting nearly 5 million people, it proved to be one of the worst natural disasters in Central America's modern history.",
-		"ovTagline":"",
-		"ovElements":[["NA","NA",""],["NA","NA","NA"],["NA","NA","NA"]]
+		"ovTagline":"Earthquake on February 4, 1976",
+		"ovElements":[["affected","4.9","MILLION+"],["killed","23,000",""],["homeless","1.1","MILLION+"]]
 
 		},	
 	"HTI":{
-		"year":0,
+		"year":2010,
 		"options":[],	
 		"Story":[],
 		"Video":[],
@@ -478,7 +486,7 @@ var featuredJSON = {
 		"ovElements":[["killed","316,000",""],["displaced","1.5","MILLION"],["affected","3","MILLION"]]
 	},	
 	"HND":{
-		"year":0,
+		"year":1998,
 		"options":[],		
 		"Story":[],
 		"Video":[],
@@ -486,11 +494,11 @@ var featuredJSON = {
 		"type":"storm",
 		"fullname":"Honduras",
 		"tagline":"Hurricane Mitch was the most powerful and destructive hurricane of the 1998 Atlantic Hurricane Season, killing nearly 10,000 people and destroying nearly 100,000 homes.",
-		"ovTagline":"Hurricane Mitch struck October to Nevember 1988",
-		"ovElements":[["affected","3.6", "MILLION"],["house","100,000", ""]]
+		"ovTagline":"Hurricane Mitch struck October to November 1998",
+		"ovElements":[["affected","3.6", "MILLION"],["killed","10,000",""],["housedestroy","100,000", ""]]
 		},
 	"JAM":{
-		"year":0,
+		"year":2004,		
 		"options":[],		
 		"Story":[],
 		"Video":[],
@@ -499,37 +507,77 @@ var featuredJSON = {
 		"fullname":"Jamaica",
 		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan, which hit in September 2004, is among the most damaging storms in the island's recorded history.",
 		"ovTagline":"Hurricane Ivan struck on September 10 & 11, 2004",
-		"ovElements":[["killed","18",""],["affected","350,000",""]]
+		"ovElements":[["killed","18",""],["affected","350,000",""],["damage","$595","MILLION"]]
 		},
 	"JPN":{
-		"year":0,
+		"year":2011,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"quake",
+		"disasterarray":{
+			"magnitude":9,
+			"depth":30, //in km
+			"epicenter":[142.369,38.233],//Long Lat
+			},
 		"fullname":"Japan",
-		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most serious nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis."
+		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most serious nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+		},	
+	"MEX":{
+		"year":1985,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":8.3,
+			"depth":0, //in km
+			"epicenter":[-102.5,17.6],//Long Lat
+			},
+		"fullname":"Mexico",
+		"tagline":"On September 19, 1985, a magnitude 8.1 earthquake struck near Mexico City, causing more than 400 buildings to collapse and contributing to more than 10,000 deaths and 30,000 injuries. After this quake, OFDA began including search and rescue as part of its humanitarian efforts.",
+		"ovTagline":"Earthquake on September 19, 1985",
+		"ovElements":[["killed","10,000+",""],["injured","30,000",""],["buildingdestroy","400+",""]]
 		},
 	"MKD":{
-		"year":0,
+		"year":1963,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"quake",
+		"disasterarray":{
+			"magnitude":6.1,
+			"depth":6, //in km
+			"epicenter":[22.66,42.16],//Long Lat
+			},
 		"fullname":"Macedonia",
-		"tagline":"The magnitude 6.0 earthquake in July 1963 that killed over 1,000 people and destroyed 75% of the city of Skopje revealed coordination challenges in providing disaster assistance that eventually lead to the establishment of OFDA."
+		"tagline":"The magnitude 6.0 earthquake in July 1963 that killed over 1,000 people and destroyed 75% of the city of Skopje revealed coordination challenges in providing disaster assistance that eventually lead to the establishment of OFDA.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
 		},
 	"NZL":{
-		"year":0,
+		"year":2011,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"quake",
+		"disasterarray":{
+			"magnitude":6.3,
+			"depth":5, //in km
+			"epicenter":[172.7012,-43.5834],//Long Lat
+			},
 		"fullname":"New Zealand",
-		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's 2nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate search efforts."
+		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's 2nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate search efforts.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
 		},
 	"PHL":{
 		"year":2013,
@@ -544,18 +592,21 @@ var featuredJSON = {
 		"ovElements":[["affected","16", "MILLION"],["displaced","4.1", "MILLION"],["killed","6,201", ""]],
 	},
 	"RWA":{
-		"year":0,
+		"year":1944,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"complex",
 		"fullname":"Rwanda",
-		"tagline":"During a 100 day span in 1994, one of the worst genocides in history claimed the lives of an estimated 800,000 Rwandans."
+		"tagline":"During a 100 day span in 1994, one of the worst genocides in history claimed the lives of an estimated 800,000 Rwandans.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
 		},
 
 	"SDS":{
-		"year":0,
+		"year":2013,
 		"options":["Gallery"],		
 		"Story":[],
 		"Video":[],
@@ -568,17 +619,18 @@ var featuredJSON = {
 		"ovElements":[["famine","1", "MILLION"],["displaced","1.4", "MILLION"],["humanitarian","4", "MILLION"]]  
 	
 		},
-
-
 	"THA":{
-		"year":0,
+		"year":2011,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"flood",
 		"fullname":"Thailand",
-		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities."
+		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
 		}
 };
 
@@ -600,7 +652,7 @@ var points2 = {
 		"fullname":"Washington, DC",
 		"type":"headquarters",
 		"coord":[-77.03666,38.89511],
-		"tagline":"Washington DC is the main headquarters where we get'er done"
+		"tagline":"Headquartered in D.C. and with more than 300 staff worldwide, USAID's Office of U.S. Foreign Disaster Assistance (OFDA) leads and coordinates the U.S. government's humanitarian assistance efforts overseas.  On average, OFDA responds to 70 disasters in more than 50 countries every year."
 	},
 	"Miami":{
 		"fullname":"Miami, Florida (Warehouse)",
@@ -802,6 +854,7 @@ d3.json("countries_min.topo.json", function(error, us) {
 				return c;
 				} )
 			.on("mouseover", function(d) {
+		//		d3.selectAll("#arrow").remove();
 			 			
 				if (featuredMap.has(d.id)) {
 				  		var centroid = path.centroid(d);
@@ -809,14 +862,14 @@ d3.json("countries_min.topo.json", function(error, us) {
 						var selection = d.id;
 						var arrow = {};
 						var offsets = [];
-						if (centroid[0] >= .8 * width) {
+						if (centroid[0] >= .80 * width) {
 							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
 							offsets = [230,-90];
 							
-						} else if (centroid[1] >= .8 * height) {
+						} else if (centroid[1] >= .80 * height) {
 							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
 							offsets = [95,29];
-						} else if (centroid[0] <= .2 * height) {
+						} else if (centroid[0] <= .3 * height) {
 							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
 							offsets = [-30,-90];
 						} else {
@@ -860,7 +913,7 @@ d3.json("countries_min.topo.json", function(error, us) {
 								tooltip.transition().delay(705).each('start', function(){
 									d3.select(this).style("opacity",0);
 									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
-									d3.selectAll("#arrow").remove()
+									d3.selectAll("#arrow").remove();
 								}).style("width","0px").style("height","0px")
 							
 							})
@@ -958,7 +1011,7 @@ setTimeout(function() {
 							.attr("width", 200)
 							.style("opacity", "1"); 
 						var image = new Image();
-						image.onload = function(d){
+						image.onload = function(error, d){
 							document.getElementById("tooltipImg").src = 'data/warehouse/' + selection + '/popimg.jpg';}
 						image.src = 'data/warehouse/' + selection + '/popimg.jpg';
 						tooltip.insert("div")
@@ -972,6 +1025,7 @@ setTimeout(function() {
 								tooltip.transition().delay(705).each('start', function(){
 									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
 									d3.select(this).style("opacity",0);
+									d3.selectAll("#arrow").remove();
 								}).style("width","0px").style("height","0px")
 							
 							})
@@ -1002,20 +1056,19 @@ setTimeout(function() {
 		.append("circle")
 		.attr("r",7)					
 		.style("fill","#002A6C")
-		.style("stroke-width","2px")			
-	.insert("path")
+		.style("stroke-width","2px");
+	d3.selectAll(".headquarters")
+	//	.append("svg")			
+		.append("path")
 		.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
-		.style("fill","black")
+		.style("fill","white")
 		.attr("id","test")
-		.attr("transform", "translate(-5,-7) scale(.5)");
+		.attr("transform", "translate(-5.5,-6.5) scale(.5)");
 //}
 },75);
 
 });
 
-/*	.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
-				.attr("transform", "translate(-5,-7) scale(.5)")
-*/
 
 function isGlobal (xyz, FC) {
 	if (xyz[2] === 1) {	
@@ -1077,7 +1130,7 @@ function isGlobal (xyz, FC) {
 							.on("mouseout", function() {
 								tooltip.transition().duration(700).style("opacity", 0);
 								tooltip.transition().delay(705).each('start', function(){
-									d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
+									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
 									d3.select(this).style("opacity",0);
 								}).style("width","0px").style("height","0px")
 							
@@ -1342,12 +1395,20 @@ function ov(feature) {
 								} else if (d[0] === "killed") {
 									text = "people killed";
 								} else if (d[0] === "crops") {
-									text = "destroyed";
+									text = "crops destroyed";
 								} else if (d[0] === "house") {
 									text = "houses damaged/destroyed";
 								} else if (d[0] === "provinces") {
 									text = "provinces hit";
-								} 
+								} else if (d[0] === "homeless") {
+							 		text = "left homeless";
+								} else if (d[0] === "damage") {
+							 		text = "in damages";
+								} else if (d[0] === "housedestroy") {
+							 		text = "houses destroyed";
+								} else if (d[0] === "buildingdestroy") {
+							 		text = "buildings destroyed";
+								}
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:140%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
 							})
 }
@@ -1599,7 +1660,7 @@ function country_clicked(d) {
 
 			contentDialog(d);			
 			zoom2ADM(d,xyz); 			
-
+			ov(d);
 		setTimeout(function() {			
 			g.append("circle")
     			.attr("class", "dot")
@@ -1642,7 +1703,7 @@ function country_clicked(d) {
 
 		}
 
-		else if ( featuredJSON[d.id].type == "complex") {
+		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id] == "volcano") {
 			contentDialog(d);
 						
 			var feature = d;	
