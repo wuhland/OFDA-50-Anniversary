@@ -423,7 +423,7 @@ var featuredJSON = {
 		"fullname":"Cambodia",
 		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011. Floodwaters spread across 18 of 24 provinces, affecting 1.5 million people and destroying nearly 10 percent of the nation's crops.",
  		"ovTagline":"Flooding in fall of 2011",
-		"ovElements":[["affected","1.5","MILLION"],["provinces","18 <span style='font-size:11pt'> out of </span>24",""],["crops","10%",""]]
+		"ovElements":[["affected","1.5","MILLION"],["provinces","18 <span style='font-size:11pt'> OUT OF </span>24",""],["crops","10%",""]]
 	},	
 	"CHL":{
 		"year":2010,
@@ -571,7 +571,7 @@ var featuredJSON = {
 		"fullname":"Macedonia",
 		"tagline":"The magnitude 6.0 earthquake in July 1963 that killed over 1,000 people and destroyed 75% of the city of Skopje revealed coordination challenges in providing disaster assistance that eventually lead to the establishment of OFDA.",
 		"ovTagline":"Earthquake on July 26, 1963",
-		"ovElements":[["killed","1,100",""],["affected","3,383",""],["percentbuildings","75%",""]]
+		"ovElements":[["killed","1,100",""],["affected","3,383",""],["percentbuildings","75%","OF BUILDINGS"]]
 
 		},
 	"NZL":{
@@ -866,7 +866,7 @@ d3.select("#map").append("div")
 					.on("mouseout.change", function () {
 						dialogOptionBoolean -=1;
 						d3.select(this).style("background-color","whitesmoke").style("color","grey");
-						setTimeout(function() {testDialog(dialogOptionBoolean, null); console.log(dialogOptionBoolean)}, 0);
+						setTimeout(function() {testDialog(dialogOptionBoolean, null); }, 0);
 						})
 					.on("mouseout.stop", function() {d3.event.stopPropagation(); })
 
@@ -888,7 +888,6 @@ d3.select("#map").append("div")
 							d3.select(this).style("background-color","whitesmoke").style("color","grey");
 						})
 						.on("click", function (d) {
-							console.log(d[1]);
 							zoom(d[1]);
 							setTimeout(function() {isGlobal(d[1],d[4])},760);
 						//	d3.selectAll(d[4]).style("fill","blue");
@@ -903,7 +902,7 @@ d3.select("#map").append("div")
 	})
 	.on("mouseout", function() {
 		dialogOptionBoolean -= 1;
-		setTimeout(function () {testDialog(dialogOptionBoolean,null); console.log("holo")},0);
+		setTimeout(function () {testDialog(dialogOptionBoolean,null); },0);
 		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
 	})		
 	.insert("span")
@@ -911,7 +910,6 @@ d3.select("#map").append("div")
 
 function popup (centroid, selection, type) {
 console.log("centroid: " + centroid + " selection: " + selection + " type: " + type);
-console.log(selection); 
 var selectionName = "";
 	if (type === "points"){
 		selectionName = selection;
@@ -990,6 +988,7 @@ var selectionName = "";
 							
 							})
 							.on("click", function() {
+								console.log(selection);
 								country_clicked(selection);
 							});
 						tooltip.append("div")
@@ -1002,6 +1001,7 @@ var selectionName = "";
 	} else if (type === "points") {
 			tooltip.append("div")
 							.attr("class","popFront")
+							.style("cursor","default")
 							.on("mouseout", function(d) {
 								tooltip.transition().duration(700).style("opacity", 0);
 								tooltip.transition().delay(705).each('start', function(){
@@ -1018,6 +1018,9 @@ var selectionName = "";
 	}
 }
 
+//var invisible = g.selectAll(".invisible").append("circle").attr("class","invisible")
+//var invisible = g.append("svg").attr("class","invisible").append("circle");
+//var invisible = g.selectAll("circle")
 d3.json("countries_min.topo.json", function(error, us) {	
 		g.append("g")
 			.attr("id", "countries")
@@ -1029,11 +1032,19 @@ d3.json("countries_min.topo.json", function(error, us) {
 				var c = "";
 				if (featuredMap.has(d.id)) {
 					c = "featured";
-					} else {
+			/*		if (path.area(d) < 23) {
+						invisible.attr("transform", function() { 
+						console.log(d);
+		return "translate(" + path.centroid(d) + ")"
+						;}) 
+						invisible.attr("r", 20)
+						invisible.style("fill","red"); 
+					} */  
+				} else {
 					c = "notFeatured";
-					}
-					return c; 
-					})
+				}
+				return c; 
+				})
 			.attr("id", function(d) { return d.id; })
 
 			.attr("d", path)
@@ -1061,6 +1072,9 @@ d3.json("countries_min.topo.json", function(error, us) {
 				
 
 			})
+
+
+
 	d3.json("data/json/FLA.json", function (error, fla) { 
 	g.append("g")
 		.selectAll("path")
@@ -1071,28 +1085,66 @@ d3.json("countries_min.topo.json", function(error, us) {
 		.style("fill","#FFCB36")
 		.attr("id","FLA")
 		.on("mouseover", function(d) {
-		var centroid = path.centroid(d);
-		var selection = d;
-		var type = "florida";
-		popup (centroid, selection, type);
+			var centroid = path.centroid(d);
+			var selection = d;
+			var type = "florida";
+			popup (centroid, selection, type);
+		})
+		.on("click", function(d) {
+			console.log(d);
+			country_clicked(d)
 		});
 
 
-	});				
-			
-			g.insert("g")
-		  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
-				return a !== b ; 
-			}))
-			.append("path")
-			.attr("class","boundary")
-			.attr("d",path);
+	});			
+		
+  
 
+	
+	g.insert("g")
+	  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
+			return a !== b ; 
+		}))
+		.append("path")
+		.attr("class","boundary")
+		.attr("d",path);
 
+g.append("g").selectAll(".invisible")
+	.data(topojson.feature(us, us.objects.countries_min).features)
+		.enter()	
+		.append("g")
+		.attr("transform", function(d) {
+console.log(path.area(d));
+console.log(d.id);
+				return "translate(" + path.centroid(d) + ")";
+				
+			})
+			.append("circle")
+			.attr("r", function (d) {
+				var rad;
+				if (featuredMap.has(d.id) && (path.area(d) <= 80)){
+					rad = 5 ;
+				} else {
+					rad = 0 ;
+				}
+				return rad;
+			})	
+			.style("fill","red")
+			.style("fill-opacity","0")
+
+			.on("mouseover", function (d) {
+				var centroid = path.centroid(d);
+				var selection = d;
+				var type = "countries";
+				popup (centroid, selection, type);	
+			})
+			.on("click", function(d) {
+				country_clicked(d);
+			});
 
 setTimeout(function() {
 
-	g.append("g").selectAll(".warehouse")
+	g.append("g").selectAll(".points")
 		.data(points)
 		.enter()
 		.append("g")
@@ -1102,78 +1154,11 @@ setTimeout(function() {
 				.attr("id", function (d) {return d[0];})
 				
 					.on("mouseover", function(d) {	
-			//		d3.select(this).style("fill","#0A68FF0").transition().duration(2000).style("fill","#002A6C");
-					//		.attr("fill", "#E89624")
-					//		.attr("fill-opacity", 1);
 						var centroid = projection(d[1]);
-						
 						var selection = d[0];
 						var type = "points";
 						popup(centroid, selection, type); 
-/*						var arrow = {};
-						var offsets = [];
-						if (centroid[0] >= .8 * width) {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
-							offsets = [230,-90];
-							
-						} else if (centroid[1] >= .8 * height) {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
-							offsets = [95,29];
-						} else if (centroid[0] <= .2 * height) {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
-							offsets = [-30,-90];
-						} else {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
-							offsets = [95,29];
-						}
-	 
-
-						tooltip
-							.style("width", "200px")
-							.attr("class","tooltip pop")
-			    			.style("top", (centroid[1] + offsets[1] ) + "px")
-			    			.style("left", (centroid[0] - offsets[0]) + "px")
-			    			.transition().duration(300)
-			    			.style("opacity", 1)
-							.style("visibility","visible")
-			    			.style("display", "block");				
-						tooltip.selectAll("div").remove();
-						tooltip.selectAll("img").remove();
-						tooltip.insert("div")
-							.append('span')
-							.text(function(d){
-								return points2[selection].fullname})				
-							.attr("class", "popName");
-						tooltip.append("img")
-							.attr("id", "tooltipImg")
-							.attr("width", 200)
-							.style("opacity", "1"); 
-						var image = new Image();
-						image.onload = function(error, d){
-							document.getElementById("tooltipImg").src = 'data/warehouse/' + selection + '/popimg.jpg';}
-						image.src = 'data/warehouse/' + selection + '/popimg.jpg';
-						tooltip.insert("div")
-							.append('span')					
-							.text(function(d){return points2[selection].tagline;}) 
-							.attr("class", "popDetail");
-						tooltip.append("div")
-							.attr("class","popFront")
-							.on("mouseout", function(d) {
-								tooltip.transition().duration(700).style("opacity", 0);
-								tooltip.transition().delay(705).each('start', function(){
-									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
-									d3.select(this).style("opacity",0);
-									d3.selectAll("#arrow").remove();
-								}).style("width","0px").style("height","0px")
-							
-							})
-						tooltip.append("div")
-							.style(arrow)
-							.style("position","absolute")
-							.attr("id","arrow");
-*/
 					})
-
 					.attr("class",function(d) {
 						return points2[d[0]].type;
 					})
@@ -1213,7 +1198,13 @@ setTimeout(function() {
 function isGlobal (xyz, FC) {
 	if (xyz[2] === 1) {
 
-
+d3.selectAll(".warehouse, .office, .headquarters")
+	.on("mouseover", function (d) {
+		var centroid = projection(d[1]);
+		var selection = d[0];
+		var type = "points"; 
+		popup(centroid, selection, type);
+});
 d3.select("#globeContainer").on("mouseover",null).on("mouseout",null).on("click",null).style("padding-left","5px");
 
 d3.select("#globeContainer")
@@ -1232,7 +1223,7 @@ d3.select("#globeContainer")
 					.on("mouseout.change", function () {
 						dialogOptionBoolean -=1;
 						d3.select(this).style("background-color","whitesmoke").style("color","grey");
-						setTimeout(function() {testDialog(dialogOptionBoolean, null); console.log(dialogOptionBoolean)}, 0);
+						setTimeout(function() {testDialog(dialogOptionBoolean, null);}, 0);
 						})
 					.on("mouseout.stop", function() {d3.event.stopPropagation(); });
 
@@ -1254,7 +1245,6 @@ d3.select("#globeContainer")
 							d3.select(this).style("background-color","whitesmoke").style("color","grey");
 						})
 						.on("click", function (d) {
-							console.log(d[1]);
 							zoom(d[1]);
 							setTimeout(function() {isGlobal(d[1],d[4])},760);
 						//	d3.selectAll(d[4]).style("fill","blue");
@@ -1269,7 +1259,7 @@ d3.select("#globeContainer")
 	})
 	.on("mouseout", function() {
 		dialogOptionBoolean -= 1;
-		setTimeout(function () {testDialog(dialogOptionBoolean,null); console.log("holo")},0);
+		setTimeout(function () {testDialog(dialogOptionBoolean,null);},0);
 		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
 	})		
 	.select("span")
@@ -1283,9 +1273,6 @@ d3.select("#globeContainer")
 		.on("mouseover", function (d) {
 			var centroid = path.centroid(d);
 			var selection = d;
-//			d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
-					//		.attr("fill", "#E89624")
-					//		.attr("fill-opacity", 1);
 			var type = "countries";
 			popup(centroid, selection, type); 
 
@@ -1297,7 +1284,9 @@ d3.select("#globeContainer")
 			
 		}) 
 	} else if (xyz[2] > 1) {
-
+		d3.selectAll(".warehouse, .office, .headquarters")
+			.on("mouseover",null);
+			
 		d3.select("#globeContainer").on("mouseover",null).on("mouseout",null).on("click",null).style("padding-left","25px");
 		d3.select("#globeContainer")
 			.on("click", function() {
@@ -1349,7 +1338,6 @@ d3.select("#globeContainer")
 //get content from server
 function getHTTP(Media, Country, Name) {
 //	var Country = Country;
-console.log(Media)
 	var Thing = featuredJSON[Country][Media];
 	var ThingByName = {};
 	NameFunct = function(d) {return d.Button;};
@@ -1361,7 +1349,6 @@ console.log(Media)
 			.attr("height", "0px")
 			.style("opacity", 0)
 			.html(function () {
-				console.log(Media);
 				var text;
 				if (Media ===  "Video") {
 					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//" + ThingByName[Name].URL + "\" frameborder=\"0\" allowfullscreen></iframe>";
@@ -1421,7 +1408,6 @@ function contentDialog(d) {
 	d3.select('body').selectAll('.dialogBox')
 	.on("click", function () {
 		var Media = this.id;
-		console.log(Media);
 		var Country = d.id;
 		if (d3.select(this).classed("dialogBoxOff")) {
 			d3.select("body").select("#swipeBack").remove();
@@ -1574,7 +1560,7 @@ function ov(feature) {
 								} else if (d[0] === "injured") {
 							 		text = "people injured";
 								} else if (d[0] === "percentbuildings") {
-							 		text = "of buildings <br> in Skopje destroyed";
+							 		text = "in Skopje destroyed";
 								}
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
 							})
@@ -1614,7 +1600,6 @@ function zoom2ADM (d, xyz) {
 					.attr("d", path);
 */
         		zoom(xyz);
-				console.log(xyz);
 				isGlobal(xyz,FC);
 //	});
 }
