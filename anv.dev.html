@@ -449,7 +449,20 @@ var featuredJSON = {
 		"ovTagline":"",
 		"ovElements":[["","",""],["","",""],["","",""]]
 
-		},
+		},	
+	"FLA":{
+		"year":0,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"N/A",
+		"fullname":"Florida",
+		"tagline":"The Sunshine State is the location of one of OFDA's strategically located warehouses stockpiled with emergency relief supplies. It's also where OFDA works with Florida International University to test the strength & design of emergency shelters in the Wall of Wind.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
+		},	
 	"GTM":{
 		"year":1976,
 		"options":[],
@@ -584,7 +597,7 @@ var featuredJSON = {
 		"options":["Story","Video", "Infographic"],
 		"Story":[{"Button":"Strengthening the Philippines through USAID relief","Name":"phl_final.html"},{"Button":"old story","Name":"phl_story.html"}],
 		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"}],
-		"Infographic":[],
+		"Infographic":[{"Button":"first graphic","Name":"graphic.jpg"}],
 		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
@@ -709,6 +722,15 @@ var points2 = {
 		"tagline":"Bangkok, Thailand is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in East Asia and the Pacific region, as well as South Asia." 
 	}
 }
+
+var regionalDisasters = [
+["io_tsunami",[600,400,3],"Indian Ocean Tsunami","quake","#IDN, #IND, #SOM"],
+["sahel",[400,400,3],"Sahel Famine","famine","#SOM, #MLI"]
+]
+	
+
+	
+
  
 //var featured = ["PHL","JAM","SDS","HTI"];
 //var featuredMap = d3.set(featured);
@@ -777,11 +799,7 @@ function testDialog (dialogOptionBoolean, Media) {
 		d3.selectAll(".dialogBoxOptionContainer").remove(); 
 	}
 }
-
-
-
-
-
+/*
 d3.select("#map").append("div")
 	.attr("id","cdContainer")
 	.style("width", width + "px")
@@ -811,19 +829,194 @@ d3.select("#map").append("div")
 	.insert("span")
 		.text("Map")
 		.style("padding-left","3px")
-		
 	.append("img")
 		.attr("id","globe")
 		.attr("opacity",1)
+*/
+var dialogOptionBoolean;
+
+dialogOptionBoolean = 0;
+
+function zoom(xyz) {
+	g.transition()
+		.duration(750)
+		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
+		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
+		
+
+}
+d3.select("#map").append("div")
+	.attr("id","cdContainer")
+	.style("width", width + "px")
+		.append("div") 
+		.attr("id","globeContainer")
+		.style("padding-left","5px")
+	.on("mouseover", function() {
+		dialogOptionBoolean += 1;
+		d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
+
+		d3.select("#globeContainer").append("div").attr("class","dialogBoxOptionContainer")
+			.style("left","0px")
+			.style("position","absolute")
+			.style("display","block")
+				.on("mouseover", function () {
+						dialogOptionBoolean += 1;
+						})
+					.on("mouseover.stop", function() {d3.event.stopPropagation(); })
+					.on("mouseout.change", function () {
+						dialogOptionBoolean -=1;
+						d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						setTimeout(function() {testDialog(dialogOptionBoolean, null); console.log(dialogOptionBoolean)}, 0);
+						})
+					.on("mouseout.stop", function() {d3.event.stopPropagation(); })
+
+		d3.select(".dialogBoxOptionContainer")
+			.selectAll(".dialogBoxOption")  //.selectAll(".dialogBoxOption")
+				.data(function () {
+					return regionalDisasters;
+				})
+				.enter()		
+					.append("div")
+						.attr("class","dialogBoxOption")
+						.style("text-align","left")
+						.style('width','150px')
+						.style('top','0%')
+						.on("mouseover",function () {
+							d3.select(this).style("background-color","#CFCDC9").style("color","grey");
+						})
+						.on("mouseout", function () {
+							d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						})
+						.on("click", function (d) {
+							console.log(d[1]);
+							zoom(d[1]);
+							setTimeout(function() {isGlobal(d[1],d[4])},760);
+						//	d3.selectAll(d[4]).style("fill","blue");
+							
+						})
+						.attr('id', function(d) { return d[0]; })
+						.append('span') 
+						.text(function (d) {
+							return d[2]; 
+						})			
+
+	})
+	.on("mouseout", function() {
+		dialogOptionBoolean -= 1;
+		setTimeout(function () {testDialog(dialogOptionBoolean,null); console.log("holo")},0);
+		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
+	})		
+	.insert("span")
+		.text("Regional");
+
+function popup (centroid, selection, type) {
+console.log("centroid: " + centroid + " selection: " + selection + " type: " + type);
+console.log(selection); 
+var selectionName = "";
+	if (type === "points"){
+		selectionName = selection;
+		headline = points2[selection].fullname;
+		tagline = points2[selection].tagline;
+	} else if (type === "countries") {
+		selectionName = selection.id;
+		headline = featuredJSON[selection.id].fullname;
+		tagline = featuredJSON[selection.id].tagline;
+	} else if (type === "florida") {
+		selectionName = "FLA";
+		headline = featuredJSON["FLA"].fullname;
+		tagline = featuredJSON["FLA"].tagline;
+	} 
+	
+						var arrow = {};
+						var offsets = [];
+						if (centroid[0] >= .8 * width) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
+							offsets = [230,-90];
+							
+						} else if (centroid[1] >= .8 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
+							offsets = [95,29];
+						} else if (centroid[0] <= .2 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
+							offsets = [-30,-90];
+						} else {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
+							offsets = [95,29];
+						}
+	 
+				//		d3.select(this).style("fill","#0A68FF0").transition().duration(2000).style("fill","#002A6C");
+					//		.attr("fill", "#E89624")
+					//		.attr("fill-opacity", 1);
+						tooltip
+							.style("width", "200px")
+							.attr("class","tooltip pop")
+			    			.style("top", (centroid[1] + offsets[1] ) + "px")
+			    			.style("left", (centroid[0] - offsets[0]) + "px")
+			    			.transition().duration(300)
+			    			.style("opacity", 1)
+							.style("visibility","visible")
+			    			.style("display", "block");				
+						tooltip.selectAll("div").remove();
+						tooltip.selectAll("img").remove();
+						tooltip.insert("div")
+							.append('span')
+							.text(function(d){
+								return headline})				
+							.attr("class", "popName");
+						tooltip.append("img")
+							.attr("id", "tooltipImg")
+							.attr("width", 200)
+							.style("opacity", "1"); 
+						var image = new Image();
+						image.onload = function(error, d){
+							document.getElementById("tooltipImg").src = 'data/' + type + "/"  + selectionName.toLowerCase() + '/popimg.jpg';}
+						image.src = 'data/' + type + "/"  + selectionName.toLowerCase() + '/popimg.jpg';
+						tooltip.insert("div")
+							.append('span')					
+							.text(function(d){return tagline;}) 
+							.attr("class", "popDetail");
 
 
-var globe = new Image();
-
-globe.onload = function(d){
-	document.getElementById("globe").src = 'globe.png';
+	if (type === "countries" || type === "florida") {
+					tooltip.append("div")
+							.attr("class","popFront")
+							.on("mouseout", function(d) {
+								tooltip.transition().duration(700).style("opacity", 0);
+								tooltip.transition().delay(705).each('start', function(){
+									d3.select(this).style("opacity",0);
+									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
+									d3.selectAll("#arrow").remove();
+								}).style("width","0px").style("height","0px")
+							
+							})
+							.on("click", function() {
+								country_clicked(selection);
+							});
+						tooltip.append("div")
+							.style(arrow)
+							.style("position","absolute")
+							.attr("id","arrow")
+							.on("click", function () {
+								country_clicked(d);
+							})	
+	} else if (type === "points") {
+			tooltip.append("div")
+							.attr("class","popFront")
+							.on("mouseout", function(d) {
+								tooltip.transition().duration(700).style("opacity", 0);
+								tooltip.transition().delay(705).each('start', function(){
+									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
+									d3.select(this).style("opacity",0);
+									d3.selectAll("#arrow").remove();
+								}).style("width","0px").style("height","0px")
+							
+							})
+						tooltip.append("div")
+							.style(arrow)
+							.style("position","absolute")
+							.attr("id","arrow");
 	}
-globe.src = 'globe.png';
-
+}
 
 d3.json("countries_min.topo.json", function(error, us) {	
 		g.append("g")
@@ -854,82 +1047,14 @@ d3.json("countries_min.topo.json", function(error, us) {
 				return c;
 				} )
 			.on("mouseover", function(d) {
-		//		d3.selectAll("#arrow").remove();
 			 			
 				if (featuredMap.has(d.id)) {
 				  		var centroid = path.centroid(d);
-						console.log(d);
-						var selection = d.id;
-						var arrow = {};
-						var offsets = [];
-						if (centroid[0] >= .80 * width) {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
-							offsets = [230,-90];
-							
-						} else if (centroid[1] >= .80 * height) {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
-							offsets = [95,29];
-						} else if (centroid[0] <= .3 * height) {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
-							offsets = [-30,-90];
-						} else {
-							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
-							offsets = [95,29];
-						}
-	 
-			///			d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
-						tooltip
-							.style("width", "200px")
-							.attr("class","tooltip pop")
-			    			.style("top", (centroid[1] + offsets[1] ) + "px")
-			    			.style("left", (centroid[0] - offsets[0]) + "px")
-			    			.transition().duration(300)
-			    			.style("opacity", 1)
-							.style("visibility","visible")
-			    			.style("display", "block");				
-						tooltip.selectAll("div").remove();
-						tooltip.selectAll("img").remove();
-						tooltip.insert("div")
-							.append('span')
-							.text(function(d){
-								return featuredJSON[selection].fullname;})				
-							.attr("class", "popName");
-						tooltip.append("img")
-							.attr("id", "tooltipImg")
-							.attr("width", 200)
-							.style("opacity", "1"); 
-						var image = new Image();
-						image.onload = function(d){
-							document.getElementById("tooltipImg").src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';}
-						image.src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';
-						tooltip.insert("div")
-							.append('span')					
-							.text(function(d){return featuredJSON[selection].tagline;}) 
-							.attr("class", "popDetail");
-						tooltip.append("div")
-							.attr("class","popFront")
-							.on("mouseout", function(d) {
-								tooltip.transition().duration(700).style("opacity", 0);
-								tooltip.transition().delay(705).each('start', function(){
-									d3.select(this).style("opacity",0);
-									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
-									d3.selectAll("#arrow").remove();
-								}).style("width","0px").style("height","0px")
-							
-							})
-							.on("click", function() {
-								country_clicked(d);
-							});
-						tooltip.append("div")
-							.style(arrow)
-							.style("position","absolute")
-							.attr("id","arrow")
-							.on("click", function () {
-								console.log(d);
-								country_clicked(d);
-							});
+						var selection = d;
+						var type = "countries";
+						popup(centroid, selection, type); 
+
 	
-					//	tooltip.select("tooltip:after").style("border-bottom","red");	
 				} else {
 					 return	null;
 				}
@@ -938,13 +1063,19 @@ d3.json("countries_min.topo.json", function(error, us) {
 			})
 	d3.json("data/json/FLA.json", function (error, fla) { 
 	g.append("g")
-		.attr("id","florida")
 		.selectAll("path")
 		.data(fla.features)
 		.enter()
 		.append("path")
 		.attr("d",path)
-		.style("fill","#FFCB36");
+		.style("fill","#FFCB36")
+		.attr("id","FLA")
+		.on("mouseover", function(d) {
+		var centroid = path.centroid(d);
+		var selection = d;
+		var type = "florida";
+		popup (centroid, selection, type);
+		});
 
 
 	});				
@@ -970,11 +1101,16 @@ setTimeout(function() {
 				})
 				.attr("id", function (d) {return d[0];})
 				
-					.on("mouseover", function(d) {
+					.on("mouseover", function(d) {	
+			//		d3.select(this).style("fill","#0A68FF0").transition().duration(2000).style("fill","#002A6C");
+					//		.attr("fill", "#E89624")
+					//		.attr("fill-opacity", 1);
 						var centroid = projection(d[1]);
 						
 						var selection = d[0];
-						var arrow = {};
+						var type = "points";
+						popup(centroid, selection, type); 
+/*						var arrow = {};
 						var offsets = [];
 						if (centroid[0] >= .8 * width) {
 							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
@@ -991,9 +1127,7 @@ setTimeout(function() {
 							offsets = [95,29];
 						}
 	 
-						d3.select(this).style("fill","#0A68FF0").transition().duration(2000).style("fill","#002A6C");
-					//		.attr("fill", "#E89624")
-					//		.attr("fill-opacity", 1);
+
 						tooltip
 							.style("width", "200px")
 							.attr("class","tooltip pop")
@@ -1037,7 +1171,9 @@ setTimeout(function() {
 							.style(arrow)
 							.style("position","absolute")
 							.attr("id","arrow");
+*/
 					})
+
 					.attr("class",function(d) {
 						return points2[d[0]].type;
 					})
@@ -1075,81 +1211,84 @@ setTimeout(function() {
 
 
 function isGlobal (xyz, FC) {
-	if (xyz[2] === 1) {	
+	if (xyz[2] === 1) {
+
+
+d3.select("#globeContainer").on("mouseover",null).on("mouseout",null).on("click",null).style("padding-left","5px");
+
+d3.select("#globeContainer")
+	.on("mouseover", function() {
+		dialogOptionBoolean += 1;
+		d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
+
+		d3.select("#globeContainer").append("div").attr("class","dialogBoxOptionContainer")
+			.style("left","0px")
+			.style("position","absolute")
+			.style("display","block")
+				.on("mouseover", function () {
+						dialogOptionBoolean += 1;
+						})
+					.on("mouseover.stop", function() {d3.event.stopPropagation(); })
+					.on("mouseout.change", function () {
+						dialogOptionBoolean -=1;
+						d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						setTimeout(function() {testDialog(dialogOptionBoolean, null); console.log(dialogOptionBoolean)}, 0);
+						})
+					.on("mouseout.stop", function() {d3.event.stopPropagation(); });
+
+		d3.select(".dialogBoxOptionContainer")
+			.selectAll(".dialogBoxOption")  //.selectAll(".dialogBoxOption")
+				.data(function () {
+					return regionalDisasters;
+				})
+				.enter()		
+					.append("div")
+						.attr("class","dialogBoxOption")
+						.style("text-align","left")
+						.style('width','150px')
+						.style('top','0%')
+						.on("mouseover",function () {
+							d3.select(this).style("background-color","#CFCDC9").style("color","grey");
+						})
+						.on("mouseout", function () {
+							d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						})
+						.on("click", function (d) {
+							console.log(d[1]);
+							zoom(d[1]);
+							setTimeout(function() {isGlobal(d[1],d[4])},760);
+						//	d3.selectAll(d[4]).style("fill","blue");
+							
+						})
+						.attr('id', function(d) { return d[0]; })
+						.append('span') 
+						.text(function (d) {
+							return d[2]; 
+						});			
+
+	})
+	.on("mouseout", function() {
+		dialogOptionBoolean -= 1;
+		setTimeout(function () {testDialog(dialogOptionBoolean,null); console.log("holo")},0);
+		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
+	})		
+	.select("span")
+		.text("Regional");
+
+
 		d3.selectAll(".earthquake").remove();	
+		d3.selectAll(".notFeatured").style("fill","#CFCDC9").style("opacity",1)
 		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1)
 		.on("click", function(d){ country_clicked(d) } )
 		.on("mouseover", function (d) {
 			var centroid = path.centroid(d);
-			var selection = d.id;
+			var selection = d;
 //			d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
 					//		.attr("fill", "#E89624")
 					//		.attr("fill-opacity", 1);
-			var arrow = {};
-			var offsets = [];
-			if (centroid[0] >= .8 * width) {
-				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
-				offsets = [230,-90];
-							
-			} else if (centroid[1] >= .8 * height) {
-				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
-				offsets = [95,29];
-			} else if (centroid[0] <= .2 * height) {
-				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
-				offsets = [-30,-90];
-			} else {
-				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
-				offsets = [95,29];
-			}
-			tooltip
-				.style("width", "200px")
-				.attr("class","tooltip pop")
-			    .style("top", (centroid[1] + offsets[1] ) + "px")
-			    .style("left", (centroid[0] - offsets[0] ) + "px")
-			    .transition().duration(300)
-			    .style("opacity", 1)
-				.style("visibility","visible")
-			    			.style("display", "block");				
-						tooltip.selectAll("div").remove();
-						tooltip.selectAll("img").remove();
-						tooltip.insert("div")
-							.append('span')
-							.text(function(){
-								return featuredJSON[selection].fullname;})				
-							.attr("class", "popName");
-						tooltip.append("img")
-							.attr("id", "tooltipImg")
-							.attr("width", 200)
-							.style("opacity", "1"); 
-						var image = new Image();
-						image.onload = function(){
-							document.getElementById("tooltipImg").src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';}
-						image.src = 'data/countries/' + selection.toLowerCase() + '/' + selection.toLowerCase() + '_popimg.jpg';
-						tooltip.insert("div")
-							.append('span')					
-							.text(function(d){return featuredJSON[selection].tagline;}) 
-							.attr("class", "popDetail");
-						tooltip.append("div")
-							.attr("class","popFront")
-							.on("mouseout", function() {
-								tooltip.transition().duration(700).style("opacity", 0);
-								tooltip.transition().delay(705).each('start', function(){
-									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
-									d3.select(this).style("opacity",0);
-									d3.selectAll("#arrow").remove();
-								}).style("width","0px").style("height","0px")
-							
-							})
-							.on("click", function() {
-								country_clicked(d);
-							});
-				tooltip.append("div")
-					.style(arrow)
-					.style("position","absolute")
-					.on("click", function () {
-						console.log(d);
-						country_clicked(d);
-					});
+			var type = "countries";
+			popup(centroid, selection, type); 
+
 		})
 		.on("mouseout", function (d) {
 			d3.select("#" + d.id)
@@ -1158,29 +1297,59 @@ function isGlobal (xyz, FC) {
 			
 		}) 
 	} else if (xyz[2] > 1) {
+
+		d3.select("#globeContainer").on("mouseover",null).on("mouseout",null).on("click",null).style("padding-left","25px");
+		d3.select("#globeContainer")
+			.on("click", function() {
+				d3.select("#ovContainer").remove();
+				d3.select("#dataTitle").remove();
+				d3.select("#hurr").remove();
+				d3.select("#icon").remove();
+				var xyz = [width / 2, height / 2, 1];
+    			country = null;
+				g.selectAll(".hide").classed("featured",true).classed("hide",false);
+				d3.select("#dialogBoxUnit").remove();
+				d3.select("#swipeBack").remove();
+    			zoom(xyz);
+				g.selectAll([".active", ".active_boundary"]).remove();
+				d3.selectAll(".dialogBox").remove();
+				isGlobal(xyz,null);
+		})
+		.on("mouseover", function() {
+			d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
+		})
+		.on("mouseout", function() {
+			d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
+		})		
+		.select("span")
+		.text("Map")
+		.style("padding-left","3px")
+		.append("img")
+			.attr("id","globe")
+			.attr("opacity",1);
+
+		var globe = new Image();
+
+		globe.onload = function(d){
+			document.getElementById("globe").src = 'globe.png';
+		}
+		globe.src = 'globe.png';
+
 		d3.selectAll(".featured").style("fill","#CFCDC9").style("cursor","default")
 			.on("click", null )
 			.on("mouseover", null )
 			.on("mouseout", null )
-		d3.select("#" + FC.id).style("fill","#FFCB36")	
+		d3.selectAll(FC).style("fill","#FFCB36")	
 	} else {
 		return;
 	}	
 }	
 
 
-function zoom(xyz) {
-	g.transition()
-		.duration(750)
-		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
-		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
-		
-
-}
 //get content from server
 function getHTTP(Media, Country, Name) {
 //	var Country = Country;
-
+console.log(Media)
 	var Thing = featuredJSON[Country][Media];
 	var ThingByName = {};
 	NameFunct = function(d) {return d.Button;};
@@ -1192,6 +1361,7 @@ function getHTTP(Media, Country, Name) {
 			.attr("height", "0px")
 			.style("opacity", 0)
 			.html(function () {
+				console.log(Media);
 				var text;
 				if (Media ===  "Video") {
 					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//" + ThingByName[Name].URL + "\" frameborder=\"0\" allowfullscreen></iframe>";
@@ -1218,7 +1388,6 @@ function getHTTP(Media, Country, Name) {
 				 
 		})
 }
-var dialogOptionBoolean;
 
 function contentDialog(d) {
 	dialogOptionBoolean = 0;
@@ -1246,36 +1415,21 @@ function contentDialog(d) {
 					return d; 
 				})
 				.style("margin-left","8px");
-			/*	.transition()
-				.ease("linear")
-				.delay(750)
-				.each("start", function() {
-					d3.select(this).style({"opacity":0});
-				
-					})
-				
-				.style('opacity', 1)
-				.text(function (d) { 
-					return d.toUpperCase(); 
-				})
-				.attr('id', function(d) { return d; });
-
-			*/		
+	
 		
 	
 	d3.select('body').selectAll('.dialogBox')
 	.on("click", function () {
 		var Media = this.id;
+		console.log(Media);
 		var Country = d.id;
 		if (d3.select(this).classed("dialogBoxOff")) {
 			d3.select("body").select("#swipeBack").remove();
 			d3.select("body").selectAll(".dialogBox").classed("selected",false).classed('dialogBoxOff', true);
 			d3.select(this).classed("selected", true).classed("dialogBoxOff",false);
 			if ((featuredJSON[Country][Media]).length === 1) {
-		//		var options = null;
 				var Name = featuredJSON[Country][Media][0].Button;//;
 				getHTTP(Media, Country, Name);
-	//		return;
 			} else {
 			}
 		
@@ -1438,7 +1592,7 @@ function get_xyz(d) {
 }
 
 function zoom2ADM (d, xyz) {
-	var FC = d;
+	var FC = "#" + d.id;
 /*	d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
           			.attr("id", "states")
@@ -1460,6 +1614,7 @@ function zoom2ADM (d, xyz) {
 					.attr("d", path);
 */
         		zoom(xyz);
+				console.log(xyz);
 				isGlobal(xyz,FC);
 //	});
 }

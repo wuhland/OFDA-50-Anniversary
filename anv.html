@@ -13,38 +13,35 @@
 <style>
 @font-face{
 font-family: 'ssp_reg';
-src: url('../.fonts/SourceSansPro-Regular.otf');
+src: url('.fonts/SourceSansPro-Regular.otf');
 src: format('opentype');
 }
 @font-face{
 font-family: 'ssp_bold';
-src:url('../.fonts/SourceSansPro-Bold.otf');
+src:url('.fonts/SourceSansPro-Bold.otf');
 src:format('opentype');
 font-weight:normal;
 src: format('opentype');
 }
 @font-face{
 font-family: 'ssp_semibold';
-src:url('../.fonts/SourceSansPro-Semibold.otf');
+src:url('.fonts/SourceSansPro-Semibold.otf');
 src:format('opentype');
 font-weight:bold;
 src: format('opentype');
 }
 #dataTitle {
 
-	width: 100px;
+	width: 120px;
 	background-color: #B2DCDD;
-	border: #16B0C1 solid 2px;
-	color: hsla(0,0%,30%,1);
-	padding: 1px;
+	color: #002A6C;
 	margin: 10px;
 	position: absolute;
 	bottom:0px;
 	right: 0px;
 	display:inline-block;
-	border-radius: .2em;
 	text-align: center; 
-	font-family: 'ssp_reg', sans-serif;
+	font-family: 'ssp_semibold', sans-serif;
 	font-weight: 300;
 	font-size: 15px;
 }
@@ -140,13 +137,16 @@ cursor:pointer;
 }
 .dialogBoxOption {
 	position:relative;
-	width: 60px;
+	width: 295px;
 	top:100%;
 	padding:5px;
 	background-color: whitesmoke;
 	color: grey;
 	display:block;
 	opacity:.92;
+	font-size: 11pt;
+	font-family: 'ssp_reg', sans-serif;
+	font-weight: normal;
 }
 
 .event {
@@ -381,14 +381,10 @@ left:5px;
 
 <script>
 //colors of text
-var alertContextColor = 'hsl(28,100%,47%)';
 
-var mainTextColor = 'hsl(0,0%,40%)';
-
-var contextColor = mainTextColor;
 
 var	width = 960,
-    height = 850,
+    height = 800,
     country,
     state;
 var topMargin = 0, 
@@ -405,38 +401,212 @@ var tooltip = d3.select("body").append("div")
 //options needs to be created via looping through country files to determine types of content. For now created expressly
 
 var featuredJSON = {
+	"AGO":{
+		"year":1975,
+		"options":[],
+		"type":"complex",
+		"Story":[],
+		"Infographic":[],
+		"Video":[],
+		"fullname":"Angola",
+		"tagline":"After obtaining its independence from Portugal in November 1975, Angola plunged into 27 years of civil war that killed more than 500,000 people and displaced millions more.",
+  		"ovTagline":"27 yrs of civil war beginning November 1975",
+		"ovElements":[["killed","500,000",""],["displaced","1","MILLION+"]]
+	},
 	"KHM":{
+		"year":2011,
 		"options":[],
 		"type":"flood",
 		"Story":[],
 		"Infographic":[],
 		"Video":[],
 		"fullname":"Cambodia",
-		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011, with floodwaters spreading across 18 of 24 provinces, dampening prospects for 1.5 million people and destroying nearly 10 percent of the nation's crops."
-	},
-	"PHL":{
-		"options":["Story","Video", "Infographic"],
-		"Story":[{"Button":"old story","Name":"phl_story.html"},{"Button":"new story","Name":"phl_story2.html"}],
-		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"},{"Button":"Kermit","URL":"www.youtube.com/embed/hpiIWMWWVco"}],
+		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011. Floodwaters spread across 18 of 24 provinces, affecting 1.5 million people and destroying nearly 10 percent of the nation's crops.",
+ 		"ovTagline":"Flooding in fall of 2011",
+		"ovElements":[["affected","1.5","MILLION"],["provinces","18 <span style='font-size:11pt'> out of </span>24",""],["crops","10%",""]]
+	},	
+	"CHL":{
+		"year":2010,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"fullname":"Chile",
+		"tagline":"In 2010, a magnitude 8.8 earthquake affected 1.8 million people. Chile is one of the most earthquake-prone countries in the world. OFDA's work there and in the region focuses on disaster preparedness.",
+		"ovTagline":"Earthquake on February 27, 2010",
+		"ovElements":[["affected","1.8","MILLION"],["killed","486",""],["house","190,000",""]]
+		},	
+	"CRI":{
+		"year":1963,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"volcano",
+		"fullname":"Costa Rica",
+		"tagline":"The devastating destruction caused by the 1963 Irazu volcano eruption was witnessed by President John F. Kennedy and paved the way for OFDA's creation by underscoring the need for a lead U.S. agency to oversee foreign disaster response. Now, Costa Rica is home to one of OFDA's regional offices and is a hub for disaster risk reduction work in the region.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
+		},
+	"GTM":{
+		"year":1976,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":7.5,
+			"depth":5, //in km
+			"epicenter":[-89.1,15.32],//Long Lat
+			},
+		"fullname":"Guatemala",
+		"tagline":"On February 4, 1976, a magnitude 7.6 earthquake shook Guatemala City and surrounding areas. Affecting nearly 5 million people, it proved to be one of the worst natural disasters in Central America's modern history.",
+		"ovTagline":"Earthquake on February 4, 1976",
+		"ovElements":[["affected","4.9","MILLION+"],["killed","23,000",""],["homeless","1.1","MILLION+"]]
+
+		},	
+	"HTI":{
+		"year":2010,
+		"options":[],	
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":7,
+			"depth":25, //in kilometers
+			"epicenter":[-72.533,18.457],//Longitude Latitude
+			},
+		"fullname":"Haiti",
+		"tagline":"On January 12, 2010, a magnitude 7.0 earthquake shook Haiti, killing 316,000 people and displacing 1.5 million others. The quake also created enough rubble to fill dump trucks lined up from Maine to Florida, twice.",
+		"ovTagline":"Earthquake on January 12, 2010",
+		"ovElements":[["killed","316,000",""],["displaced","1.5","MILLION"],["affected","3","MILLION"]]
+	},	
+	"HND":{
+		"year":1998,
+		"options":[],		
+		"Story":[],
+		"Video":[],
 		"Infographic":[],
 		"type":"storm",
-		"fullname":"Philippines",
-		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
-		"ovTagline":"November 8, 2013 Typhoon Haiyan",
-		"ovElements":[["affected","16", "MILLION"],["displaced","4.1", "MILLION"],["killed","6,201", ""]],
-	},
+		"fullname":"Honduras",
+		"tagline":"Hurricane Mitch was the most powerful and destructive hurricane of the 1998 Atlantic Hurricane Season, killing nearly 10,000 people and destroying nearly 100,000 homes.",
+		"ovTagline":"Hurricane Mitch struck October to November 1998",
+		"ovElements":[["affected","3.6", "MILLION"],["killed","10,000",""],["housedestroy","100,000", ""]]
+		},
 	"JAM":{
+		"year":2004,		
 		"options":[],		
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"Jamaica",
-		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan-- which hit in September 2004-- is among the most damaging storms in the island's recorded history.",
-		"ovTagline":"Something Something Something",
-		"ovElements":[["famine","temp", "temp"],["displaced","temp", "temp"]]
+		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan, which hit in September 2004, is among the most damaging storms in the island's recorded history.",
+		"ovTagline":"Hurricane Ivan struck on September 10 & 11, 2004",
+		"ovElements":[["killed","18",""],["affected","350,000",""],["damage","$595","MILLION"]]
 		},
+	"JPN":{
+		"year":2011,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":9,
+			"depth":30, //in km
+			"epicenter":[142.369,38.233],//Long Lat
+			},
+		"fullname":"Japan",
+		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most serious nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+		},	
+	"MEX":{
+		"year":1985,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":8.3,
+			"depth":0, //in km
+			"epicenter":[-102.5,17.6],//Long Lat
+			},
+		"fullname":"Mexico",
+		"tagline":"On September 19, 1985, a magnitude 8.1 earthquake struck near Mexico City, causing more than 400 buildings to collapse and contributing to more than 10,000 deaths and 30,000 injuries. After this quake, OFDA began including search and rescue as part of its humanitarian efforts.",
+		"ovTagline":"Earthquake on September 19, 1985",
+		"ovElements":[["killed","10,000+",""],["injured","30,000",""],["buildingdestroy","400+",""]]
+		},
+	"MKD":{
+		"year":1963,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":6.1,
+			"depth":6, //in km
+			"epicenter":[22.66,42.16],//Long Lat
+			},
+		"fullname":"Macedonia",
+		"tagline":"The magnitude 6.0 earthquake in July 1963 that killed over 1,000 people and destroyed 75% of the city of Skopje revealed coordination challenges in providing disaster assistance that eventually lead to the establishment of OFDA.",
+		"ovTagline":"Earthquake on July 26, 1963",
+		"ovElements":[["killed","1,100",""],["affected","3,383",""],["percentbuildings","75%",""]]
+
+		},
+	"NZL":{
+		"year":2011,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"disasterarray":{
+			"magnitude":6.1,
+			"depth":5, //in km
+			"epicenter":[172.7012,-43.5834],//Long Lat
+			},
+		"fullname":"New Zealand",
+		"tagline":"On February, 22, 2011, a magnitude 6.1 earthquake rocked Christchurch, the country's 2nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate search efforts.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
+		},
+	"PHL":{
+		"year":2013,
+		"options":["Story","Video", "Infographic"],
+		"Story":[{"Button":"Strengthening the Philippines through USAID relief","Name":"phl_final.html"},{"Button":"old story","Name":"phl_story.html"}],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"}],
+		"Infographic":[{"Button":"first graphic","Name":"graphic.jpg"}],
+		"type":"storm",
+		"fullname":"Philippines",
+		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
+		"ovTagline":"Typhoon Haiyan struck on November 8, 2013",
+		"ovElements":[["affected","16", "MILLION"],["displaced","4.1", "MILLION"],["killed","6,201", ""]],
+	},
+	"RWA":{
+		"year":1944,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Rwanda",
+		"tagline":"During a 100 day span in 1994, one of the worst genocides in history claimed the lives of an estimated 800,000 Rwandans.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
+		},
+
 	"SDS":{
+		"year":2013,
 		"options":["Gallery"],		
 		"Story":[],
 		"Video":[],
@@ -449,100 +619,106 @@ var featuredJSON = {
 		"ovElements":[["famine","1", "MILLION"],["displaced","1.4", "MILLION"],["humanitarian","4", "MILLION"]]  
 	
 		},
-	"HTI":{
-		"options":[],	
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"quake",
-		"disasterarray":{
-			"magnitude":7,
-			"depth":25, //in kilometers
-			"epicenter":[-72.533,18.457],//Longitude Latitude
-			},
-		"fullname":"Haiti",
-		"tagline":"On January 12, 2010, a magnitude 7.0 earthquake shook Haiti, killing 316,000 people and displacing 1.5 million others. The quake also created enough rubble to fill dump trucks lined up from Maine to Florida, twice."
-	},
-	"CHL":{
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"quake",
-		"fullname":"Chile",
-		"tagline":"So far with this amount of text it look like the popup box extends a little beyond the bottom of the map. There are a lot of ways we can get around this from limiting the amount of text we put in these boxes to having carl set the frame he allots to us to a height a little longer than the frame of the map to accomodate the extra popup box length. As for antarctica I think it is usefull for framing the map but if we are going to have Carl extend the frame it might be nice to take it out because we might not want something framing the bottom of the map if we are going to have a bunch of blank space underneath it anyways."
-		},	
-	"CRI":{
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"volcano",
-		"fullname":"Costa Rica",
-		"tagline":"The devastating destruction caused by the 1963 Irazu volcano eruption was witnessed by President John F. Kennedy and paved the way for OFDA's creation by underscoring the need for a lead U.S. agency to oversee foreign disaster response. Now, Costa Rica is home to one of OFDA's regional offices and is a hub for disaster risk reduction work in the region."
-		},
-	"GTM":{
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"quake",
-		"fullname":"Guatemala",
-		"tagline":"On February 4, 1976, a magnitude 7.6 earthquake shook Guatemala city and surrounding areas. Affecting more than 4.9 million people, it proved to be one of the worst natural disasters in Central America's modern history."
-		},
-	"JPN":{
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"quake",
-		"fullname":"Japan",
-		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most serious nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis."
-		},
-	"MKD":{
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"quake",
-		"fullname":"Macedonia",
-		"tagline":"The magnitude 6.0 earthquake in 1963 that killed over 1,000 people and destroyed 75% of the city of Skopje revealed coordination challenges in providing disaster assistance that eventually lead to the establishment of OFDA."
-		},
-	"NZL":{
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"quake",
-		"fullname":"New Zealand",
-		"tagline":"On February, 22, 2011, a magnitude 6.3 earthquake rocked Christchurch, the country's second largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate international search efforts."
-		},
-	"RWA":{
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"complex",
-		"fullname":"Rwanda",
-		"tagline":"During a 100 day span in 1994, one of the worst genocides in history claimed the lives of an estimated 800,000 Rwandans."
-		},
 	"THA":{
+		"year":2011,
 		"options":[],
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
 		"type":"flood",
 		"fullname":"Thailand",
-		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities."
+		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities.",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+
 		}
 };
 
-var warehouse = [
-	["miami",[-80.224, 25.7877]],
-	["pisa",[10.4, 43.716]],
-	["dubai",[55.333,24.95]]
-]
+var  points = [
+	["DC",[-77.03666,38.89511]],
+	["Miami",[-80.224, 25.7877]],
+	["Pisa",[10.4, 43.716]],
+	["Dubai",[55.333,24.95]],
+	["SanJose",[-84.0833,9.93333]],
+	["Budapest",[19.051389,47.4925]],
+	["Dakar",[-17.44666,14.692778]],
+	["Nairobi",[36.81666,-1.28333]],
+	["Pretoria",[28.188056,-25.746111]],
+	["Bangkok",[100.46666,13.75]]
+];
+	
+var points2 = {
+	"DC":{
+		"fullname":"Washington, DC",
+		"type":"headquarters",
+		"coord":[-77.03666,38.89511],
+		"tagline":"Headquartered in D.C. and with more than 300 staff worldwide, USAID's Office of U.S. Foreign Disaster Assistance (OFDA) leads and coordinates the U.S. government's humanitarian assistance efforts overseas.  On average, OFDA responds to 70 disasters in more than 50 countries every year."
+	},
+	"Miami":{
+		"fullname":"Miami, Florida (Warehouse)",
+		"type":"warehouse",
+		"coord":[-80.224, 25.7877],
+		"tagline":"Miami is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
+	},
+	"Pisa":{
+		"fullname":"Pisa, Italy (Warehouse)",		
+		"type":"warehouse",
+		"coord":[10.4, 43.716],
+		"tagline":"Pisa is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
+	},
+	"Dubai":{
+		"fullname":"Dubai, United Arab Emirates (Warehouse)",
+		"type":"warehouse",
+		"coord":[55.333,24.95],
+		"tagline":"Dubai is 1 of 3 locations where OFDA stockpiles critical commodities--including emergency shelter materials, warm blankets, water treatment systems, and hygiene kits--that can be transported quickly to people most in need."
+	},
+	"SanJose":{
+		"fullname":"San Jose, Costa Rica",
+		"type":"office",
+		"coord":[-84.0833,9.93333],
+		"tagline":"San Jose, Costa Rica is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in Latin America and the Caribbean." 
+	},	
+	"Budapest":{
+		"fullname":"Budapest, Hungary",
+		"type":"office",
+		"coord":[19.051389,47.4925],
+		"tagline":"Budapest, Hungary is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in Europe, Middle East, and Central Asia." 
+	},
+	"Dakar":{
+		"fullname":"Dakar, Senegal",
+		"type":"office",
+		"coord":[-17.44666,14.692778],
+		"tagline":"Dakar, Senegal is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in West Africa." 
+	},
+	"Nairobi":{
+		"fullname":"Nairobi, Kenya",
+		"type":"office",
+		"coord":[36.81666,-1.28333],
+		"tagline":"Nairobi, Kenya is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in East and Central Africa." 
+	},
+	"Pretoria":{
+		"fullname":"Pretoria, South Africa",
+		"type":"office",
+		"coord":[28.188056,-25.746111],
+		"tagline":"Pretoria, South Africa is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in South Africa." 
+	},	
+	"Bangkok":{
+		"fullname":"Bangkok, Thailand",
+		"type":"office",
+		"coord":[100.46666,13.75],
+		"tagline":"Bangkok, Thailand is the location of 1 of OFDA's 6 regional offices where staff oversee humanitarian programs in East Asia and the Pacific region, as well as South Asia." 
+	}
+}
 
+var regionalDisasters = [
+["io_tsunami",[600,400,3],"Indian Ocean Tsunami","quake","#IDN, #IND, #SOM"],
+["sahel",[400,400,3],"Sahel Famine","famine","#SOM, #MLI"]
+]
+	
+
+	
+
+ 
 //var featured = ["PHL","JAM","SDS","HTI"];
 //var featuredMap = d3.set(featured);
 var featuredMap = d3.map(featuredJSON);
@@ -610,17 +786,12 @@ function testDialog (dialogOptionBoolean, Media) {
 		d3.selectAll(".dialogBoxOptionContainer").remove(); 
 	}
 }
-
-
-
-
-
+/*
 d3.select("#map").append("div")
 	.attr("id","cdContainer")
 	.style("width", width + "px")
 		.append("div") 
 		.attr("id","globeContainer")
-
 		.on("click", function() {
 			d3.select("#ovContainer").remove();
 			d3.select("#dataTitle").remove();
@@ -645,18 +816,85 @@ d3.select("#map").append("div")
 	.insert("span")
 		.text("Map")
 		.style("padding-left","3px")
-		
 	.append("img")
 		.attr("id","globe")
 		.attr("opacity",1)
+*/
+var dialogOptionBoolean;
 
+dialogOptionBoolean = 0;
 
-var globe = new Image();
+function zoom(xyz) {
+	g.transition()
+		.duration(750)
+		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
+		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
+		
 
-globe.onload = function(d){
-	document.getElementById("globe").src = 'globe.png';
-	}
-globe.src = 'globe.png';
+}
+d3.select("#map").append("div")
+	.attr("id","cdContainer")
+	.style("width", width + "px")
+		.append("div") 
+		.attr("id","globeContainer")
+		.style("padding-left","5px")
+	.on("mouseover", function() {
+		dialogOptionBoolean += 1;
+		d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
+
+		d3.select("#globeContainer").append("div").attr("class","dialogBoxOptionContainer")
+			.style("left","0px")
+			.style("position","absolute")
+			.style("display","block")
+				.on("mouseover", function () {
+						dialogOptionBoolean += 1;
+						})
+					.on("mouseover.stop", function() {d3.event.stopPropagation(); })
+					.on("mouseout.change", function () {
+						dialogOptionBoolean -=1;
+						d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						setTimeout(function() {testDialog(dialogOptionBoolean, null); console.log(dialogOptionBoolean)}, 0);
+						})
+					.on("mouseout.stop", function() {d3.event.stopPropagation(); })
+
+		d3.select(".dialogBoxOptionContainer")
+			.selectAll(".dialogBoxOption")  //.selectAll(".dialogBoxOption")
+				.data(function () {
+					return regionalDisasters;
+				})
+				.enter()		
+					.append("div")
+						.attr("class","dialogBoxOption")
+						.style("text-align","left")
+						.style('width','150px')
+						.style('top','0%')
+						.on("mouseover",function () {
+							d3.select(this).style("background-color","#CFCDC9").style("color","grey");
+						})
+						.on("mouseout", function () {
+							d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						})
+						.on("click", function (d) {
+							console.log(d[1]);
+							zoom(d[1]);
+							setTimeout(function() {isGlobal(d[1],d[4])},760);
+						//	d3.selectAll(d[4]).style("fill","blue");
+							
+						})
+						.attr('id', function(d) { return d[0]; })
+						.append('span') 
+						.text(function (d) {
+							return d[2]; 
+						})			
+
+	})
+	.on("mouseout", function() {
+		dialogOptionBoolean -= 1;
+		setTimeout(function () {testDialog(dialogOptionBoolean,null); console.log("holo")},0);
+		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
+	})		
+	.insert("span")
+		.text("Regional");
 
 
 d3.json("countries_min.topo.json", function(error, us) {	
@@ -694,15 +932,14 @@ d3.json("countries_min.topo.json", function(error, us) {
 						var selection = d.id;
 						var arrow = {};
 						var offsets = [];
-						console.log (centroid);
-						if (centroid[0] >= .8 * width) {
+						if (centroid[0] >= .80 * width) {
 							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
 							offsets = [230,-90];
 							
-						} else if (centroid[1] >= .8 * height) {
+						} else if (centroid[1] >= .80 * height) {
 							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
 							offsets = [95,29];
-						} else if (centroid[0] <= .2 * height) {
+						} else if (centroid[0] <= .3 * height) {
 							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
 							offsets = [-30,-90];
 						} else {
@@ -710,12 +947,8 @@ d3.json("countries_min.topo.json", function(error, us) {
 							offsets = [95,29];
 						}
 	 
-						console.log(arrow + "  " + offsets);	
-						d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
-					//		.attr("fill", "#E89624")
-					//		.attr("fill-opacity", 1);
 						tooltip
-							.style("width", "200px")
+							.style("width", "210px")
 							.attr("class","tooltip pop")
 			    			.style("top", (centroid[1] + offsets[1] ) + "px")
 			    			.style("left", (centroid[0] - offsets[0]) + "px")
@@ -747,8 +980,9 @@ d3.json("countries_min.topo.json", function(error, us) {
 							.on("mouseout", function(d) {
 								tooltip.transition().duration(700).style("opacity", 0);
 								tooltip.transition().delay(705).each('start', function(){
-									d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
 									d3.select(this).style("opacity",0);
+									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
+									d3.selectAll("#arrow").remove();
 								}).style("width","0px").style("height","0px")
 							
 							})
@@ -758,17 +992,30 @@ d3.json("countries_min.topo.json", function(error, us) {
 						tooltip.append("div")
 							.style(arrow)
 							.style("position","absolute")
-							.style("bottom","-20px");;
-						
+							.attr("id","arrow")
+							.on("click", function () {
+								country_clicked(d);
+							});
 	
-					//	tooltip.select("tooltip:after").style("border-bottom","red");	
 				} else {
 					 return	null;
 				}
 				
 
 			})
-					
+	d3.json("data/json/FLA.json", function (error, fla) { 
+	g.append("g")
+		.attr("id","florida")
+		.selectAll("path")
+		.data(fla.features)
+		.enter()
+		.append("path")
+		.attr("d",path)
+		.style("fill","#FFCB36")
+		;
+
+
+	});				
 			
 			g.insert("g")
 		  	.datum(topojson.mesh(us, us.objects.countries_min, function (a, b)  {
@@ -779,45 +1026,219 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.attr("d",path);
 
 
-for (i=0; i < warehouse.length; i++) {
 
-			g.append("g")
-    			.attr("class", "warehouse")
-    			.attr("transform", "translate(" + projection(warehouse[i][1]) + ")")
-				.attr("id", function () {return warehouse[i][0];})
-				.append("path")
-					.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
+setTimeout(function() {
 
-					.style("fill","#002A6C")
-					.attr("transform", "translate(-5,-7) scale(.5)")
-					.style("stroke","#B2D0C1")
-					.style("stroke-width","2px");	
+	g.append("g").selectAll(".warehouse")
+		.data(points)
+		.enter()
+		.append("g")
+    			.attr("transform", function(d) {
+					return "translate(" + projection(d[1]) + ")";
+				})
+				.attr("id", function (d) {return d[0];})
+				
+					.on("mouseover", function(d) {
+						var centroid = projection(d[1]);
+						
+						var selection = d[0];
+						var arrow = {};
+						var offsets = [];
+						if (centroid[0] >= .8 * width) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
+							offsets = [230,-90];
+							
+						} else if (centroid[1] >= .8 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
+							offsets = [95,29];
+						} else if (centroid[0] <= .2 * height) {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
+							offsets = [-30,-90];
+						} else {
+							arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
+							offsets = [95,29];
+						}
+	 
+						d3.select(this).style("fill","#0A68FF0").transition().duration(2000).style("fill","#002A6C");
+					//		.attr("fill", "#E89624")
+					//		.attr("fill-opacity", 1);
+						tooltip
+							.style("width", "200px")
+							.attr("class","tooltip pop")
+			    			.style("top", (centroid[1] + offsets[1] ) + "px")
+			    			.style("left", (centroid[0] - offsets[0]) + "px")
+			    			.transition().duration(300)
+			    			.style("opacity", 1)
+							.style("visibility","visible")
+			    			.style("display", "block");				
+						tooltip.selectAll("div").remove();
+						tooltip.selectAll("img").remove();
+						tooltip.insert("div")
+							.append('span')
+							.text(function(d){
+								return points2[selection].fullname})				
+							.attr("class", "popName");
+						tooltip.append("img")
+							.attr("id", "tooltipImg")
+							.attr("width", 200)
+							.style("opacity", "1"); 
+						var image = new Image();
+						image.onload = function(error, d){
+							document.getElementById("tooltipImg").src = 'data/warehouse/' + selection + '/popimg.jpg';}
+						image.src = 'data/warehouse/' + selection + '/popimg.jpg';
+						tooltip.insert("div")
+							.append('span')					
+							.text(function(d){return points2[selection].tagline;}) 
+							.attr("class", "popDetail");
+						tooltip.append("div")
+							.attr("class","popFront")
+							.on("mouseout", function(d) {
+								tooltip.transition().duration(700).style("opacity", 0);
+								tooltip.transition().delay(705).each('start', function(){
+									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
+									d3.select(this).style("opacity",0);
+									d3.selectAll("#arrow").remove();
+								}).style("width","0px").style("height","0px")
+							
+							})
+						tooltip.append("div")
+							.style(arrow)
+							.style("position","absolute")
+							.attr("id","arrow");
+					})
+					.attr("class",function(d) {
+						return points2[d[0]].type;
+					})
 
-    	//		.attr("r", 3)
-		
-}
+	d3.selectAll(".warehouse")
+		.append("circle")
+		.attr("r",4)					
+		.style("fill","#002A6C")
+		.style("stroke-width","2px");
+	
+	
+	d3.selectAll(".office")
+		.append("path")
+		.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
+		.style("fill","#002A6C")
+		.style("stroke-width","2px")
+		.attr("transform", "translate(-5,-7) scale(.5)");
+	
+	d3.selectAll(".headquarters")
+		.append("circle")
+		.attr("r",7)					
+		.style("fill","#002A6C")
+		.style("stroke-width","2px");
+	d3.selectAll(".headquarters")
+	//	.append("svg")			
+		.append("path")
+		.attr("d","m 11.111678,0.93801117 c 0.438436,0 2.912939,7.87941143 3.26764,8.13711713 0.354702,0.2577057 8.613131,0.1762266 8.748615,0.5932032 0.135484,0.4169765 -6.593618,5.2052405 -6.729102,5.6222175 -0.135484,0.416977 2.494002,8.246031 2.139301,8.503737 -0.354702,0.257706 -6.988019,-4.662396 -7.426454,-4.662396 -0.438435,0 -7.0717525,4.920101 -7.4264539,4.662396 C 3.3305226,23.53658 5.9600094,15.707526 5.8245255,15.290549 5.6890416,14.873572 -1.0400603,10.085307 -0.90457641,9.6683309 -0.76909251,9.2513543 7.4893366,9.332834 7.8440381,9.0751283 8.1987395,8.8174226 10.673243,0.93801117 11.111678,0.93801117 z")
+		.style("fill","white")
+		.attr("id","test")
+		.attr("transform", "translate(-5.5,-6.5) scale(.5)");
+//}
+},75);
 
 });
 
 
-
-
 function isGlobal (xyz, FC) {
-	if (xyz[2] === 1) {	
+	if (xyz[2] === 1) {
+
+
+d3.select("#globeContainer").on("mouseover",null).on("mouseout",null).on("click",null).style("padding-left","5px");
+
+d3.select("#globeContainer")
+	.on("mouseover", function() {
+		dialogOptionBoolean += 1;
+		d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
+
+		d3.select("#globeContainer").append("div").attr("class","dialogBoxOptionContainer")
+			.style("left","0px")
+			.style("position","absolute")
+			.style("display","block")
+				.on("mouseover", function () {
+						dialogOptionBoolean += 1;
+						})
+					.on("mouseover.stop", function() {d3.event.stopPropagation(); })
+					.on("mouseout.change", function () {
+						dialogOptionBoolean -=1;
+						d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						setTimeout(function() {testDialog(dialogOptionBoolean, null); console.log(dialogOptionBoolean)}, 0);
+						})
+					.on("mouseout.stop", function() {d3.event.stopPropagation(); });
+
+		d3.select(".dialogBoxOptionContainer")
+			.selectAll(".dialogBoxOption")  //.selectAll(".dialogBoxOption")
+				.data(function () {
+					return regionalDisasters;
+				})
+				.enter()		
+					.append("div")
+						.attr("class","dialogBoxOption")
+						.style("text-align","left")
+						.style('width','150px')
+						.style('top','0%')
+						.on("mouseover",function () {
+							d3.select(this).style("background-color","#CFCDC9").style("color","grey");
+						})
+						.on("mouseout", function () {
+							d3.select(this).style("background-color","whitesmoke").style("color","grey");
+						})
+						.on("click", function (d) {
+							console.log(d[1]);
+							zoom(d[1]);
+							setTimeout(function() {isGlobal(d[1],d[4])},760);
+						//	d3.selectAll(d[4]).style("fill","blue");
+							
+						})
+						.attr('id', function(d) { return d[0]; })
+						.append('span') 
+						.text(function (d) {
+							return d[2]; 
+						});			
+
+	})
+	.on("mouseout", function() {
+		dialogOptionBoolean -= 1;
+		setTimeout(function () {testDialog(dialogOptionBoolean,null); console.log("holo")},0);
+		d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
+	})		
+	.select("span")
+		.text("Regional");
+
+
 		d3.selectAll(".earthquake").remove();	
+		d3.selectAll(".notFeatured").style("fill","#CFCDC9").style("opacity",1)
 		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1)
 		.on("click", function(d){ country_clicked(d) } )
 		.on("mouseover", function (d) {
 			var centroid = path.centroid(d);
 			var selection = d.id;
-			d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
+//			d3.select(this).style("fill","#E89624").transition().duration(2000).style("fill","#FFCB36");
 					//		.attr("fill", "#E89624")
 					//		.attr("fill-opacity", 1);
+			var arrow = {};
+			var offsets = [];
+			if (centroid[0] >= .8 * width) {
+				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%"};
+				offsets = [230,-90];
+							
+			} else if (centroid[1] >= .8 * height) {
+				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px"};
+				offsets = [95,29];
+			} else if (centroid[0] <= .2 * height) {
+				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-40px","top":"75px"};
+				offsets = [-30,-90];
+			} else {
+				arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-40px","left":"40%"};
+				offsets = [95,29];
+			}
 			tooltip
 				.style("width", "200px")
 				.attr("class","tooltip pop")
-			    .style("top", (centroid[1] + 29 ) + "px")
-			    .style("left", (centroid[0] - 95) + "px")
+			    .style("top", (centroid[1] + offsets[1] ) + "px")
+			    .style("left", (centroid[0] - offsets[0] ) + "px")
 			    .transition().duration(300)
 			    .style("opacity", 1)
 				.style("visibility","visible")
@@ -846,14 +1267,21 @@ function isGlobal (xyz, FC) {
 							.on("mouseout", function() {
 								tooltip.transition().duration(700).style("opacity", 0);
 								tooltip.transition().delay(705).each('start', function(){
-									d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
+									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
 									d3.select(this).style("opacity",0);
+									d3.selectAll("#arrow").remove();
 								}).style("width","0px").style("height","0px")
 							
 							})
 							.on("click", function() {
 								country_clicked(d);
-							})
+							});
+				tooltip.append("div")
+					.style(arrow)
+					.style("position","absolute")
+					.on("click", function () {
+						country_clicked(d);
+					});
 		})
 		.on("mouseout", function (d) {
 			d3.select("#" + d.id)
@@ -862,29 +1290,59 @@ function isGlobal (xyz, FC) {
 			
 		}) 
 	} else if (xyz[2] > 1) {
+
+		d3.select("#globeContainer").on("mouseover",null).on("mouseout",null).on("click",null).style("padding-left","25px");
+		d3.select("#globeContainer")
+			.on("click", function() {
+				d3.select("#ovContainer").remove();
+				d3.select("#dataTitle").remove();
+				d3.select("#hurr").remove();
+				d3.select("#icon").remove();
+				var xyz = [width / 2, height / 2, 1];
+    			country = null;
+				g.selectAll(".hide").classed("featured",true).classed("hide",false);
+				d3.select("#dialogBoxUnit").remove();
+				d3.select("#swipeBack").remove();
+    			zoom(xyz);
+				g.selectAll([".active", ".active_boundary"]).remove();
+				d3.selectAll(".dialogBox").remove();
+				isGlobal(xyz,null);
+		})
+		.on("mouseover", function() {
+			d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
+		})
+		.on("mouseout", function() {
+			d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
+		})		
+		.select("span")
+		.text("Map")
+		.style("padding-left","3px")
+		.append("img")
+			.attr("id","globe")
+			.attr("opacity",1);
+
+		var globe = new Image();
+
+		globe.onload = function(d){
+			document.getElementById("globe").src = 'globe.png';
+		}
+		globe.src = 'globe.png';
+
 		d3.selectAll(".featured").style("fill","#CFCDC9").style("cursor","default")
 			.on("click", null )
 			.on("mouseover", null )
 			.on("mouseout", null )
-		d3.select("#" + FC.id).style("fill","#FFCB36")	
+		d3.selectAll(FC).style("fill","#FFCB36")	
 	} else {
 		return;
 	}	
 }	
 
 
-function zoom(xyz) {
-	g.transition()
-		.duration(750)
-		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
-		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
-		
-
-}
 //get content from server
 function getHTTP(Media, Country, Name) {
 //	var Country = Country;
-
+console.log(Media)
 	var Thing = featuredJSON[Country][Media];
 	var ThingByName = {};
 	NameFunct = function(d) {return d.Button;};
@@ -896,6 +1354,7 @@ function getHTTP(Media, Country, Name) {
 			.attr("height", "0px")
 			.style("opacity", 0)
 			.html(function () {
+				console.log(Media);
 				var text;
 				if (Media ===  "Video") {
 					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//" + ThingByName[Name].URL + "\" frameborder=\"0\" allowfullscreen></iframe>";
@@ -922,7 +1381,6 @@ function getHTTP(Media, Country, Name) {
 				 
 		})
 }
-var dialogOptionBoolean;
 
 function contentDialog(d) {
 	dialogOptionBoolean = 0;
@@ -947,7 +1405,6 @@ function contentDialog(d) {
 				.attr('id', function(d) { return d; })
 				.append('span') 
 				.text(function (d) { 
-				//	return d.toUpperCase(); 
 					return d; 
 				})
 				.style("margin-left","8px");
@@ -971,6 +1428,7 @@ function contentDialog(d) {
 	d3.select('body').selectAll('.dialogBox')
 	.on("click", function () {
 		var Media = this.id;
+		console.log(Media);
 		var Country = d.id;
 		if (d3.select(this).classed("dialogBoxOff")) {
 			d3.select("body").select("#swipeBack").remove();
@@ -1108,8 +1566,26 @@ function ov(feature) {
 									text = "people affected";
 								} else if (d[0] === "killed") {
 									text = "people killed";
-								} 
-								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:140%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
+								} else if (d[0] === "crops") {
+									text = "crops destroyed";
+								} else if (d[0] === "house") {
+									text = "houses damaged/destroyed";
+								} else if (d[0] === "provinces") {
+									text = "provinces hit";
+								} else if (d[0] === "homeless") {
+							 		text = "left homeless";
+								} else if (d[0] === "damage") {
+							 		text = "in damages";
+								} else if (d[0] === "housedestroy") {
+							 		text = "houses destroyed";
+								} else if (d[0] === "buildingdestroy") {
+							 		text = "buildings destroyed";
+								} else if (d[0] === "injured") {
+							 		text = "people injured";
+								} else if (d[0] === "percentbuildings") {
+							 		text = "of buildings <br> in Skopje destroyed";
+								}
+								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
 							})
 }
 
@@ -1125,7 +1601,7 @@ function get_xyz(d) {
 }
 
 function zoom2ADM (d, xyz) {
-	var FC = d;
+	var FC = "#" + d.id;
 /*	d3.json("data/json/states_" + d.id.toLowerCase() + ".topo.json", function(error, us) {
 				g.append("g")
           			.attr("id", "states")
@@ -1147,6 +1623,7 @@ function zoom2ADM (d, xyz) {
 					.attr("d", path);
 */
         		zoom(xyz);
+				console.log(xyz);
 				isGlobal(xyz,FC);
 //	});
 }
@@ -1187,14 +1664,17 @@ function country_clicked(d) {
 
 	
 					var color_scale = d3.scale.quantile().domain([3,5]).range(colorbrewer.YlGnBu[5]);
-
+					var year = featuredJSON[d.id].year;
 					map.append("div")
 						.attr("id", "dataTitle")
-						.attr("class","pop")
+						.append("div").attr("id","strip").style({"background-color":"whitesmoke","width":"5px","height":"100%","left":"0px","position":"absolute"});
 					
-        				.html("<p><span id=\"popYear\"</span><b>2013</b></span><br>" + track[0].month + " " + track[0].day + " " + track[0].hour + ":00<br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>")
-						.attr("font-family", "sans-serif");
-					var dateTextChange = map.select('#dataTitle');
+					d3.select("#dataTitle").append("div")
+			//			.attr("class","pop")
+						.attr("id","dataTitleHTML")
+        				.html("<p><span id=\"popYear\">" + track[0].month + " " + track[0].day + ", " + year  + "</span><br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>");
+					//	.attr("font-family", "sans-serif");
+					var dateTextChange = map.select('#dataTitleHTML');
 						
 					var cat = dateTextChange.select('#category');	
 
@@ -1249,7 +1729,7 @@ function country_clicked(d) {
         					.attr("fill", color_scale(track[i].class));
 						
       					dateTextChange
-        					.html("<p><b>2013</b><br>" + track[i].month + " " + track[i].day + " " + track[i].hour + ":00<br>Category: <span id=\"category\" style=\"color:" + color_scale(track[i].class) + "\">" + track[i].class + "</span></p>");
+        					.html("<p><b>" + track[i].month +" " + track[i].day +", " + year + "<br>Category: <span id=\"category\" style=\"color:" + color_scale(track[i].class) + "\">" + track[i].class + "</span></p>");
 								
 
 //						cat.text(track[i].class).style("color", color_scale(track[i].class));
@@ -1357,7 +1837,7 @@ function country_clicked(d) {
 
 			contentDialog(d);			
 			zoom2ADM(d,xyz); 			
-
+			ov(d);
 		setTimeout(function() {			
 			g.append("circle")
     			.attr("class", "dot")
@@ -1400,7 +1880,7 @@ function country_clicked(d) {
 
 		}
 
-		else if ( featuredJSON[d.id].type == "complex") {
+		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id] == "volcano") {
 			contentDialog(d);
 						
 			var feature = d;	
