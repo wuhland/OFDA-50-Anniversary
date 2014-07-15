@@ -368,9 +368,7 @@ left:5px;
 .ovElemHead {
 	position:absolute;
 	top:0px;
-	
 }	
-
 
 </style>
 
@@ -509,7 +507,20 @@ var featuredJSON = {
 		"tagline":"Hurricane Mitch was the most powerful and destructive hurricane of the 1998 Atlantic Hurricane Season, killing nearly 10,000 people and destroying nearly 100,000 homes.",
 		"ovTagline":"Hurricane Mitch struck October to November 1998",
 		"ovElements":[["affected","3.6", "MILLION"],["killed","10,000",""],["housedestroy","100,000", ""]]
-		},
+
+	},
+	"IND":{
+		"year":1999,
+		"options":[],		
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"storm",
+		"fullname":"India",
+		"tagline":"In October 1999, twin cyclones hit the eastern coast of India within 2 weeks, killing nearly 10,000 people and affecting almost 14 million others. Since then, OFDA has worked with India on programs that have reduced the risk cyclones pose to lives and livelihoods.",
+		"ovTagline":"Cyclones hit eastern coast October 1999",
+		"ovElements":[["2weeks","2", "CYCLONES"],["killed","10,000",""],["affected","14", "MILLION"]]
+	},
 	"JAM":{
 		"year":2004,		
 		"options":[],		
@@ -574,6 +585,20 @@ var featuredJSON = {
 		"ovElements":[["killed","1,100",""],["affected","3,383",""],["percentbuildings","75%","OF BUILDINGS"]]
 
 		},
+	
+	"NPL":{
+		"year":1900,
+		"options":[],		
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"disasters",
+		"fullname":"Nepal",
+		"tagline":"Nepal is one of the world's most disaster prone countries, where natural disasters over the past 100 years have affected almost 10 million people. Prepardness is vital to help people who face a threat of flooding, landslides, avalanches, and earthquakes.",
+		"ovTagline":"Natural Disasters (1900 - present)",
+		"ovElements":[["killed","23,153", ""],["affected","9.9","MILLION"],["damage","15", "MILLION"]]
+		},
+
 	"NZL":{
 		"year":2011,
 		"options":[],
@@ -582,7 +607,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"quake",
 		"disasterarray":{
-			"magnitude":6.1,
+			"magnitude":6.3,
 			"depth":5, //in km
 			"epicenter":[172.7012,-43.5834],//Long Lat
 			},
@@ -1561,6 +1586,8 @@ function ov(feature) {
 							 		text = "people injured";
 								} else if (d[0] === "percentbuildings") {
 							 		text = "in Skopje destroyed";
+							 	} else if (d[0] === "2weeks") {
+							 		text = "within 2 weeks";
 								}
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
 							})
