@@ -866,8 +866,16 @@ function zoom(xyz) {
 	g.transition()
 		.duration(750)
 		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
+	//	.attr("transform", "scale(" + xyz[2] + ")")
 		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
-		
+
+setTimeout(function () {	
+g.selectAll(".warehouse, .headquarters, .office").transition()
+		.duration(75)
+	//	.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")");
+		.attr("transform", "scale(" +  xyz[2] / 6 + ")");
+}, 800);
+	console.log(xyz[2]);		
 
 }
 d3.select("#map").append("div")
@@ -934,7 +942,6 @@ d3.select("#map").append("div")
 		.text("Regional");
 
 function popup (centroid, selection, type) {
-console.log("centroid: " + centroid + " selection: " + selection + " type: " + type);
 var selectionName = "";
 	if (type === "points"){
 		selectionName = selection;
@@ -1013,7 +1020,6 @@ var selectionName = "";
 							
 							})
 							.on("click", function() {
-								console.log(selection);
 								country_clicked(selection);
 							});
 						tooltip.append("div")
@@ -1059,7 +1065,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 					c = "featured";
 			/*		if (path.area(d) < 23) {
 						invisible.attr("transform", function() { 
-						console.log(d);
 		return "translate(" + path.centroid(d) + ")"
 						;}) 
 						invisible.attr("r", 20)
@@ -1116,7 +1121,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 			popup (centroid, selection, type);
 		})
 		.on("click", function(d) {
-			console.log(d);
 			country_clicked(d)
 		});
 
@@ -1139,8 +1143,6 @@ g.append("g").selectAll(".invisible")
 		.enter()	
 		.append("g")
 		.attr("transform", function(d) {
-console.log(path.area(d));
-console.log(d.id);
 				return "translate(" + path.centroid(d) + ")";
 				
 			})
