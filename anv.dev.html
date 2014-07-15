@@ -399,6 +399,18 @@ var tooltip = d3.select("body").append("div")
 //options needs to be created via looping through country files to determine types of content. For now created expressly
 
 var featuredJSON = {
+	"AFG":{
+		"year":2002,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Afghanistan",
+		"tagline":"Since 2002, ongoing conflict and recurring natural disasters have generated significant humanitarian needs in Afghanistan. Natural disasters affect approximately 250,000 Afghans each year; more than 672,000 people remain internally displaced as a result of conflict.",
+		"ovTagline":"Ongoing conflict and recurrent natural disasters",
+		"ovElements":[["affected/yr","250,000",""],["displacedconflict","672,000",""]]
+		},
 	"AGO":{
 		"year":1975,
 		"options":[],
@@ -411,6 +423,29 @@ var featuredJSON = {
   		"ovTagline":"27 yrs of civil war beginning November 1975",
 		"ovElements":[["killed","500,000",""],["displaced","1","MILLION+"]]
 	},
+	"BGD":{
+		"year":1970,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"storm",
+		"fullname":"Bangladesh",
+		"tagline":"With tidal surges of 20-25 feet, Cyclone Bhola devasted Bangladesh in November 1970. The cyclone affected more than 3.6 million people and nearly wiped out the island of Manpura, which lost 3/4 of its people and all but 4 homes.",
+		"ovTagline":"Cyclone Bhola struck on November 12-13, 1970",
+		"ovElements":[["killed","300,000",""],["affected","3.6","MILLION"],["housedestroy","335,000",""]]
+		},
+	"BIH":{
+		"year":1992,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Bosnia and Herzegovina",
+		"tagline":"Following the 1992 collapse of Yugoslavia, conflict between several ethnic groups erupted in newly formed Bosnia and Herzegovina. The war ended on November 21, 1995, leaving more than 97,000 people dead.",
+		"ovElements":[["humanitarian","4.3","MILLION"],["displaced","2.5","MILLION"],["killed","97,000+",""]]
+		},
 	"KHM":{
 		"year":2011,
 		"options":[],
@@ -422,7 +457,19 @@ var featuredJSON = {
 		"tagline":"Heavy rains fell over nearly all of Cambodia in the fall of 2011. Floodwaters spread across 18 of 24 provinces, affecting 1.5 million people and destroying nearly 10 percent of the nation's crops.",
  		"ovTagline":"Flooding in fall of 2011",
 		"ovElements":[["affected","1.5","MILLION"],["provinces","18 <span style='font-size:11pt'> OUT OF </span>24",""],["crops","10%",""]]
-	},	
+		},
+	"CAF":{
+		"year":2012,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Central African Republic",
+		"tagline":"In December 2012, Muslim Seleka fighters engaged in violent clashes with Christian anti-Balaka groups. Security conditions continue to deteriorate as conflict rages on, leaving half the country in need of humanitarian aid.",
+		"ovTagline":"Widespread violence broke out in March 2013",
+		"ovElements":[["affected","2.5","MILLION"],["insecure","1.7","MILLION"],["displaced","913,000",""]]
+		},
 	"CHL":{
 		"year":2010,
 		"options":[],
@@ -434,7 +481,19 @@ var featuredJSON = {
 		"tagline":"In 2010, a magnitude 8.8 earthquake affected 1.8 million people. Chile is one of the most earthquake-prone countries in the world. OFDA's work there and in the region focuses on disaster preparedness.",
 		"ovTagline":"Earthquake on February 27, 2010",
 		"ovElements":[["affected","1.8","MILLION"],["killed","486",""],["house","190,000",""]]
-		},	
+		},
+	"COL":{
+		"year":1985,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"volcano",
+		"fullname":"Colombia",
+		"tagline":"Dormant for nearly 150 years, ‘the Sleeping Lion’ Nevado del Ruiz volcano erupted in 1985, killing some 23,000 people. The eruption led to the creation of the USAID/U.S. Geological Service’s Volcano Disaster Assistance Program, the world’s only volcano crisis response team.",
+		"ovTagline":"Volcano eruption on November 13, 1985",
+		"ovElements":[["killed","23,000",""],["injured","5,000",""],["homeless","7,700",""]]
+		},
 	"CRI":{
 		"year":1963,
 		"options":[],
@@ -447,7 +506,20 @@ var featuredJSON = {
 		"ovTagline":"",
 		"ovElements":[["","",""],["","",""],["","",""]]
 
-		},	
+		},
+	"SLV":{
+		"year":2001,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"quake",
+		"fullname":"El Salvador",
+		"tagline":"In 2001, 2 earthquakes exactly 1 month apart rattled El Salvador and left a wake of destruction. Nearly 1.6 million people were affected and more than 300,000 homes were reduced to rubble. OFDA responded by helping to build more than 22,000 shelters.",
+		"ovTagline":"Earthquakes hit on January 13 & February 13, 2001",
+		"ovElements":[["killed","1,159",""],["affected","1.59","MILLION"],["shelters","22,005",""]]
+		
+		},
 	"FLA":{
 		"year":0,
 		"options":[],
@@ -546,10 +618,34 @@ var featuredJSON = {
 			"epicenter":[142.369,38.233],//Long Lat
 			},
 		"fullname":"Japan",
-		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most serious nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis.",
-		"ovTagline":"",
-		"ovElements":[["","",""],["","",""],["","",""]]
-		},	
+		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most severe nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis.",
+		"ovTagline":"Earthquake and tsunami struck on March 1, 2011",
+		"ovElements":[["killed","19,000",""],["displaced","350,000",""],["damage","$212.5","MILLION"]]
+		},
+	"KOS":{
+		"year":1998,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Kosovo",
+		"tagline":"Conflict in Kosovo between February 1998 and June 1999 displaced hundreds of thousands of ethnic Albanians, resulting in the need for emergency assistance. The humanitarian crisis continued when people returned to their villages, only to find 1/3 of homes were damaged or destroyed.",
+		"ovTagline":"Conflict broke out in February 1998",
+		"ovElements":[["killed","10,000+",""],["displacedKosovo","500,000",""],["homes","365,000",""]]
+		},
+	"LBN":{
+		"year":1975,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Lebanon",
+		"tagline":"Sectarian conflict erupted in 1975 following violence between Christian and Muslim armed groups. The ensuing 15-year civil war resulted in the deaths of approximately 150,000 people and significantly damaged Lebanon's infrastructure and economy.",
+		"ovTagline":"Conflict broke out in 1975",
+		"ovElements":[["killed","150,000",""],["violence","1","MILLION"],["missing","17,000",""]]
+		},
 	"MEX":{
 		"year":1985,
 		"options":[],
@@ -612,9 +708,9 @@ var featuredJSON = {
 			"epicenter":[172.7012,-43.5834],//Long Lat
 			},
 		"fullname":"New Zealand",
-		"tagline":"On February, 22, 2011, a magnitude 6.1 earthquake rocked Christchurch, the country's 2nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate search efforts.",
-		"ovTagline":"",
-		"ovElements":[["","",""],["","",""],["","",""]]
+		"tagline":"On February 22, 2011, a magnitude 6.1 earthquake rocked Christchurch, the country's 2nd largest city. OFDA sent urban search and rescue teams to locate survivors and help coordinate search efforts.",
+		"ovTagline":"Earthquake on February 22, 2011",
+		"ovElements":[["killed","181",""],["affected","301,500",""],["damage","$15","MILLION"]]
 
 		},
 	"NGA":{
@@ -635,7 +731,7 @@ var featuredJSON = {
 		"year":2013,
 		"options":["Story","Video", "Infographic"],
 		"Story":[{"Button":"Strengthening the Philippines through USAID relief","Name":"phl_final.html"},{"Button":"old story","Name":"phl_story.html"}],
-		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/HaEbhGiCVT8"}],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/oCK9IRLCky4"}],
 		"Infographic":[{"Button":"first graphic","Name":"graphic.jpg"}],
 		"type":"storm",
 		"fullname":"Philippines",
@@ -652,8 +748,8 @@ var featuredJSON = {
 		"type":"complex",
 		"fullname":"Rwanda",
 		"tagline":"During a 100 day span in 1994, one of the worst genocides in history claimed the lives of an estimated 800,000 Rwandans.",
-		"ovTagline":"",
-		"ovElements":[["","",""],["","",""],["","",""]]
+		"ovTagline":"Conflict escalated on April 7, 1994",
+		"ovElements":[["killed","800,000",""],["humanitarian","4.5","MILLION"],["displaced","2","MILLION"]]
 
 		},
 
@@ -666,10 +762,23 @@ var featuredJSON = {
 		"Gallery":[{"Button":"Potatoes","Name":"sds_gallery.html"}],
 		"type":"complex",
 		"fullname":"South Sudan",
-		"tagline":"Since conflict erupted in December 2013, more than 1.4 million people have been forced from their homes, up to one million are at risk of famine, and many more are affected by infectious disease outbreaks such as cholera.", 
+		"tagline":"In 1988, OFDA spearheaded efforts to create Operation Lifeline, a system that allowed humanitarian assistance to reach war-torn and drought-affected areas of what is currently in South Sudan. In December 2013, conflict erupted again between South Sudanese government and rebel opposition forces. More than 1.5 million people have been forced from their homes and up to one million are at risk of famine.", 
 		"ovTagline":"Conflict broke out in December 2013",
-		"ovElements":[["famine","1", "MILLION"],["displaced","1.4", "MILLION"],["humanitarian","4", "MILLION"]]  
+		"ovElements":[["displaced","1.5", "MILLION"],["humanitarian","40% country", ""],["insecure","7", "MILLION"]]  
 	
+		},
+		
+	"SYR":{
+		"year":2014,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Syria",
+		"tagline":"4 years of brutal civil war has left more than 10 million people in need of humanitarian assistance in Syria. Nearly 1/2 the population is displaced, and the crisis affected more than 5 million children, which is as much as the total population of Norway.",
+		"ovTagline":"Conflict broke out in March 2011",
+		"ovElements":[["humanitarian","10.8","MILLION"],["refugees","2.9","MILLION"],["children","5.5","MILLION"]]
 		},
 	"THA":{
 		"year":2011,
@@ -1589,11 +1698,15 @@ function ov(feature) {
 								} else if (d[0] === "provinces") {
 									text = "provinces hit";
 								} else if (d[0] === "homeless") {
-							 		text = "left homeless";
+							 		text = "people left homeless";
 								} else if (d[0] === "damage") {
 							 		text = "in damages";
 								} else if (d[0] === "housedestroy") {
 							 		text = "houses destroyed";
+								} else if (d[0] === "homes") {
+							 		text = "homes damaged";
+								} else if (d[0] === "displacedKosovo") {
+							 		text = "people displaced in Kosovo";
 								} else if (d[0] === "buildingdestroy") {
 							 		text = "buildings destroyed";
 								} else if (d[0] === "injured") {
@@ -1602,7 +1715,26 @@ function ov(feature) {
 							 		text = "in Skopje destroyed";
 							 	} else if (d[0] === "2weeks") {
 							 		text = "within 2 weeks";
+								} else if (d[0] === "children") {
+							 		text = "children affected";
+								} else if (d[0] === "refugees") {
+							 		text = "refugees";
+								} else if (d[0] === "insecure") {
+							 		text = "people food insecure";
+								} else if (d[0] === "shelters") {
+							 		text = "temporary shelters built";
+								} else if (d[0] === "affected/yr") {
+							 		text = "people affected annually";
+								} else if (d[0] === "displacedconflict") {
+							 		text = "people displaced by conflict";
+								} else if (d[0] === "buildingsdestroyedSkopje") {
+							 		text = "of buildings <br> in Skopje destroyed";
+								} else if (d[0] === "missing") {
+							 		text = "people missing";
+								} else if (d[0] === "violence") {
+							 		text = "people fled violence";
 								}
+								
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
 							})
 }
