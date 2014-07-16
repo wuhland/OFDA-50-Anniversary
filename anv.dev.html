@@ -877,19 +877,24 @@ var dialogOptionBoolean;
 dialogOptionBoolean = 0;
 
 function zoom(xyz) {
+
 	g.transition()
 		.duration(750)
 		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
-	//	.attr("transform", "scale(" + xyz[2] + ")")
 		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
 
-setTimeout(function () {	
-g.selectAll(".warehouse, .headquarters, .office").transition()
-		.duration(75)
+//setTimeout(function () {	
+
+
+//g.selectAll(".warehouse, .headquarters, .office").transition()
+//		.duration(75)
 	//	.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")");
-		.attr("transform", "scale(" +  xyz[2] / 6 + ")");
-}, 800);
-	console.log(xyz[2]);		
+	//	.attr("transform",function(d){
+			//return d3.select(this).attr("transform") + "scale(" + 1 / xyz[2] + ")"});
+//		.style("height", 1.0 / xyz[2] + "px")
+//		.style("width", 1.0 / xyz[2] + "px")
+		
+//}, 900);
 
 }
 d3.select("#map").append("div")
@@ -1063,9 +1068,6 @@ var selectionName = "";
 	}
 }
 
-//var invisible = g.selectAll(".invisible").append("circle").attr("class","invisible")
-//var invisible = g.append("svg").attr("class","invisible").append("circle");
-//var invisible = g.selectAll("circle")
 d3.json("countries_min.topo.json", function(error, us) {	
 		g.append("g")
 			.attr("id", "countries")
@@ -1077,13 +1079,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 				var c = "";
 				if (featuredMap.has(d.id)) {
 					c = "featured";
-			/*		if (path.area(d) < 23) {
-						invisible.attr("transform", function() { 
-		return "translate(" + path.centroid(d) + ")"
-						;}) 
-						invisible.attr("r", 20)
-						invisible.style("fill","red"); 
-					} */  
 				} else {
 					c = "notFeatured";
 				}
@@ -1152,36 +1147,34 @@ d3.json("countries_min.topo.json", function(error, us) {
 		.attr("class","boundary")
 		.attr("d",path);
 
-g.append("g").selectAll(".invisible")
-	.data(topojson.feature(us, us.objects.countries_min).features)
-		.enter()	
-		.append("g")
-		.attr("transform", function(d) {
-				return "translate(" + path.centroid(d) + ")";
-				
-			})
+	g.append("g").selectAll(".invisible")
+		.data(topojson.feature(us, us.objects.countries_min).features)
+			.enter()	
 			.append("circle")
-			.attr("r", function (d) {
-				var rad;
-				if (featuredMap.has(d.id) && (path.area(d) <= 80)){
-					rad = 5 ;
-				} else {
-					rad = 0 ;
-				}
-				return rad;
-			})	
-			.style("fill","red")
-			.style("fill-opacity","0")
-
-			.on("mouseover", function (d) {
-				var centroid = path.centroid(d);
-				var selection = d;
-				var type = "countries";
-				popup (centroid, selection, type);	
-			})
-			.on("click", function(d) {
-				country_clicked(d);
-			});
+			.attr("transform", function(d) {
+					return "translate(" + path.centroid(d) + ")";
+					
+				})
+				.attr("r", function (d) {
+					var rad;
+					if (featuredMap.has(d.id) && (path.area(d) <= 80)){
+						rad = 5 ;
+					} else {
+						rad = 0 ;
+					}
+					return rad;
+				})	
+				.style("fill","red")
+				.style("fill-opacity","0")
+				.on("mouseover", function (d) {
+					var centroid = path.centroid(d);
+					var selection = d;
+					var type = "countries";
+					popup (centroid, selection, type);	
+				})
+				.on("click", function(d) {
+					country_clicked(d);
+				});
 
 setTimeout(function() {
 
