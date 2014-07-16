@@ -465,6 +465,21 @@ var featuredJSON = {
 		"tagline":"Following the 1992 collapse of Yugoslavia, conflict between several ethnic groups erupted in newly formed Bosnia and Herzegovina. The war ended on November 21, 1995, leaving more than 97,000 people dead.",
 		"ovElements":[["humanitarian","4.3","MILLION"],["displaced","2.5","MILLION"],["killed","97,000+",""]]
 		},
+	"ETH":{
+		"cat":"regional",
+		"catName":"Horn of Africa",
+		"catID":"horn",
+		"year":2011,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"N/A",
+		"fullname":"Ethiopia",
+		"tagline":"",
+		"ovTagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
+		},
 	"KEN":{
 		"cat":"regional",
 		"catName":"Horn of Africa",
@@ -479,7 +494,6 @@ var featuredJSON = {
 		"tagline":"",
 		"ovTagline":"",
 		"ovElements":[["","",""],["","",""],["","",""]]
-
 		},
 	"KHM":{
 		"cat":"country",
@@ -1120,13 +1134,13 @@ var regionalDisasters = {
 		"xyz":[400,400,3],
 		"fullname":"Sahel Famine",
 		"type":"famine",
-		"countries":["#SOM, #MLI"]
+		"countries":["#SEN, #MRT, #SOM, #MLI"]
 	},
 	"horn":{
 		"xyz":[400,400,3],
 		"fullname":"Horn of Africa",
 		"type":"famine",
-		"countries":["#SOM, #MLI"]
+		"countries":["#DJI, #ETH, #SOM, #MLI"]
 		
 	}	
 }
@@ -2243,9 +2257,8 @@ function country_clicked(d) {
 
 		}
 
-		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id] == "volcano") {
+		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id].type == "volcano") {
 			contentDialog(d);
-						
 			var feature = d;	
 			g.selectAll( "#" + d.id ).classed(".hide");
 			zoom2ADM(d,xyz);
