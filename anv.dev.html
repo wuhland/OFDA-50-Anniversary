@@ -1025,6 +1025,21 @@ var featuredJSON = {
 		"ovElements":[["","",""],["","",""],["","",""]]
 
 		},
+	"SDN":{
+		"cat":"country",
+		"year":2013,
+		"options":[],		
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"Gallery":[],
+		"type":"complex",
+		"fullname":"Sudan",
+		"tagline":"In February 2003, rebels in the Darfur region took up arms against the Sudanese government over its treatment of the non-Arab population. The government's retaliation and ensuing conflict has affected more than 4.7 million people, to date.", 
+		"ovTagline":"Conflict broke out in February 2013",
+		"ovElements":[["affected","4.7", "MILLION"],["displaced","3", "MILLION"],["camps","1.2", "MILLION"]]  
+	
+		},
 		
 	"SYR":{
 		"cat":"country",
@@ -2121,6 +2136,8 @@ function ov(feature) {
 							 		text = "people missing";
 								} else if (d[0] === "violence") {
 							 		text = "people fled violence";
+							 	} else if (d[0] === "camps") {
+							 		text = "people remain in camps";
 								}
 								
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
