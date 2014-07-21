@@ -274,6 +274,7 @@ font-weight:400;
 font-size: small;
 color:white;
 line-height:100%;
+pointer-events:none;
 
 }
 
@@ -701,6 +702,7 @@ var featuredJSON = {
 		},	
 	"IND":{
 		"cat":"both",
+		"catID":"io_tsunami",	
 		"year":1999,
 		"options":[],		
 		"Story":[],
@@ -1009,7 +1011,7 @@ var featuredJSON = {
 		},
 	"SOM":{
 		"cat":"doubleRegional",
-		"catName":"Indian Ocean Tsunami",
+		"catName":["Indian Ocean Tsunami","Horn of Africa Famine"],
 		"catID":["io_tsunami","horn"],
 		"year":2004,
 		"options":[],
@@ -1131,10 +1133,7 @@ var points2 = {
 	}
 }
 
-//var regionalDisasters = [
-//["io_tsunami",[600,400,3],"Indian Ocean Tsunami","quake","#IDN, #IND, #SOM"],
-//["sahel",[400,400,3],"Sahel Famine","famine","#SOM, #MLI"]
-//]
+
 var regionalDisasters = {
 	"io_tsunami":{
 		"xyz":[600,400,3],
@@ -1223,24 +1222,31 @@ svg.append("rect")
 var g = svg.append("g");
 
 function testDialog (dialogOptionBoolean, Media) {
+
+			console.log(dialogOptionBoolean);
 	if (dialogOptionBoolean === 0) {
 		d3.select("#" + Media).style("background-color","#16B0C1").style("color","white");	
-		d3.selectAll(".dialogBoxOptionContainer").remove(); 
+		d3.selectAll(".dialogBoxOptionContainer").remove();
+		tooltip.transition().duration(700).style("opacity", 0);
+		tooltip.transition().delay(705).each('start', function(){
+//		d3.select(this).style("opacity",0);
+			d3.selectAll(".popDetail, #tooltipImg, .popName, #arrow, .another").remove();
+	//		d3.selectAll("#arrow").remove();
+		}).style("width","0px").style("height","0px") 
 	}
 }
 
-var dialogOptionBoolean;
-
-dialogOptionBoolean = 0;
+var dialogOptionBoolean = 0;
 
 function zoom(xyz) {
-
+dialogOptionBoolean = 0;
 	g.transition()
 		.duration(750)
 		.attr("transform", "translate(" + projection.translate() + ")scale(" + xyz[2] + ")translate(-" + xyz[0] + ",-" + xyz[1] + ")")
 		.select(".boundary").style("stroke-width", 1.0 / xyz[2] + "px")
 
 }
+
 d3.select("#map").append("div")
 	.attr("id","cdContainer")
 	.style("width", width + "px")
@@ -1305,7 +1311,6 @@ d3.select("#map").append("div")
 		.text("Regional");
 
 function popup (centroid, selection, type) {
-console.log("type = " + type);
 var selectionName = "";
 var click = function () {};
 var color;
@@ -1315,11 +1320,8 @@ var color;
 		selectionName = selection;
 		headline = points2[selection].fullname;
 		tagline = points2[selection].tagline;
-	} else if (type === "country" || type === "both" || type === "doubleRegional"   ) {
-			console.log("click");
-		console.log(selection);
-		click = function(){country_clicked(selection); console.log(selection);}; 
-		
+	} else if (type === "country" || type === "both"  ) {
+		click = function(){country_clicked(selection);}; 
 		color = "#" + selection.id; 
 		selectionName = selection.id;
 		headline = featuredJSON[selection.id].fullname;
@@ -1334,22 +1336,22 @@ var color;
 	} else if (type === "regional") {
 		click = function() {zoom( regionalDisasters[featuredJSON[selection.id].catID].xyz)};
 		color = regionalDisasters[featuredJSON[selection.id].catID].countries;
-console.log(selection.id)
 		selectionName =  featuredJSON[selection.id].catID;
 		headline = regionalDisasters[featuredJSON[selection.id].catID].fullname;
 		tagline = regionalDisasters[featuredJSON[selection.id].catID].tagline;	
 	} else if (type === "invisible" ) {
-			console.log("click");
 		color = "#" + selection.id; 
 		click = function(){country_clicked(selection);}; 
 		selectionName = selection.id;
 		headline = featuredJSON[selection.id].fullname;
 		tagline = featuredJSON[selection.id].tagline;
-	}
-console.log(selectionName)
-console.log("color = " + color)
-console.log("click = " + click)
-
+	} else if (type === "doubleRegional"   ) {
+		click = null; 
+		color = "#" + selection.id; 
+		selectionName = selection.id;
+		headline = featuredJSON[selection.id].fullname;
+		tagline = featuredJSON[selection.id].tagline;
+	} 
 	
 						var arrow = {};
 						var offsets = [];
@@ -1368,9 +1370,6 @@ console.log("click = " + click)
 							offsets = [95,40];
 						}
 	 
-				//		d3.select(this).style("fill","#0A68FF0").transition().duration(2000).style("fill","#002A6C");
-					//		.attr("fill", "#E89624")
-					//		.attr("fill-opacity", 1);
 						tooltip
 							.style("width", "200px")
 							.attr("class","tooltip pop")
@@ -1381,8 +1380,10 @@ console.log("click = " + click)
 							.style("visibility","visible")
 			    			.style("display", "block");				
 						tooltip.selectAll("div").remove();
-						tooltip.selectAll("img").remove();
+						tooltip.selectAll("img").remove()
+						tooltip.selectAll(".arrow .another").remove();
 						tooltip.insert("div")
+							.attr("id","base")
 							.append('span')
 							.text(function(d){
 								return headline})				
@@ -1402,20 +1403,15 @@ console.log("click = " + click)
 					tooltip.append("div")
 							.attr("class","popFront")
 							.on("mouseover", function() {
-								
-								console.log(color);
-								d3.select(color).transition().duration(700).style("fill","#E89624");
+								dialogOptionBoolean += 1;
+								d3.selectAll(color).transition().duration(700).style("fill","#E89624");
 							})	
 							.on("mouseout", function(d) {
-								console.log(color);
-								d3.select(color).transition().duration(700).style("fill","#FFCB36");
-								tooltip.transition().duration(700).style("opacity", 0);
-								tooltip.transition().delay(705).each('start', function(){
-									d3.select(this).style("opacity",0);
-									d3.selectAll(".popDetail, #tooltipImg, .popName","#arrow").remove();
-									d3.selectAll("#arrow").remove();
-								}).style("width","0px").style("height","0px")
-							
+								dialogOptionBoolean -= 1;
+								console.log("Hello ;)  " + color);
+								d3.selectAll(color).transition().duration(700).style("fill","#FFCB36");
+	
+							setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
 							})
 							.on("click", click);
 						tooltip.append("div")
@@ -1423,6 +1419,70 @@ console.log("click = " + click)
 							.style("position","absolute")
 							.attr("id","arrow")
 							.on("click", click)	
+	console.log("selection.id = " + selection.id);
+if (type === "both") {
+	d3.select(".tooltip").append("div")
+		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"grey","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
+		.attr("id","another")
+		.style("padding","8px")
+		.style("width","200px")
+		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " was also affected by the " + regionalDisasters[featuredJSON[selection.id].catID].fullname + " click here to find out more about OFDA's responce to that disaster.</span>")
+		.on("mouseover", function() {
+			dialogOptionBoolean += 1;
+			d3.selectAll(regionalDisasters[featuredJSON[selection.id].catID].countries).transition().duration(700).style("fill","#E89624");
+		}) 
+		.on("mouseout", function() {
+			dialogOptionBoolean -= 1;
+			d3.selectAll(regionalDisasters[featuredJSON[selection.id].catID].countries).transition().duration(700).style("fill","#FFCB36");
+			setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
+		})
+} else if (type === "doubleRegional"){
+	d3.select(".tooltip").append("div")
+		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"grey","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
+		.attr("id","another")
+		.style("padding","8px")
+		.style("width","200px")
+
+		.on("mouseover", function() {
+			console.log("mouseover 1");
+			dialogOptionBoolean += 1;
+	//		console.log("countries = " + regionalDisasters[color[0]].countries);
+			d3.selectAll(regionalDisasters[featuredJSON[selection.id].catID[0]].countries).transition().duration(700).style("fill","#E89624");
+		}) 
+		.on("mouseout", function() {
+			dialogOptionBoolean -= 1;
+			console.log("mouseout 1");
+			console.log(regionalDisasters[featuredJSON[selection.id].catID[0]].countries);
+			d3.selectAll(regionalDisasters[featuredJSON[selection.id].catID[0]].countries).transition().duration(70).style("fill","#FFCB36");
+			setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
+		})
+		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " was affected by the " + regionalDisasters[featuredJSON[selection.id].catID[0]].fullname + " click here to find out more about OFDA's responce to that disaster.</span>")
+		.append("div")
+			.style({"width":"100%","display":"inline-block","left":"0px","background-color":"aquamarine","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
+			.attr("id","another")
+			.style("padding","8px")
+			.style("width","200px")
+			.html("<span class=popDetail>" + regionalDisasters[featuredJSON[selection.id].catID[1]].fullname + " also triggered an OFDA responce click here to find out about that.</span>")
+			.on("mouseover", function() {
+				console.log("mouseover 2");
+				dialogOptionBoolean += 1;
+				d3.selectAll(regionalDisasters[featuredJSON[selection.id].catID[1]].countries).transition().duration(700).style("fill","#E89624");
+//	setTimeout(function(){d3.selectAll(regionalDisasters[featuredJSON[selection.id].catID[1]].countries).transition().duration(700).style("fill","#E89624")},80);
+			})
+			.on("mouseover.chill", function() { 
+				d3.event.stopPropagation();
+			})		
+			.on("mouseout", function() {
+				console.log("mouseout 2");
+				dialogOptionBoolean -= 1;
+				d3.selectAll(regionalDisasters[featuredJSON[selection.id].catID[1]].countries).transition().duration(700).style("fill","#FFCB36");
+				setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
+			})		
+			.on("mouseout.chill", function() { 
+				d3.event.stopPropagation();
+			})
+
+	}
 
 }
 
@@ -1452,7 +1512,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 			.attr("d", path)
 			.on("click", function(d) {
 				var c;
-				console.log(d);
 				if (featuredMap.has(d.id)) {
 					c = country_clicked(d);
 					if (featuredJSON[d.id].cat === "regional") {
@@ -1473,11 +1532,10 @@ d3.json("countries_min.topo.json", function(error, us) {
 						var centroid = path.centroid(d);
 						var selection = d;
 						var type = featuredJSON[d.id].cat;
-console.log( selection);
 						popup(centroid, selection, type); 
 						c = "";		
-						if (featuredJSON[d.id].cat === "country"){
-							c =	d3.select(this).transition().duration(700).style("fill", "#E89624");
+						if (featuredJSON[d.id].cat === "country" || featuredJSON[d.id].cat === "doubleRegional" || featuredJSON[d.id].cat === "both"){ 
+							c =	d3.select("#" + d.id).transition().duration(700).style("fill", "#E89624");
 						} else if (featuredJSON[d.id].cat === "regional"){
 							c =	d3.selectAll(regionalDisasters[featuredJSON[d.id].catID].countries)
 								.transition().duration(700).style("fill", "#E89624");
@@ -1707,20 +1765,60 @@ d3.select("#globeContainer")
 		d3.selectAll(".earthquake").remove();	
 		d3.selectAll(".notFeatured").style("fill","#CFCDC9").style("opacity",1)
 		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1)
-		.on("click", function(d){ country_clicked(d) } )
-		.on("mouseover", function (d) {
-			var centroid = path.centroid(d);
-			var selection = d;
-			var type = "countries";
-			popup(centroid, selection, type); 
+			.on("click", function(d) {
+				var c;
+				if (featuredMap.has(d.id)) {
+					c = country_clicked(d);
+					if (featuredJSON[d.id].cat === "regional") {
+						
+						c =	 zoom(regionalDisaster[featuredJSON[d.id].catID].xyz);
+						
+					}
+							 
+				} else {
+					c = null;
+				}
+				return c;
+				} )
+			.on("mouseover", function(d) {
+			 			
+				if (featuredMap.has(d.id)) {
+				  		
+						var centroid = path.centroid(d);
+						var selection = d;
+						var type = featuredJSON[d.id].cat;
+						popup(centroid, selection, type); 
+						c = "";		
+						if (featuredJSON[d.id].cat === "country"){
+							c =	d3.select(this).transition().duration(700).style("fill", "#E89624");
+						} else if (featuredJSON[d.id].cat === "country" || featuredJSON[d.id].cat === "doubleRegional" || featuredJSON[d.id].cat === "both"){
+							c =	d3.selectAll(regionalDisasters[featuredJSON[d.id].catID].countries)
+								.transition().duration(700).style("fill", "#E89624");
+						}
+						return c;
+	
+				} else {
+					 return	null;
+				}
+				
 
-		})
-		.on("mouseout", function (d) {
-			d3.select("#" + d.id)
-				.style("fill","#FFCB36")
-				.attr("fill-opacity", function(d){return 1;})
-			
-		}) 
+			})
+			.on("mouseout", function(d) {	
+					c = "";	
+				if (featuredMap.has(d.id)) {
+					if (featuredJSON[d.id].cat === "country"){
+						c =	d3.select(this).transition().duration(700).style("fill", "#FFCB36");
+					} else if (featuredJSON[d.id].cat === "regional"){
+						c =	d3.selectAll(regionalDisasters[featuredJSON[d.id].catID].countries)
+							.transition().duration(700).style("fill", "#FFCB36");
+					}
+				} else {
+					c = null;
+				}
+				return c;
+			})
+
+ 
 	} else if (xyz[2] > 1) {
 		d3.selectAll(".warehouse, .office, .headquarters")
 			.on("mouseover",null);
