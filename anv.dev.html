@@ -477,9 +477,9 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"N/A",
 		"fullname":"Ethiopia",
-		"tagline":"",
-		"ovTagline":"",
-		"ovElements":[["","",""],["","",""],["","",""]]
+		"tagline":"From 1983-1985, drought conditions and political conflict in Ethiopia led to the worst famine in a century, causing more than 300,000 deaths and affecting more than 7.7 million people.",
+		"ovTagline":"Drought and Conflict led to famine in 1984",
+		"ovElements":[["killed","300,000",""],["affected","7.7","MILLION"],["regions","12 out of 14",""]]
 		},
 	"KEN":{
 		"cat":"regional",
@@ -690,9 +690,9 @@ var featuredJSON = {
 		"catName":"Indian Ocean Tsunami",
 		"catID":"io_tsunami",
 		"year":2004,
-		"options":[],
+		"options":["Video"],
 		"Story":[],
-		"Video":[],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/sk57TjjdcCY"}],
 		"Infographic":[],
 		"type":"N/A",
 		"fullname":"Indonesia",
@@ -743,7 +743,7 @@ var featuredJSON = {
 			},
 		"fullname":"Japan",
 		"tagline":"On March 11, 2011, a tsunami produced by a magnitude 9.0 earthquake struck the Fukushima Daiichi power plant, creating one of the most severe nuclear meltdowns in history. This marked the first time OFDA responded following a major nuclear crisis.",
-		"ovTagline":"Earthquake and tsunami struck on March 1, 2011",
+		"ovTagline":"Earthquake and tsunami struck on March 11, 2011",
 		"ovElements":[["killed","19,000",""],["displaced","350,000",""],["damage","$212.5","MILLION"]]
 		},
 	"KOS":{
@@ -947,8 +947,21 @@ var featuredJSON = {
 		"fullname":"Nigeria",
 		"tagline":"In May 1967, ethnic tensions led the southeastern state of Biafra to secede from Nigeria. Over the next 2 and a half years, the Biafran Civil War left more than 1 million people dead as a result of violence and famine.",
 		"ovTagline":"Civil War from July 1967 - January 1970",
-		"ovElements":[["killed","181",""],["killed","1","MILLION"],["humanitarian","3.5","MILLION"]]
+		"ovElements":[["","",""],["killed","1","MILLION+"],["humanitarian","3.5","MILLION"]]
 		
+		},
+	"PAK":{
+		"cat":"country",
+		"year":1975,
+		"options":["Video"],
+		"Story":[],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/vmY2H49O4xo"}],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Lebanon",
+		"tagline":"Words",
+		"ovTagline":"Conflict broke out in 1975",
+		"ovElements":[["killed","150,000",""],["violence","1","MILLION"],["missing","17,000",""]]
 		},
 		
 	"PHL":{
@@ -1083,6 +1096,8 @@ var featuredJSON = {
 		"Video":[],
 		"tagline":"The deadliest tsunami in recorded history struck on December 26, 2004, killing an estimated 220,000 people and displacing more than 1.1 million people. Produced by a magnitude 9.0 earthquake, the tsunami affected at least 12 countries in the region.",
 		"type":"quake",
+		"ovTagline":"Storm struck on December 26, 2004",
+		"ovElements":[["killed","220,000",""],["displaced","1.1","MILLION"],["countriesaffected","12",""]].
 		"countries":"#IDN, #IND, #SOM, #MYS, #LKA, #THA"
 	},
 	"sahel":{
@@ -1095,8 +1110,10 @@ var featuredJSON = {
 		"Story":[],
 		"Infographic":[],
 		"Video":[],
-		"tagline":"The U.N. estimates 20 million people in West Africa?s Sahel region are currently on the brink of starvation. In 2012, a combination of drought, conflict, failed crops, insect plague and high food prices led to a food insecurity crisis in the region.",
+		"tagline":"The U.N. estimates 20 million people in West Africa's Sahel region are currently on the brink of starvation. In 2012, a combination of drought, conflict, failed crops, insect plague and high food prices led to a food insecurity crisis in the region.",
 		"type":"famine",
+		"ovTagline":"Chronic food insecurity (2012 - present)",
+		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+"],["","",""]],
 		"countries":"#MRT,#SEN,#SOM, #MLI, #BFA, #NGA, #NER, #TCD"
 	},
 	"horn":{
@@ -1109,8 +1126,10 @@ var featuredJSON = {
 		"Story":[],
 		"Infographic":[],
 		"Video":[],
-		"tagline":"In 2011, the worst drought in 60 years affected 13 million people in the Horn of Africa, more than the populations of NYC and LA combined. This led the U.N. declared a famine in Somalia and prompted a vast humanitarian response to the region.",
+		"tagline":"In 2011, the worst drought in 60 years affected 13 million people in the Horn of Africa, more than the populations of NYC and LA combined. This led the U.N. to declare a famine in Somalia and prompted a vast humanitarian response to the region.",
 		"type":"famine",
+		"ovTagline":"Drought led to famine declaration in 2011",
+		"ovElements":[["affected","13","MILLION"],["countriesimpacted","4",""],["worst","60",""]],
 		"countries":"#DJI,  #ETH,  #SOM, #KEN"
 	}
 };
@@ -1215,7 +1234,7 @@ var regionalDisasters = {
 		"Story":[],
 		"Infographic":[],
 		"Video":[],
-		"tagline":"The U.N. estimates 20 million people in West Africa?s Sahel region are currently on the brink of starvation. In 2012, a combination of drought, conflict, failed crops, insect plague and high food prices led to a food insecurity crisis in the region.",
+		"tagline":"The U.N. estimates 20 million people in West Africa's Sahel region are currently on the brink of starvation. In 2012, a combination of drought, conflict, failed crops, insect plague and high food prices led to a food insecurity crisis in the region.",
 		"type":"famine",
 		"countries":"#MRT,#SEN,#SOM, #MLI, #BFA, #NGA, #NER, #TCD"
 	},
@@ -2260,6 +2279,8 @@ function ov(feature) {
 							 		text = "within 2 weeks";
 								} else if (d[0] === "children") {
 							 		text = "children affected";
+							 	} else if (d[0] === "regions") {
+							 		text = "regions affected";
 								} else if (d[0] === "refugees") {
 							 		text = "refugees";
 								} else if (d[0] === "insecure") {
@@ -2278,8 +2299,14 @@ function ov(feature) {
 							 		text = "people fled violence";
 							 	} else if (d[0] === "camps") {
 							 		text = "people remain in camps";
+							 	} else if (d[0] === "worst") {
+							 		text = "Years worst drought";
+							 	} else if (d[0] === "mal") {
+							 		text = "children faced severe acute malnutrition in 2012";
+							 	} else if (d[0] === "countriesaffected") {
+							 		text = "countries affected";
 								}
-								
+							
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
 							})
 }
