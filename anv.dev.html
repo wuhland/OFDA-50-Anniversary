@@ -402,8 +402,8 @@ var featuredJSON = {
 	"AFG":{
 		"cat":"country",
 		"year":2002,
-		"options":[],
-		"Story":[],
+		"options":["Story"],
+		"Story":[{"Button":"Hot Potatoe: Improving Potato Farming in Afghanistan","Name":"PoP_Afghanistan.html"}],
 		"Video":[],
 		"Infographic":[],
 		"type":"complex",
@@ -475,7 +475,7 @@ var featuredJSON = {
 		"Story":[],
 		"Video":[],
 		"Infographic":[],
-		"type":"N/A",
+		"type":"famine",
 		"fullname":"Ethiopia",
 		"tagline":"From 1983-1985, drought conditions and political conflict in Ethiopia led to the worst famine in a century, causing more than 300,000 deaths and affecting more than 7.7 million people.",
 		"ovTagline":"Drought and Conflict led to famine in 1984",
@@ -960,7 +960,7 @@ var featuredJSON = {
 		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/vmY2H49O4xo"}],
 		"Infographic":[],
 		"type":"complex",
-		"fullname":"Lebanon",
+		"fullname":"Pakistan",
 		"tagline":"Words",
 		"ovTagline":"Conflict broke out in 1975",
 		"ovElements":[["killed","150,000",""],["violence","1","MILLION"],["missing","17,000",""]]
@@ -970,7 +970,7 @@ var featuredJSON = {
 		"cat":"country",
 		"year":2013,
 		"options":["Story","Video", "Infographic"],
-		"Story":[{"Button":"Strengthening the Philippines through USAID relief","Name":"phl_final.html"},{"Button":"old story","Name":"phl_story.html"}],
+		"Story":[{"Button":"Strengthening the Philippines through USAID relief","Name":"phl_final.html"}],
 		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/oCK9IRLCky4"}],
 		"Infographic":[{"Button":"first graphic","Name":"graphic.jpg"}],
 		"type":"storm",
@@ -1104,7 +1104,7 @@ var featuredJSON = {
 	},
 	"sahel":{
 		"id":"sahel",
-		"xyz":[400,400,3],
+		"xyz":[380,350,5],
 		"fullname":"Sahel Famine",
 		"year":2011,
 		"options":[],
@@ -1116,11 +1116,11 @@ var featuredJSON = {
 		"type":"famine",
 		"ovTagline":"Chronic food insecurity (2012 - present)",
 		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+"],["","",""]],
-		"countries":"#MRT,#SEN,#SOM, #MLI, #BFA, #NGA, #NER, #TCD"
+		"countries":"#MRT,#SEN, #MLI, #BFA, #NGA, #NER, #TCD"
 	},
 	"horn":{
 		"id":"horn",
-		"xyz":[400,400,3],
+		"xyz":[520,390,7],
 		"fullname":"Horn of Africa",
 		"year":2011,
 		"options":[],
@@ -1283,9 +1283,13 @@ function testDialog (dialogOptionBoolean, Media) {
 		tooltip.transition().duration(700).style("opacity", 0);
 		tooltip.transition().delay(705).each('start', function(){
 //		d3.select(this).style("opacity",0);
-			d3.selectAll(".popDetail, #tooltipImg, .popName, #arrow, .another").remove();
+			d3.selectAll(".popDetail, #tooltipImg").remove()
+			d3.selectAll(".popName").remove()
+			d3.selectAll("#arrow").remove() 
+			d3.selectAll(".another").remove()
+			d3.selectAll(".popFront").remove()
 	//		d3.selectAll("#arrow").remove();
-		}).style("width","0px").style("height","0px") 
+		}).style("width","0px").style("height","0px").style("left","0px").style("top","0px").style("pointer-events","none"); 
 	}
 }
 
@@ -1312,25 +1316,14 @@ d3.select("#map").append("div")
 		.on("click", function() {
 			d3.select("#ovContainer").remove();
 			d3.select("#dataTitle").remove();
-			d3.select("#hurr").remove();
-			d3.select("#icon").remove();
 			var xyz = [width / 2, height / 2, 1];
     		country = null;
-			g.selectAll(".hide").classed("featured",true).classed("hide",false);
 			d3.select("#dialogBoxUnit").remove();
+			d3.selectAll(".dialogBox").remove();
 			d3.select("#swipeBack").remove();
     		zoom(xyz);
-			g.selectAll([".active", ".active_boundary"]).remove();
-			d3.selectAll(".dialogBox").remove();
 			isGlobal(xyz,null);
 		})
-/*		.on("mouseover", function() {
-			d3.select(this).style("box-shadow", "2px 2px 4px rgb(136,136,136)");
-		})
-		.on("mouseout", function() {
-			d3.select(this).style("box-shadow", "1px 1px 2px rgb(136,136,136)");
-		})
-*/		
 		.append("span")
 		.html("Map")
 		.style("margin-left","23px")
@@ -1347,7 +1340,7 @@ globe.onload = function(d){
 globe.src = 'globe.png';
 
 var zoomRegion = function(region) {	
-		d3.selectAll(".popDetail, #tooltipImg, .popName").remove();
+		d3.selectAll(".popDetail, #tooltipImg, .popName, .another").remove();
 		d3.select(".tooltip").style("opacity",0).style("width","0px");	
 		zoom(region.xyz);
 		contentDialog(region.id);
@@ -1363,7 +1356,7 @@ function popup (centroid, selection, type) {
 	var color;
 	if (type === "points"){
 		click = null;
-		color = null;
+		color = "#NA";
 		selectionName = selection;
 		headline = points2[selection].fullname;
 		tagline = points2[selection].tagline;
@@ -1417,6 +1410,7 @@ if (centroid[0] >= .8 * width) {
 	}
 	 
 		tooltip
+			.style("pointer-events","auto")
 			.attr("class","tooltip pop")
 			.style("width", "200px")
 			.style("opacity", 0)
@@ -1446,8 +1440,8 @@ if (centroid[0] >= .8 * width) {
 		var image = new Image();
 
 		image.onload = function(error, d){
-			document.getElementById("tooltipImg").src = 'data/' + type + "/"  + selectionName.toLowerCase() + '/popimg.jpg';}
-			image.src = 'data/' + type + "/"  + selectionName.toLowerCase() + '/popimg.jpg';
+			document.getElementById("tooltipImg").src = 'data/' + "countries" + "/"  + selectionName.toLowerCase() + '/popimg.jpg';}
+			image.src = 'data/' + "countries"  + "/"  + selectionName.toLowerCase() + '/popimg.jpg';
 
 			tooltip.insert("div")
 			.append('span')					
@@ -1457,12 +1451,14 @@ if (centroid[0] >= .8 * width) {
 			tooltip.append("div")
 				.attr("class","popFront")
 				.on("mouseover", function() {
+					dialogOptionBoolean = 0;
 					dialogOptionBoolean += 1;
-					d3.selectAll(color).transition().duration(700).style("fill","#E89624");
+					d3.selectAll(color).transition().duration(500).style("fill","#E89624");
 				})	
 				.on("mouseout", function(d) {
+					
 					dialogOptionBoolean -= 1;
-					d3.selectAll(color).transition().duration(700).style("fill","#FFCB36");
+					d3.selectAll(color).transition().duration(500).style("fill","#FFCB36");
 					setTimeout(function(){
 						testDialog(dialogOptionBoolean,null)},10);
 				})
@@ -1472,22 +1468,22 @@ if (centroid[0] >= .8 * width) {
 				.style(arrow)
 				.style("position","absolute")
 				.attr("id","arrow")
-				.on("click", click)	
+				.on("click", click);	
 
 if (type === "both") {
 	d3.select(".tooltip").append("div")
 		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
-		.attr("id","another")
+		.attr("class","another")
 		.style("padding","8px")
 		.style("width","200px")
 		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " was also affected by the " + featuredJSON[featuredJSON[selection.id].catID].fullname + " click here to find out more about OFDA's responce to that disaster.</span>")
 		.on("mouseover", function() {
 			dialogOptionBoolean += 1;
-			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID].countries).transition().duration(700).style("fill","#E89624");
+			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID].countries).transition().duration(500).style("fill","#E89624");
 		}) 
 		.on("mouseout", function() {
 			dialogOptionBoolean -= 1;
-			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID].countries).transition().duration(700).style("fill","#FFCB36");
+			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID].countries).transition().duration(500).style("fill","#FFCB36");
 			setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
 		})
 		.on("click", function() {
@@ -1498,13 +1494,13 @@ if (type === "both") {
 } else if (type === "doubleRegional"){
 	d3.select(".tooltip").append("div")
 		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
-		.attr("id","another")
+		.attr("class","another")
 		.style("padding","8px")
 		.style("width","200px")
 
 		.on("mouseover", function() {
 			dialogOptionBoolean += 1;
-			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[0]].countries).transition().duration(700).style("fill","#E89624");
+			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[0]].countries).transition().duration(500).style("fill","#E89624");
 		}) 
 		.on("mouseout", function() {
 			dialogOptionBoolean -= 1;
@@ -1517,20 +1513,20 @@ if (type === "both") {
 		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " was affected by the " + featuredJSON[featuredJSON[selection.id].catID[0]].fullname + " click here to find out more about OFDA's responce.</span>")
 		.append("div")
 			.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
-			.attr("id","another")
+			.attr("class","another")
 			.style("padding","8px")
 			.style("width","200px")
 			.html("<span class=popDetail>" + featuredJSON[featuredJSON[selection.id].catID[1]].fullname + " also triggered an OFDA responce click here to find out about that.</span>")
 			.on("mouseover", function() {
 				dialogOptionBoolean += 1;
-				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(700).style("fill","#E89624");
+				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(500).style("fill","#E89624");
 			})
 			.on("mouseover.chill", function() { 
 				d3.event.stopPropagation();
 			})		
 			.on("mouseout", function() {
 				dialogOptionBoolean -= 1;
-				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(700).style("fill","#FFCB36");
+				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(500).style("fill","#FFCB36");
 				setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
 			})		
 			.on("mouseout.chill", function() { 
@@ -1573,15 +1569,22 @@ d3.json("countries_min.topo.json", function(error, us) {
 
 			.attr("d", path)
 			.on("click", function(d) {
-				var c;
+				console.log("clicked");
+				var c;// = function(){};
 				if (featuredMap.has(d.id)) {
-					c =country_clicked(d);
+					c =  country_clicked(d);
 					if (featuredJSON[d.id].cat === "regional") {
 						c = zoomRegion(featuredJSON[featuredJSON[d.id].catID]);
 					}
 							 
 				} else {
-					c = null;
+						var xyz = [width / 2, height / 2, 1];
+    					country = null;
+						d3.select("#dialogBoxUnit").remove();
+						d3.selectAll(".dialogBox").remove();
+						d3.select("#swipeBack").remove();
+    					zoom(xyz);
+						isGlobal(xyz,null);
 				}
 				return c;
 				} )
@@ -1595,10 +1598,10 @@ d3.json("countries_min.topo.json", function(error, us) {
 						popup(centroid, selection, type); 
 						c = "";		
 						if (featuredJSON[d.id].cat === "country" || featuredJSON[d.id].cat === "doubleRegional" || featuredJSON[d.id].cat === "both"){ 
-							c =	d3.select("#" + d.id).transition().duration(700).style("fill", "#E89624");
+							c =	d3.select("#" + d.id).transition().duration(500).style("fill", "#E89624");
 						} else if (featuredJSON[d.id].cat === "regional"){
 							c =	d3.selectAll(featuredJSON[featuredJSON[d.id].catID].countries)
-								.transition().duration(700).style("fill", "#E89624");
+								.transition().duration(500).style("fill", "#E89624");
 						}
 						return c;
 	
@@ -1612,10 +1615,10 @@ d3.json("countries_min.topo.json", function(error, us) {
 					c = "";	
 				if (featuredMap.has(d.id)) {
 					if (featuredJSON[d.id].cat === "country" || featuredJSON[d.id].cat === "doubleRegional" || featuredJSON[d.id].cat === "both"){
-						c =	d3.select(this).transition().duration(700).style("fill", "#FFCB36");
+						c =	d3.select(this).transition().duration(500).style("fill", "#FFCB36");
 					} else if (featuredJSON[d.id].cat === "regional"){
 						c =	d3.selectAll(featuredJSON[featuredJSON[d.id].catID].countries)
-							.transition().duration(700).style("fill", "#FFCB36");
+							.transition().duration(500).style("fill", "#FFCB36");
 					}
 				} else {
 					c = null;
@@ -1640,7 +1643,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 		.attr("id","FLA")
 		.on("mouseover", function(d) {
 			var centroid = path.centroid(d);
-			console.log(centroid);
 			var selection = d;
 			var type = "florida";
 			popup (centroid, selection, type);
@@ -1691,11 +1693,11 @@ d3.json("countries_min.topo.json", function(error, us) {
 				.style("fill-opacity","0")
 				.on("mouseout", function (d) {
 				
-					d3.select("#" + d.id).transition().duration(700).style("fill", "#FFCB36");
+					d3.select("#" + d.id).transition().duration(500).style("fill", "#FFCB36");
 				})	
 				.on("mouseover", function (d) {
 					
-					d3.select("#" + d.id).transition().duration(700).style("fill", "#E89624");
+					d3.select("#" + d.id).transition().duration(500).style("fill", "#E89624");
 					var centroid = path.centroid(d);
 					var selection = d;
 					var type = "invisible";
@@ -1761,54 +1763,70 @@ setTimeout(function() {
 
 function isGlobal (xyz, FC) {
 	if (xyz[2] === 1) {
-
-d3.selectAll(".circle").style("pointer-events","auto"); 
-d3.select("#FLA")
-	.on("mouseover", function(d) {
-		var centroid = path.centroid(d);
-		var selection = d;
-		var type = "florida";
-		popup (centroid, selection, type);
-	})
-	.on("click", function(d) {
-		var xyz = get_xyz(d);
-		zoom(xyz);
-		contentDialog("FLA");
-		isGlobal(xyz, "#FLA");
+			d3.select("#hurr").remove();
+			d3.select("#icon").remove();
+	d3.selectAll(".circle").style("pointer-events","auto"); 
+	d3.select("#FLA")
+		.on("mouseover", function(d) {
+			var centroid = path.centroid(d);
+			var selection = d;
+			var type = "florida";
+			popup (centroid, selection, type);
+		})
+		.on("click", function(d) {
+			var xyz = get_xyz(d);
+			zoom(xyz);
+			contentDialog("FLA");
+			isGlobal(xyz, "#FLA");
 		
-	})
-	.transition().duration(700).style("fill","#FFCB36");
+		})
+		.transition().duration(500).style("fill","#FFCB36");
 
 
-d3.selectAll(".warehouse, .office, .headquarters")
+	d3.selectAll(".warehouse, .office, .headquarters")
+		.style("pointer-events","auto")
+		.transition().duration(500)
+		.style("opacity","1");
+
+
+	d3.select("#globeContainer").style("pointer-events","none").style("visibility","hidden");
+
+	d3.selectAll(".earthquake").remove();	
+
+	d3.selectAll(".featured").style("cursor","pointer")
 	.style("pointer-events","auto")
-	.style("visibility","visible");
-
-
-d3.select("#globeContainer").style("pointer-events","none").style("visibility","hidden");
-
-		d3.selectAll(".earthquake").remove();	
-		d3.selectAll(".featured").style("fill","#FFCB36").style("cursor","pointer").style("opacity",1).style("pointer-events","auto");
+	.transition().duration(500)
+	.style("opacity",1).style("fill","#FFCB36");
 
  
-	} else if (xyz[2] > 1) {
-		d3.selectAll(".circle").style("pointer-events","none"); 
-		
-		d3.select("#FLA").on("click",null).on("mouseover",null).transition().duration(700).style("fill","#CFCDC9");
+} else if (xyz[2] > 1) {
+	
+	tooltip.style("pointer-events","none");
 
-		d3.selectAll(".warehouse, .office, .headquarters")
-			.style("pointer-events","none").style("visibility","hidden");
+	d3.selectAll(".circle").style("pointer-events","none"); 
+		
+	d3.select("#FLA").on("click",null).on("mouseover",null).transition().duration(500).style("fill","#CFCDC9");
+
+	d3.selectAll(".warehouse, .office, .headquarters")
+		.style("pointer-events","none")
+		.transition().duration(500)
+		.style("opacity",0)
+		
+		
+//.style("visibility","hidden");
 	
 	d3.select("#globeContainer").style("visibility","visible").style("pointer-events","auto");
-
 		
-		d3.selectAll(".featured").style("fill","#CFCDC9").style("cursor","default")
-			.style("pointer-events",function () { return "none"})
+	d3.selectAll(".featured").style("pointer-events","none")
+	.transition().duration(500)
+	.style("fill","#CFCDC9").style("cursor","default");
 			
+	d3.selectAll(FC).style("fill","#FFCB36");	
+	
+	
 
-		d3.selectAll(FC).style("fill","#FFCB36")	
-	} else {
-		return;
+} else {
+	return;
 	}	
 }	
 
@@ -2082,9 +2100,11 @@ function get_xyz(d) {
 	var bounds = path.bounds(d);
 	var w_scale = (bounds[1][0] - bounds[0][0]) / width;
 	var h_scale = (bounds[1][1] - bounds[0][1]) / height;
-	var z = .96 / Math.max(w_scale, h_scale);
+	var z = .5 / Math.max(w_scale, h_scale);
+//	var z = .96 / Math.max(w_scale, h_scale);
 	var x = (bounds[1][0] + bounds[0][0]) / 2;
-	var y = (bounds[1][1] + bounds[0][1]) / 2 + (height / z / 6);
+//	var y = (bounds[1][1] + bounds[0][1]) / 2 + (height / z / 6);
+	var y = (bounds[1][1] + bounds[0][1]) / 2 + (height / z / 50);
 	return [x, y, z];
 }
 
@@ -2322,12 +2342,12 @@ function country_clicked(d) {
       				.attr("r", 160 / xyz[2] )
       				.remove();
 			}, 800);
-			d3.selectAll(".background, #globeContainer")
+			d3.selectAll(".background, #globeContainer, .notFeatured")
 				.on("click.stop", function() {
 					clearInterval(animation);		
 					svg.select(".dot").remove();
 					svg.selectAll(".ring").remove();
-					d3.selectAll(".background, #globeContainer")
+					d3.selectAll(".background, #globeContainer, .notFeatured")
 						.on("click.stop", null);
 					
 				})
@@ -2336,7 +2356,7 @@ function country_clicked(d) {
 
 		}
 
-		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id].type == "volcano") {
+		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id].type == "volcano" || featuredJSON[d.id].type == "famine" ) {
 			contentDialog(d.id);
 			var feature = d;	
 			g.selectAll( "#" + d.id ).classed(".hide");
