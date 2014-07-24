@@ -453,6 +453,19 @@ var featuredJSON = {
 		"ovTagline":"",
 		"ovElements":[["","",""],["","",""],["","",""]]
 		},
+	"MMR":{
+		"cat":"country",
+		"year":2008,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"storm",
+		"fullname":"Burma",
+		"tagline":"",
+		"ovTagline":"Cyclone Nargis made landfall May 2, 2008",
+		"ovElements":[["killed","138,000+",""],["affected","2.4","MILLION"],["damage","$4","MILLION"]]
+		},
 	"BIH":{
 		"cat":"country",
 		"year":1992,
@@ -699,9 +712,9 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"N/A",
 		"fullname":"Indonesia",
-		"tagline":"",
-		"ovTagline":"",
-		"ovElements":[["","",""],["","",""],["","",""]]
+		"tagline":"With more than 3 million people living within 6 miles of an active volcano, Indonesia has the most people at risk from volcanoes in the world. On October 26, 2010, Mt. Merapi had its largest eruption in 100+ years.",
+		"ovTagline":"Mt. Merapi began erupting October 26, 2010",
+		"ovElements":[["evacuated","400,000",""],["saved","15,000",""],["killed","386",""]]
 
 		},	
 	"IND":{
@@ -1124,7 +1137,7 @@ var featuredJSON = {
 	"sahel":{
 		"id":"sahel",
 		"xyz":[380,350,5],
-		"fullname":"Sahel",
+		"fullname":"Sahel Food Insecurity",
 		"year":2011,
 		"options":[],
 		"type":"famine",
@@ -2128,6 +2141,10 @@ function ov(feature) {
 							 		text = "surgeries performed";
 							 	} else if (d[0] === "facilities") {
 							 		text = "health facilities supported";
+							 	} else if (d[0] === "evacuated") {
+							 		text = "people evacuated";
+							 	} else if (d[0] === "saved") {
+							 		text = "people saved";
 								}
 							
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
