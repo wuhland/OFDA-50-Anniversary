@@ -1552,7 +1552,7 @@ if (type === "both") {
 			.attr("class","another")
 			.style("padding","8px")
 			.style("width","200px")
-			.html("<span class=popDetail>Somalia was also impacted by the deadliest tsunami in recorded history, which hit the region in December 2004.</span>")
+			.html("<span class=popDetail>Somalia was also impacted by the <span style=color:#FFCB36;font-weight:bold>deadliest tsunami</span> in recorded history, which hit the region in December 2004.</span>")
 			.on("mouseover", function() {
 				dialogOptionBoolean += 1;
 				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[0]].countries).transition().duration(500).style("fill","#E89624");
