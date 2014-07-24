@@ -428,8 +428,8 @@ var featuredJSON = {
 	"BGD":{
 		"cat":"country",
 		"year":1970,
-		"options":[],
-		"Story":[],
+		"options":["Story"],
+		"Story":[{"Button":"Reducing Risk of Cyclones in Bangladesh","Name":"PoP_Bangladesh.html"}],
 		"Video":[],
 		"Infographic":[],
 		"type":"storm",
@@ -478,8 +478,8 @@ var featuredJSON = {
 		"type":"famine",
 		"fullname":"Ethiopia",
 		"tagline":"From 1983-1985, drought conditions and political conflict in Ethiopia led to the worst famine in a century, causing more than 300,000 deaths and affecting more than 7.7 million people.",
-		"ovTagline":"Drought and Conflict led to famine in 1984",
-		"ovElements":[["killed","300,000",""],["affected","7.7","MILLION"],["regions","12 out of 14",""]]
+		"ovTagline":"Drought and conflict led to famine in 1984",
+		"ovElements":[["killed","300,000",""],["affected","7.7","MILLION+"],["regions","12 <span style= 'font-size:11pt'> OUT OF </span>14",""]]
 		},
 	"KEN":{
 		"cat":"regional",
@@ -573,8 +573,8 @@ var featuredJSON = {
 		"type":"complex",
 		"fullname":"Democratic Republic of the Congo",
 		"tagline":"The conflict in the Democratic Republic of the Congo is one of the longest-running in Africa. Natural disasters, violence, forced recruitment into armed groups, and restricted humanitarian access have led to huge numbers of people being forced to flee their homes, often several times.",
-		"ovTagline":"Emergencia Complicado",
-		"ovElements":[["affected/yr","250,000",""],["displacedconflict","672,000",""]]
+		"ovTagline":"Ongoing conflict",
+		"ovElements":[["displaced","2.6","MILLION"],["insecure","6.7","MILLION"]]
 		},
 	"DJI":{
 		"cat":"regional",
@@ -627,7 +627,7 @@ var featuredJSON = {
 		"year":0,
 		"options":[],
 		"Story":[],
-		"Video":[],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/MZVo552nbwA"}],
 		"Infographic":[],
 		"type":"N/A",
 		"fullname":"Florida",
@@ -669,7 +669,7 @@ var featuredJSON = {
 			"epicenter":[-72.533,18.457],//Longitude Latitude
 			},
 		"fullname":"Haiti",
-		"tagline":"On January 12, 2010, a magnitude 7.0 earthquake shook Haiti, killing 316,000 people and displacing 1.5 million others. The quake also created enough rubble to fill dump trucks lined up from Maine to Florida, twice.",
+		"tagline":"On January 12, 2010, a magnitude 7.0 earthquake shook Haiti, killing 316,000 people and displacing 1.5 million others. In mid-2011, cholera broke out and killed more than 6,900 people and infected 13,000 others.",
 		"ovTagline":"Earthquake on January 12, 2010",
 		"ovElements":[["killed","316,000",""],["displaced","1.5","MILLION"],["affected","3","MILLION"]]
 	},	
@@ -774,6 +774,20 @@ var featuredJSON = {
 		"tagline":"Sectarian conflict erupted in 1975 following violence between Christian and Muslim armed groups. The ensuing 15-year civil war resulted in the deaths of approximately 150,000 people and significantly damaged Lebanon's infrastructure and economy.",
 		"ovTagline":"Conflict broke out in 1975",
 		"ovElements":[["killed","150,000",""],["violence","1","MILLION"],["missing","17,000",""]]
+		},
+	"LBY":{
+		"cat":"country",
+		"year":2011,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Libya",
+		"tagline":"In February 2011, an uprising in Libya led to escalating conflict  that uprooted entire communities, cut off supply routes, and left the Libyan people facing shorages of food, water, and fuel. OFDA's response focused on delivering critical medical assistance.",
+		"ovTagline":"Conflict broke out February 2011",
+		"ovElements":[["healthcare","10,000+",""],["surgeries","3,860",""],["facilities","78",""]]
+		
 		},
 	"LKA":{
 		"cat":"regional",
@@ -950,7 +964,7 @@ var featuredJSON = {
 		"fullname":"Nigeria",
 		"tagline":"In May 1967, ethnic tensions led the southeastern state of Biafra to secede from Nigeria. Over the next 2 and a half years, the Biafran Civil War left more than 1 million people dead as a result of violence and famine.",
 		"ovTagline":"Civil War from July 1967 - January 1970",
-		"ovElements":[["","",""],["killed","1","MILLION+"],["humanitarian","3.5","MILLION"]]
+		"ovElements":[["killed","1","MILLION+"],["humanitarian","3.5","MILLION"]]
 		
 		},
 	"PAK":{
@@ -1083,8 +1097,8 @@ var featuredJSON = {
 		"type":"flood",
 		"fullname":"Thailand",
 		"tagline":"When the worst flooding in half a century swept through Thailand in 2011 affecting 13.6 million people, OFDA provided assistance and also helped build the resilience of affected communities.",
-		"ovTagline":"",
-		"ovElements":[["","",""],["","",""],["","",""]]
+		"ovTagline":"Flooding in 2011",
+		"ovElements":[["affected","13.6","MILLION"],["killed","823",""],["economicdamages","$46","BILLION"]]
 
 		},
 	"io_tsunami":{
@@ -1116,7 +1130,7 @@ var featuredJSON = {
 		"tagline":"The U.N. estimates 20 million people in West Africa's Sahel region are currently on the brink of starvation. In 2012, a combination of drought, conflict, failed crops, insect plague and high food prices led to a food insecurity crisis in the region.",
 		"type":"famine",
 		"ovTagline":"Chronic food insecurity (2012 - present)",
-		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+"],["","",""]],
+		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+"]],
 		"countries":"#MRT,#SEN, #MLI, #BFA, #NGA, #NER, #TCD"
 	},
 	"horn":{
@@ -1129,7 +1143,7 @@ var featuredJSON = {
 		"Story":[],
 		"Infographic":[],
 		"Video":[],
-		"tagline":"In 2011, the worst drought in 60 years affected 13 million people in the Horn of Africa, more than the populations of NYC and LA combined. This led the U.N. to declare a famine in Somalia and prompted a vast humanitarian response to the region.",
+		"tagline":"In 2011, ongoing conflict and the worst drought in 60 years affected 13 million people in the Horn of Africa, more than the populations of NYC and LA combined. This led the U.N. to declare a famine in Somalia and prompted a vast humanitarian response to the region.",
 		"type":"famine",
 		"ovTagline":"Drought led to famine declaration in 2011",
 		"ovElements":[["affected","13","MILLION"],["countriesimpacted","4",""],["worst","60",""]],
@@ -2088,8 +2102,16 @@ function ov(feature) {
 							 		text = "Years worst drought";
 							 	} else if (d[0] === "mal") {
 							 		text = "children faced severe acute malnutrition in 2012";
-							 	} else if (d[0] === "countriesaffected") {
-							 		text = "countries affected";
+							 	} else if (d[0] === "countriesimpacted") {
+							 		text = "countries impacted";
+							 	} else if (d[0] === "economicdamages") {
+							 		text = "in economic damanges";
+							 	} else if (d[0] === "healthcare") {
+							 		text = "patients received health care";
+							 	} else if (d[0] === "surgeries") {
+							 		text = "surgeries performed";
+							 	} else if (d[0] === "facilities") {
+							 		text = "health facilities supported";
 								}
 							
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
