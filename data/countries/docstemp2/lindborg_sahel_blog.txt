@@ -1,0 +1,35 @@
+<html>
+
+<div style="margin: 25px 0px 0px 12px;">
+
+<head>
+<style>
+p {font-family: 'Source Sans Pro', sans-serif; font-size: 15px;}
+#content {margin: 1.75em;}
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
+</style>
+<body link="#16B0C1" vlink="#16B0C1" alink="#16B0C1">
+</head>
+<body>
+
+<p dir="ltr"><span style="color:#16B0C1;font-size: 21px;font-weight: 700;">Responding Early and Building Resilience in the Sahel</span><br />
+<span style="color: black;font-size: 12px;">By Nancy Lindborg, Assistant Administrator, Bureau for Democracy, Conflict, and Humanitarian Assistance</span>
+<span style="color: black;font-size: 12px;">March 2, 2012</span>
+
+<p><em>Originally posted at <a href="http://www.usaid.gov/cgi-bin/goodbye?http://www.huffingtonpost.com/nancy-lindborg/responding-early-and-buil_b_1316234.html">Huffington Post</a>.</em></p>
+
+<p>In the village of Tougouri, in Burkina Faso, I stood with the four women squinting in the sun. They each held a digging tool. Between them, they had 31 children and no husbands. Safieta, wearing a bright yellow scarf, noted the rains were bad last year. No, she said, none of them were able to harvest much of the maize they had planted during the rainy season. I had just driven from Niger, through hours of flat and dusty land, and was in Tougouri to visit communities that were once again experiencing drought.</p>
+
+<p>In the arid regions of East and West Africa, we are seeing droughts that used to come every ten years, now coming nearly every other year. A year after the worst drought in 60 years sent 13.3 million people in the Horn of Africa into crisis, we are now facing a rising threat of crisis in the Sahel -- an arid belt that stretches from Senegal through Niger and Burkina Faso to Chad.</p>
+
+<p>When families are living on the edge of survival, the slightest shock can send them into crisis. For many women throughout the Sahel, as in the Horn of Africa, who are eking out a living on small farms or raising livestock, a failed rain means no food for their children. Years of repeated drought means they can't put away any reserves. Today, rising food prices, another failed rain, and conflict in Mali and Libya, means that between seven and ten million people are at risk of sliding into crisis as we enter the lean season of the months ahead.</p>
+
+<p>I have spent the last year helping to lead the United States' response to the Horn of Africa drought. We began prepositioning stocks of food in the region as early as Sept 2010 and through the crisis we focused on expanding resilience programs that help rebuild assets, improved water infrastructure and increased the ability of families to buy food in the markets through voucher programs.</p>
+
+<p>Through our <a href="http://blog.usaid.gov/2012/02/responding-to-the-crisis-in-the-sahel/">early actions</a>, we were able to reach 4.6 million of the most vulnerable people, primarily women and children, with life-saving food. We know that it is critical to reach children in those first 1,000 days with the right nutritional food when their brains and bodies are developing. We also helped an estimated 3.9 million people stay healthy with improved access to water, sanitation and critical medical help, especially vaccinations so crucial for protecting children under five from infectious diseases that easily kill a child already weak from hunger.</p>
+
+<p>As we focus on the rising crisis in the Sahel, we are committed to responding immediately and acting on the most important lessons learned from the Horn response. That is why last week I announced <a href="http://www.usaid.gov/content/usaid-responds-drought-sahel">$33 million in humanitarian relief</a>, bringing up the total U.S. Government commitment to $270 million in 2011 and 2012.</p>
+
+<p>We know we can't stop droughts from happening, but we can and do commit ourselves to early action when we have early warning signs, with a focus on highly targeted programs that build resilience even as we meet urgent needs.</p>
+
+<p>Back in the fields of Burkina Faso, Safieta proudly took me along the edge of her three plots filled with bright green onion sprouts. Seven years ago, USAID began a program in partnership with CRS to increase the resilience of villagers dependent upon rain fed crops. Two years ago, the program ended. Yet, Safieta and her fellow farmers are continuing to thrive on the proceeds of their dry season market gardens. "We chose onions," she noted, "because if the water pump fails for a few days, they are strong enough to survive." Safieta is sending her children to school and still putting away a little for the unpredictable needs, she said. "I am resilient now," she laughed, "just like the onions."</p>

@@ -1,0 +1,29 @@
+
+<html>
+
+
+<head>
+<style>
+p {font-family: 'Source Sans Pro', sans-serif; font-size: 13px;}
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
+</style>
+<body link="#16B0C1" vlink="#16B0C1" alink="#16B0C1">
+</head>
+<body>
+
+<p dir="ltr"><span style="color:#16B0C1;font-size: 16px;font-weight: 700;">Learning to Map Risk in Indonesia</span>
+
+<p>On July 2, 2013, a magnitude 6.1 earthquake struck Indonesia’s Aceh Province, resulting in 42 deaths and displacing more than 53,000 people. In Bener Meriah, one of Aceh’s hardest-hit districts, the earthquake damaged or destroyed houses, health facilities, roads, and communications systems.</p>
+
+<p>Fortunately, when the earthquake struck, Bener Meriah’s disaster authorities were ready to respond. Using previously prepared disaster risk maps, authorities were able to identify vulnerable areas and prepare for possible obstacles to reaching affected communities and providing emergency assistance.</p>
+
+<p>Less than three months before the earthquake occurred, those disaster risk maps did not exist. Government officials in Bener Meriah had just created the district-level maps in May 2013 as part of an eight-day intensive training course conducted by the International Organization for Migration (IOM) with funding from USAID.</p>
+
+<div style="float:left;background-color: #B2DCDD; margin-right: 5px; margin-bottom: 5px;">
+<img class="size-medium wp-image-25688" src="http://www.usaid.gov/sites/default/files/nodeimage/Indonesia_Mapping.jpg" width="240" height="159" /></div>
+
+<p>Recognizing that local authorities lacked training in key information skills, USAID supported partner IOM in providing training to equip 25 government employees with the skills and knowledge required to collect data, conduct surveys, utilize da-tabase applications, and generate maps. At the end of the training, officials used their newly acquired skills to develop dis-trict-level disaster risk maps, which support Bener Meriah’s disaster management plan and improved the July 2 earthquake response.</p>
+
+<p>“I never thought the training would become so handy so quickly,” said Ibu Hajjah, who heads the preparedness section of Bener Meriah’s Disaster Management Agency. “Now we will be able to react in a more targeted and effective way.”</p>
+
+<p>The training is part of a larger, multi-year program to strengthen disaster risk reduction capacity and promote community resilience in five districts within Aceh. Implemented by IOM, the program promotes training in and use of open-source software that allows local officials to better prepare for and respond to natural disasters.</p>
