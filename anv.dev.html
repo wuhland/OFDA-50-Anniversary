@@ -625,8 +625,9 @@ var featuredJSON = {
 		"xyz":[133.81,293.13,3],
 		"cat":"country",
 		"year":0,
-		"options":[],
+		"options":["Video"],
 		"Story":[],
+		"countries":"#FLA",
 		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/MZVo552nbwA"}],
 		"Infographic":[],
 		"type":"N/A",
@@ -714,7 +715,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"storm",
 		"fullname":"India",
-		"tagline":"In October 1999, twin cyclones hit the eastern coast of India within 2 weeks, killing nearly 10,000 people and affecting almost 14 million others. Since then, OFDA has worked with India on programs that have reduced the risk cyclones pose to lives and livelihoods.",
+		"tagline":"In October 1999, <span style=color:#E89624>twin cyclones</span> hit the eastern coast of India within 2 weeks, killing nearly 10,000 people and affecting almost 14 million others. Since then, OFDA has worked with India on programs that have reduced the risk cyclones pose to lives and livelihoods.",
 		"ovTagline":"Cyclones hit eastern coast October 1999",
 		"ovElements":[["2weeks","2", "CYCLONES"],["killed","10,000",""],["affected","14", "MILLION"]]
 	},
@@ -955,6 +956,8 @@ var featuredJSON = {
 		},
 	"NGA":{
 		"cat":"both",
+		"catName":"Sahel",
+		"catID":"sahel",
 		"year":1967,
 		"options":[],
 		"Story":[],
@@ -1112,6 +1115,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"Video":[],
 		"tagline":"The deadliest tsunami in recorded history struck on December 26, 2004, killing an estimated 220,000 people and displacing more than 1.1 million people. Produced by a magnitude 9.0 earthquake, the tsunami affected at least 12 countries in the region.",
+		"bothTagline":"was also impacted by the <span style=color:#FFCB36;font-weight:bold>deadliest tsunami</span> in recorded history, which hit the region in December 2004",
 		"type":"quake",
 		"ovTagline":"Storm struck on December 26, 2004",
 		"ovElements":[["killed","220,000",""],["displaced","1.1","MILLION"],["countriesaffected","12",""]],
@@ -1128,6 +1132,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"Video":[],
 		"tagline":"The U.N. estimates 20 million people in West Africa's Sahel region are currently on the brink of starvation. In 2012, a combination of drought, conflict, failed crops, insect plague and high food prices led to a food insecurity crisis in the region.",
+		"bothTagline":"was also affected by the drought that hit the Sahel region in 2012, which left more than 1 million children malnourished.",
 		"type":"famine",
 		"ovTagline":"Chronic food insecurity (2012 - present)",
 		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+"]],
@@ -1136,14 +1141,15 @@ var featuredJSON = {
 	"horn":{
 		"id":"horn",
 		"xyz":[520,390,7],
-		"fullname":"Horn of Africa",
+		"fullname":"Horn of Africa Drought",
 		"year":2011,
-		"options":[],
+		"options":["Story"],
 		"type":"famine",
-		"Story":[],
+		"Story":[{"Button":"Reflections on the Humanitarian Responce in the Horn","Name":"hoa_blog.html"}],
 		"Infographic":[],
 		"Video":[],
 		"tagline":"In 2011, ongoing conflict and the worst drought in 60 years affected 13 million people in the Horn of Africa, more than the populations of NYC and LA combined. This led the U.N. to declare a famine in Somalia and prompted a vast humanitarian response to the region.",
+		"bothTagline":"was also affected by the 2011 Horn of Africa drought, which was the worst in 60 years.",
 		"type":"famine",
 		"ovTagline":"Drought led to famine declaration in 2011",
 		"ovElements":[["affected","13","MILLION"],["countriesimpacted","4",""],["worst","60",""]],
@@ -1304,7 +1310,7 @@ function testDialog (dialogOptionBoolean, Media) {
 			d3.selectAll(".another").remove()
 			d3.selectAll(".popFront").remove()
 	//		d3.selectAll("#arrow").remove();
-		}).style("width","0px").style("height","0px").style("left","0px").style("top","0px").style("pointer-events","none"); 
+		}).style("width","0px").style("height","0px").style("pointer-events","none"); 
 	}
 }
 
@@ -1361,7 +1367,7 @@ var zoomRegion = function(region) {
 		contentDialog(region.id);
 		ov(region.id)
 		isGlobal(region.xyz, region.countries);
-		
+		console.log(region.id)		
 }
 
 function popup (centroid, selection, type) {
@@ -1428,6 +1434,8 @@ if (centroid[0] >= .8 * width) {
 			.style("pointer-events","auto")
 			.attr("class","tooltip pop")
 			.style("width", "200px")
+			.style("border-bottom-left-radius",".4em")
+			.style("border-bottom-right-radius",".4em")
 			.style("opacity", 0)
 			.style("top", (centroid[1] + offsets[1] ) + "px")
 			.style("left", (centroid[0] - offsets[0]) + "px")
@@ -1458,25 +1466,24 @@ if (centroid[0] >= .8 * width) {
 			document.getElementById("tooltipImg").src = 'data/' + "countries" + "/"  + selectionName.toLowerCase() + '/popimg.jpg';}
 			image.src = 'data/' + "countries"  + "/"  + selectionName.toLowerCase() + '/popimg.jpg';
 
-			tooltip.insert("div")
-			.append('span')					
-			.text(function(d){return tagline;}) 
+		tooltip.insert("div")
+			.html(function(d){return tagline;}) 
 			.attr("class", "popDetail");
 
-			tooltip.append("div")
-				.attr("class","popFront")
-				.on("mouseover", function() {
-					dialogOptionBoolean = 0;
-					dialogOptionBoolean += 1;
-					d3.selectAll(color).transition().duration(500).style("fill","#E89624");
-				})	
-				.on("mouseout", function(d) {
+		tooltip.append("div")
+			.attr("class","popFront")
+			.on("mouseover", function() {
+				dialogOptionBoolean = 0;
+				dialogOptionBoolean += 1;
+				d3.selectAll(color).transition().duration(500).style("fill","#E89624");
+			})	
+			.on("mouseout", function(d) {
 					
-					dialogOptionBoolean -= 1;
-					d3.selectAll(color).transition().duration(500).style("fill","#FFCB36");
-					setTimeout(function(){
-						testDialog(dialogOptionBoolean,null)},10);
-				})
+				dialogOptionBoolean -= 1;
+				d3.selectAll(color).transition().duration(500).style("fill","#FFCB36");
+				setTimeout(function(){
+					testDialog(dialogOptionBoolean,null)},10);
+			})
 				.on("click", click);
 				
 			tooltip.append("div")
@@ -1486,12 +1493,14 @@ if (centroid[0] >= .8 * width) {
 				.on("click", click);	
 
 if (type === "both") {
-	d3.select(".tooltip").append("div")
-		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
+//	d3.select(".tooltip").append("div")
+//	tooltip.select(".popFront").append("div")
+	tooltip.style({"border-bottom-left-radius":"0em","border-bottom-right-radius":"0em"}).append("div")
+		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em","border-top":"medium solid white","top":"100%"})
 		.attr("class","another")
 		.style("padding","8px")
 		.style("width","200px")
-		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " was also affected by the " + featuredJSON[featuredJSON[selection.id].catID].fullname + " click here to find out more about OFDA's responce to that disaster.</span>")
+		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " " + featuredJSON[featuredJSON[selection.id].catID].bothTagline + "</span>")
 		.on("mouseover", function() {
 			dialogOptionBoolean += 1;
 			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID].countries).transition().duration(500).style("fill","#E89624");
@@ -1507,48 +1516,47 @@ if (type === "both") {
 
 
 } else if (type === "doubleRegional"){
-	d3.select(".tooltip").append("div")
-		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
+	tooltip.append("div")
+		.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute"})
 		.attr("class","another")
 		.style("padding","8px")
 		.style("width","200px")
-
 		.on("mouseover", function() {
 			dialogOptionBoolean += 1;
-			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[0]].countries).transition().duration(500).style("fill","#E89624");
+			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(500).style("fill","#E89624");
 		}) 
 		.on("mouseout", function() {
 			dialogOptionBoolean -= 1;
-			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[0]].countries).transition().duration(70).style("fill","#FFCB36");
+			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(70).style("fill","#FFCB36");
 			setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
 		})
 		.on("click", function() {
-			 zoomRegion(featuredJSON[featuredJSON[selection.id].catID[0]]);
+			 zoomRegion(featuredJSON[featuredJSON[selection.id].catID[1]]);
 		})
-		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " was affected by the " + featuredJSON[featuredJSON[selection.id].catID[0]].fullname + " click here to find out more about OFDA's responce.</span>")
+		.html("<span class=popDetail>In 2011, ongoing conflict and the worst drought in 60 years affected 13 million people in the Horn of Africa, more than the populations of NYC and LA combined. This led the U.N. declared a famine in Somalia and prompted a vast humanitarian response to the region.</span>")
 		.append("div")
-			.style({"width":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em"})
+			.style({"width":"100%","top":"100%","display":"inline-block","left":"0px","background-color":"#16B0C1","z-index":6,"position":"absolute","border-bottom-left-radius":".4em","border-bottom-right-radius":".4em","border-top":"medium solid white"})
 			.attr("class","another")
 			.style("padding","8px")
 			.style("width","200px")
-			.html("<span class=popDetail>" + featuredJSON[featuredJSON[selection.id].catID[1]].fullname + " also triggered an OFDA responce click here to find out about that.</span>")
+			.html("<span class=popDetail>Somalia was also impacted by the deadliest tsunami in recorded history, which hit the region in December 2004.</span>")
 			.on("mouseover", function() {
 				dialogOptionBoolean += 1;
-				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(500).style("fill","#E89624");
+				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[0]].countries).transition().duration(500).style("fill","#E89624");
 			})
 			.on("mouseover.chill", function() { 
 				d3.event.stopPropagation();
 			})		
 			.on("mouseout", function() {
 				dialogOptionBoolean -= 1;
-				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[1]].countries).transition().duration(500).style("fill","#FFCB36");
+				d3.selectAll(featuredJSON[featuredJSON[selection.id].catID[0]].countries).transition().duration(500).style("fill","#FFCB36");
 				setTimeout(function(){testDialog(dialogOptionBoolean,null)},10);
 			})		
 			.on("mouseout.chill", function() { 
 				d3.event.stopPropagation();
 			})
 			.on("click",function() {
-				 zoomRegion(featuredJSON[featuredJSON[selection.id].catID[1]]);
+				 zoomRegion(featuredJSON[featuredJSON[selection.id].catID[0]]);
 			})
 			.on("click.chill", function() { 
 				d3.event.stopPropagation();
@@ -1584,7 +1592,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 
 			.attr("d", path)
 			.on("click", function(d) {
-				console.log("clicked");
 				var c;// = function(){};
 				if (featuredMap.has(d.id)) {
 					c =  country_clicked(d);
@@ -1668,7 +1675,16 @@ d3.json("countries_min.topo.json", function(error, us) {
 		//	zoom(xyz);
 		//	contentDialog("FLA");
 		//	isGlobal(xyz, "#FLA");
-			zoomRegion(featuredJSON["FLA"]);
+	//		zoomRegion(featuredJSON["FLA"]);
+		var FLA = featuredJSON["FLA"];
+		d3.selectAll(".popDetail, #tooltipImg, .popName, .another").remove();
+		tooltip.style("opacity",0).style("width","0px");	
+		zoom(FLA.xyz);
+		d3.select("#FLA").transition().duration(500).style("opacity",1);
+		contentDialog(FLA.id);
+//		ov(FLA.id)
+		isGlobal(FLA.xyz, FLA.countries);
+//		console.log(region.id)
 			
 		});
 
