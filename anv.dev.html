@@ -1093,8 +1093,8 @@ var featuredJSON = {
 		"catName":"Indian Ocean Tsunami",
 		"catID":"io_tsunami",
 		"year":2011,
-		"options":[],
-		"Story":[],
+		"options":["Story"],
+		"Story":["Button":"Child-Centered Disaster Preparedness in Thailand","Name":"PoP_Thailand.html"}],
 		"Video":[],
 		"Infographic":[],
 		"type":"flood",
@@ -1124,7 +1124,7 @@ var featuredJSON = {
 	"sahel":{
 		"id":"sahel",
 		"xyz":[380,350,5],
-		"fullname":"Sahel Famine",
+		"fullname":"Sahel",
 		"year":2011,
 		"options":[],
 		"type":"famine",
@@ -1135,7 +1135,7 @@ var featuredJSON = {
 		"bothTagline":"was also affected by the drought that hit the Sahel region in 2012, which left more than 1 million children malnourished.",
 		"type":"famine",
 		"ovTagline":"Chronic food insecurity (2012 - present)",
-		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+"]],
+		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+ children"]],
 		"countries":"#MRT,#SEN, #MLI, #BFA, #NGA, #NER, #TCD"
 	},
 	"horn":{
@@ -2115,9 +2115,9 @@ function ov(feature) {
 							 	} else if (d[0] === "camps") {
 							 		text = "people remain in camps";
 							 	} else if (d[0] === "worst") {
-							 		text = "Years worst drought";
+							 		text = "years worst drought";
 							 	} else if (d[0] === "mal") {
-							 		text = "children faced severe acute malnutrition in 2012";
+							 		text = "faced severe acute malnutrition in 2012";
 							 	} else if (d[0] === "countriesimpacted") {
 							 		text = "countries impacted";
 							 	} else if (d[0] === "economicdamages") {
