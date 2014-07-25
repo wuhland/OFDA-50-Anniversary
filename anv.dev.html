@@ -264,14 +264,14 @@ cursor:pointer;
 .popName {
 font-family: 'ssp_bold', sans-serif;
 font-weight:800;
-font-size:large;
+font-size:20px;
 color:#002A6C;
 }
 
 .popDetail {
 font-family: 'ssp_reg', sans-serif;
 font-weight:400;
-font-size: small;
+font-size: 15px;
 color:white;
 line-height:100%;
 pointer-events:none;
@@ -710,7 +710,7 @@ var featuredJSON = {
 		"Story":[{"Button":"Learning to Map Risk in Indonesia","Name":"Indonesia_Mapping.html"}],
 		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/sk57TjjdcCY"}],
 		"Infographic":[],
-		"type":"N/A",
+		"type":"DRR",
 		"fullname":"Indonesia",
 		"tagline":"With more than 3 million people living within 6 miles of an active volcano, Indonesia has the most people at risk from volcanoes in the world. On October 26, 2010, Mt. Merapi had its largest eruption in 100+ years.",
 		"ovTagline":"Mt. Merapi began erupting October 26, 2010",
@@ -1128,7 +1128,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"Video":[],
 		"tagline":"The deadliest tsunami in recorded history struck on December 26, 2004, killing an estimated 220,000 people and displacing more than 1.1 million people. Produced by a magnitude 9.0 earthquake, the tsunami affected at least 12 countries in the region.",
-		"bothTagline":"was also impacted by the <span style=color:#FFCB36;font-weight:bold>deadliest tsunami</span> in recorded history, which hit the region in December 2004",
+		"bothTagline":"was also impacted by the <span style=color:#FFCB36;font-weight:bold>deadliest tsunami</span> in recorded history, which hit the region in December 2004.",
 		"type":"quake",
 		"ovTagline":"Storm struck on December 26, 2004",
 		"ovElements":[["killed","220,000",""],["displaced","1.1","MILLION"],["countriesaffected","12",""]],
@@ -1401,11 +1401,20 @@ function popup (centroid, selection, type) {
 		headline = featuredJSON[selection.id].fullname;
 		tagline = featuredJSON[selection.id].tagline;
 	} else if (type === "florida") {
-		click = function(){country_clicked(selection);}; 
-		color = "#FLA";
-		selectionName = "FLA";
-		headline = featuredJSON["FLA"].fullname;
-		tagline = featuredJSON["FLA"].tagline;
+		click = function(){		
+			var FLA = featuredJSON["FLA"];
+			d3.selectAll(".popDetail, #tooltipImg, .popName, .another").remove();
+			tooltip.style("opacity",0).style("width","0px");	
+			zoom(FLA.xyz);
+			contentDialog(FLA.id);
+			isGlobal(FLA.xyz, FLA.countries);
+			testDialog(dialogOptionBoolean,null);
+			console.log(dialogOptionBoolean)
+			}; 
+			color = "#FLA";
+			selectionName = "FLA";
+			headline = featuredJSON["FLA"].fullname;
+			tagline = featuredJSON["FLA"].tagline;
 	} else if (type === "regional") {
 		click = function() {zoomRegion(featuredJSON[featuredJSON[selection.id].catID])};
 		color = featuredJSON[featuredJSON[selection.id].catID].countries;
@@ -1513,7 +1522,7 @@ if (type === "both") {
 		.attr("class","another")
 		.style("padding","8px")
 		.style("width","200px")
-		.html("<span class=popDetail>" + featuredJSON[selection.id].fullname + " " + featuredJSON[featuredJSON[selection.id].catID].bothTagline + "</span>")
+		.html("<span class=popDetail style=line-height:100%>" + featuredJSON[selection.id].fullname + " " + featuredJSON[featuredJSON[selection.id].catID].bothTagline + "</span>")
 		.on("mouseover", function() {
 			dialogOptionBoolean += 1;
 			d3.selectAll(featuredJSON[featuredJSON[selection.id].catID].countries).transition().duration(500).style("fill","#E89624");
@@ -1693,10 +1702,12 @@ d3.json("countries_min.topo.json", function(error, us) {
 		d3.selectAll(".popDetail, #tooltipImg, .popName, .another").remove();
 		tooltip.style("opacity",0).style("width","0px");	
 		zoom(FLA.xyz);
-		d3.select("#FLA").transition().duration(500).style("opacity",1);
 		contentDialog(FLA.id);
 //		ov(FLA.id)
 		isGlobal(FLA.xyz, FLA.countries);
+		testDialog(dialogOptionBoolean,null);
+		console.log(dialogOptionBoolean)
+//		d3.select("#FLA").transition().duration(500).style("opacity",1);
 //		console.log(region.id)
 			
 		});
@@ -1810,8 +1821,8 @@ function isGlobal (xyz, FC) {
 			d3.select("#hurr").remove();
 			d3.select("#icon").remove();
 	d3.selectAll(".circle").style("pointer-events","auto"); 
-	d3.select("#FLA")
-		.on("mouseover", function(d) {
+	d3.select("#FLA").style("pointer-events","auto").transition().duration(500).style("fill","#FFCB36");
+/*		.on("mouseover", function(d) {
 			var centroid = path.centroid(d);
 			var selection = d;
 			var type = "florida";
@@ -1823,8 +1834,8 @@ function isGlobal (xyz, FC) {
 			contentDialog("FLA");
 			isGlobal(xyz, "#FLA");
 		
-		})
-		.transition().duration(500).style("fill","#FFCB36");
+		})*/
+//		.transition().duration(500).style("fill","#FFCB36");
 
 
 	d3.selectAll(".warehouse, .office, .headquarters")
@@ -1848,8 +1859,8 @@ function isGlobal (xyz, FC) {
 	tooltip.style("pointer-events","none");
 
 	d3.selectAll(".circle").style("pointer-events","none"); 
-		
-	d3.select("#FLA").on("click",null).on("mouseover",null).transition().duration(500).style("fill","#CFCDC9");
+d3.select("#FLA").style("pointer-events","none");		
+//	d3.select("#FLA").on("click",null).on("mouseover",null).transition().duration(500).style("fill","#CFCDC9");
 
 	d3.selectAll(".warehouse, .office, .headquarters")
 		.style("pointer-events","none")
@@ -2145,6 +2156,8 @@ function ov(feature) {
 							 		text = "people evacuated";
 							 	} else if (d[0] === "saved") {
 							 		text = "people saved";
+								} else if (d[0] === "countriesaffected") {
+							 		text = "countries affected";
 								}
 							
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
@@ -2191,35 +2204,35 @@ function country_clicked(d) {
 		contentDialog(d.id);			
 		
 		ov(d.id);
-	 xyz[2] = 6;  
+		xyz[2] = 6;  
 
 		zoom2ADM(d,xyz);
-			d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
+		d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
 
-	
-					var color_scale = d3.scale.quantile().domain([3,5]).range(colorbrewer.YlGnBu[5]);
-					var year = featuredJSON[d.id].year;
-					map.append("div")
-						.attr("id", "dataTitle")
-						.append("div").attr("id","strip").style({"background-color":"whitesmoke","width":"5px","height":"100%","left":"0px","position":"absolute"});
+		//	var color_scale = d3.scale.quantile().domain([1,5]).range(colorbrewer.YlGnBu[5]);
+			var color_scale = d3.scale.quantile().domain([0,1,5]).range(["#c8141a","#f48b8e","#a21015"]);
+			var year = featuredJSON[d.id].year;
+			map.append("div")
+				.attr("id", "dataTitle")
+				.append("div").attr("id","strip").style({"background-color":"whitesmoke","width":"5px","height":"100%","left":"0px","position":"absolute"});
 					
-					d3.select("#dataTitle").append("div")
-						.attr("id","dataTitleHTML")
-        				.html("<p><span id=\"popYear\">" + track[0].month + " " + track[0].day + ", " + year  + "</span><br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>");
-					var dateTextChange = map.select('#dataTitleHTML');
+			d3.select("#dataTitle").append("div")
+				.attr("id","dataTitleHTML")
+        		.html("<p><span id=\"popYear\">" + track[0].month + " " + track[0].day + ", " + year  + "</span><br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>");
+			var dateTextChange = map.select('#dataTitleHTML');
 						
-					var cat = dateTextChange.select('#category');	
+			var cat = dateTextChange.select('#category');	
 
-					var line = d3.svg.line()
-						.interpolate("cardinal")
-						.x(function(d) {return projection([d.lon, d.lat])[0]; })
-						.y(function(d) {return projection([d.lon, d.lat])[1]; });
+			var line = d3.svg.line()
+				.interpolate("cardinal")
+				.x(function(d) {return projection([d.lon, d.lat])[0]; })
+				.y(function(d) {return projection([d.lon, d.lat])[1]; });
 
-					var baseHurrPath = svg.append("path")
-						.attr("d",line(track))
-						.attr("fill","none")
-						.attr("stroke","none")
-						.attr("stroke-width",0)
+			var baseHurrPath = svg.append("path")
+				.attr("d",line(track))
+				.attr("fill","none")
+				.attr("stroke","none")
+				.attr("stroke-width",0)
 
 					var hurrPathEl = baseHurrPath.node();
 					var hurrPathElLen = hurrPathEl.getTotalLength();
@@ -2412,7 +2425,7 @@ function country_clicked(d) {
 
 		}
 
-		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id].type == "volcano" || featuredJSON[d.id].type == "famine" ) {
+		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id].type == "volcano" || featuredJSON[d.id].type == "famine" || featuredJSON[d.id].type == "DRR" ) {
 			contentDialog(d.id);
 			var feature = d;	
 			g.selectAll( "#" + d.id ).classed(".hide");
