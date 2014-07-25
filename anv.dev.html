@@ -1771,6 +1771,9 @@ setTimeout(function() {
 					.attr("class",function(d) {
 						return points2[d[0]].type;
 					})
+					.on("click", function(d) {
+					country_clicked(d);
+				});
 
 	d3.selectAll(".warehouse")
 		.append("circle")
