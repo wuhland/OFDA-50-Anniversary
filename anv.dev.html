@@ -490,7 +490,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"famine",
 		"fullname":"Ethiopia",
-		"tagline":"From 1983-1985, drought conditions and political conflict in Ethiopia led to the worst famine in a century, causing more than 300,000 deaths and affecting more than 7.7 million people.",
+		"tagline":"From 1983-1985, drought conditions and political conflict in Ethiopia led to the <span style=color:#FFCB36;font-weight:bold>worst famine</span> in a century, causing more than 300,000 deaths and affecting more than 7.7 million people.",
 		"ovTagline":"Drought and conflict led to famine in 1984",
 		"ovElements":[["killed","300,000",""],["affected","7.7","MILLION+"],["regions","12 <span style= 'font-size:11pt'> OUT OF </span>14",""]]
 		},
@@ -992,7 +992,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"complex",
 		"fullname":"Nigeria",
-		"tagline":"In May 1967, ethnic tensions led the southeastern state of Biafra to secede from Nigeria. Over the next 2 and a half years, the Biafran Civil War left more than 1 million people dead as a result of violence and famine.",
+		"tagline":"In May 1967, <span style=color:#FFCB36;font-weight:bold>ethnic tensions</span> led the southeastern state of Biafra to secede from Nigeria. Over the next 2 and a half years, the Biafran Civil War left more than 1 million people dead as a result of violence and famine.",
 		"ovTagline":"Civil War from July 1967 - January 1970",
 		"ovElements":[["killed","1","MILLION+"],["humanitarian","3.5","MILLION"]]
 		
@@ -1159,7 +1159,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"Video":[],
 		"tagline":"The U.N. estimates 20 million people in West Africa's Sahel region are currently on the brink of starvation. In 2012, a combination of drought, conflict, failed crops, insect plague and high food prices led to a food insecurity crisis in the region.",
-		"bothTagline":"was also affected by the drought that hit the Sahel region in 2012, which left more than 1 million children malnourished.",
+		"bothTagline":"was also affected by the <span style=color:#FFCB36;font-weight:bold>drought</span> that hit the Sahel region in 2012, which left more than 1 million children malnourished.",
 		"type":"famine",
 		"ovTagline":"Chronic food insecurity (2012 - present)",
 		"ovElements":[["affected","20","MILLION"],["mal","1","MILLION+ children"]],
@@ -1889,7 +1889,7 @@ d3.select("#FLA").style("pointer-events","none");
 		
 	d3.selectAll(".featured").style("pointer-events","none")
 	.transition().duration(500)
-	.style("fill","#CFCDC9").style("cursor","default");
+	.style("fill","#CFCDC9").style("cursor","pointer");
 			
 	d3.selectAll(FC).style("fill","#FFCB36");	
 	
