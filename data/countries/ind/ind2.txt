@@ -1,0 +1,38 @@
+<html>
+
+<div style="margin: 25px 0px 0px 12px;">
+
+<head>
+<style>
+p {font-family: 'Source Sans Pro', sans-serif; font-size: 15px;}
+#content {margin: 1.75em;}
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
+</style>
+<body link="#16B0C1" vlink="#16B0C1" alink="#16B0C1">
+</head>
+<body>
+
+<p dir="ltr"><span style="color:#16B0C1;font-size: 21px;font-weight: 700;">Preparing for Cyclones in India</span><br /> 
+
+<p dir="ltr">India&mdash;with nearly 4,700 miles of coastline&mdash;regularly confronts cyclones in the Bay of Bengal and Arabian Sea. In October 1999, two cyclones hit the eastern coast of India within two weeks of each other, killing nearly 10,000 people and impacting nearly 14 million others. Since then, the Government of India and its citizens, with support from USAID, has made enormous strides towards reducing the risk cyclones pose to lives and livelihoods.</p>  
+
+<div style="
+    width: 325px;
+    float: left;
+    background-color: #B2DCDD;
+    margin: 10px 10px 0px 10px;
+    padding: 10px;
+"><img alt="Trainees medically stabilize a colleague during a disaster simulation as part of a USAID-sponsored training course in India. Photo courtesy: National Society for Earthquake Technology-Nepal" src="http://www.usaid.gov/sites/default/files/nodeimage/India_PoP.jpg" width="320" height="340"><p style="
+    font-size: 11px;
+">Trainees medically stabilize a colleague during a disaster simulation as part of a USAID-sponsored training course in India. <em>Photo courtesy: National Society for Earthquake Technology-Nepal</em></p></div>
+
+<p dir="ltr">On October 12, 2013, Cyclone Phailin battered the coast of India, making landfall near Gopalpur in Odisha State. With high wind speeds and heavy rains, the storm blew off roofs, uprooted trees, flooded homes, and downed power lines. With this storm, however, the people of India were not caught unaware.</p>  
+
+<p dir="ltr">The India Meteorological Department, which had benefited from past exchanges with American colleagues on severe weather detection, forecasting, and enhanced communication of early warning information, provided effective cyclone warnings days prior to Cyclone Phailin's arrival. This gave the country lead time for preparedness efforts. State and local authorities coordinated a variety of measures, including evacuating nearly 1 million people living in low-lying, coastal areas and providing supplies to shelters. Likewise, after the storm they responded swiftly to determine the extent of damage and provide assistance to communities in need. These efforts helped to limit the number of storm-related fatalities to less than 50.</p> 
+ 
+<p dir="ltr">Over the last decade, USAID has worked with the Government of India to strengthen its disaster management system and response capabilities.  Among the responders to Cyclone Phailin were a number of people who gained their skills through USAID's premier and long-standing project to increase first responder capacity in Asia, the Program for the Enhancement of Emergency Response, which has trained emergency personnel in India since 1998. The Government of India's National Disaster Response Force even adapted the training curriculum for its own battalions to develop state-of-the-art capacity within India for urban search and rescue and medical first response, including hospital preparedness.</p> 
+ 
+<p dir="ltr">Following the 2001 Gujarat earthquake, Indian officials toured USAID's Operation Center in Washington, D.C., and learned about the Incident Command System (ICS), the U.S. government's own framework for disaster response management. Since then, USAID has helped bring the ICS to India by facilitating the training of thousands of Indian officials through a strategic partnership with the Indian National Disaster Management Institute and the National Disaster Management Authority. Likewise, USAID supported efforts to increase awareness of and preparedness for disaster risks within Indian communities. Having developed evacuation plans and participated in cyclone drills as part of these USAID-sponsored programs, village disaster management committees and local officials knew just what to do when they received warnings about Cyclone Phailin's imminent arrival. During the same period, the Government of India invested in strengthening its disaster management institutions by passing important legislation and providing vision, leadership, and resources.</p> 
+ 
+<p dir="ltr">India's capacity to prepare for and cope with disasters has increased significantly thanks in part to the knowledge exchange provided through USAID. No matter the scale of the hazard, the country has proven its commitment to reducing its disaster risk and responding effectively when required.</p>    
+
