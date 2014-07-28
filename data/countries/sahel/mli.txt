@@ -1,0 +1,38 @@
+
+<html>
+
+<div style="margin: 25px 0px 0px 12px;">
+
+<head>
+<style>
+p {font-family: 'Source Sans Pro', sans-serif; font-size: 15px;}
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
+</style>
+<body link="#16B0C1" vlink="#16B0C1" alink="#16B0C1">
+</head>
+<body>
+
+<p dir="ltr"><span style="color:#16B0C1;font-size: 21px;font-weight: 700;">USAID Tracks Displaced Families in Mali</span>
+
+
+<p>When a crisis hits, people move&mdash;often with nothing but the clothes on their back. In 2012 and 2013, more than half a million people fled their homes in northern and central Mali due to protracted conflict. When the crisis eased, thousands of internally displaced persons (IDPs) and refugees voluntarily returned to their homes. The humanitarian community in Mali needed to know&mdash;and fast&mdash;where families were headed and what they needed to save lives and deliver assistance.</p> 
+ 
+<div style="
+    width: 245px;
+    float: left;
+    background-color: #B2DCDD;
+    margin: 10px 10px 0px 10px;
+    padding: 10px;
+"><img alt="FMP team surveys IDPs returning to northern Mali to assess needs. Photo courtesy: Ron Mortensen, USAID/OFDA" src="http://www.usaid.gov/sites/default/files/nodeimage/Mali_SS.jpg" width="240" height="160"><p style="
+    font-size: 11px;
+">FMP team surveys IDPs returning to northern Mali to assess needs. <em>Photo courtesy: Ron Mortensen, USAID/OFDA </em></p></div>
+
+<p>In June 2012, USAID partner the International Organization for Migration (IOM) launched the Displacement Tracking Matrix (DTM) to capture the volume, pace, and destinations of IDPs inside Mali. DTM teams travel door-to-door to register IDPs, provide assistance, and refer vulnerable cases to services.</p>
+
+<p>Since 2013, USAID partner IOM has recorded nearly 354,000 returns to areas of origin through displacement flow monitoring and IDP tracking mechanisms.</p>
+
+<p>By positioning flow monitoring points (FMPs) in strategic transport hubs, IOM is able to collect data on where families are coming from, where they are going, and what they need&mdash;vital information for planning efforts by the humanitarian community. Through FMPs, IOM collects near real-time reports on dynamics in crisis-affected areas of central and northern Mali, precious information during a crisis where violence significantly limits access. IOM feeds this data into the Commission on Population Movements&mdash;a body comprising government officials and relief agencies&mdash;to ensure reliable IDP data.</p>
+ 
+<p>IOM&#146;s operations serve a second, but equally vital, purpose:  to identify vulnerable individuals who require emergency care and immediately link them with services. IOM has successfully referred unaccompanied children, survivors of sexual violence, and separated families to the help they need. IOM-recorded trends on IDP vulnerability have also helped relief agencies create much-needed services, such as child-friendly spaces.</p>
+ 
+<p>Linking data collection with services ensures that statistics translate into lives saved. By supporting IOM to track population displacement in Mali, USAID is helping relief agencies hone aid efforts&mdash;limited by access constraints and funding shortages&mdash;to more efficiently reach populations in need.</p> 
