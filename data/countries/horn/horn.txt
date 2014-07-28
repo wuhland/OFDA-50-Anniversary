@@ -1,0 +1,52 @@
+<html>
+
+<div style="margin: 25px 0px 0px 12px;">
+
+<head>
+<style>
+p {font-family: 'Source Sans Pro', sans-serif; font-size: 15px;}
+#content {margin: 1.75em;}
+<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,400italic,600italic' rel='stylesheet' type='text/css'>
+</style>
+<body link="#16B0C1" vlink="#16B0C1" alink="#16B0C1">
+</head>
+<body>
+
+<p dir="ltr"><span style="color:#16B0C1;font-size: 21px;font-weight: 700;">One Year Later: Reflections on the Humanitarian Response in the Horn</span><br />
+<span style="color: black;font-size: 12px;">By Mark Bartolini, Former Director, USAID's Office of U.S. Foreign Disaster Assistance</span><br />
+<span style="color: black;font-size: 12px;">July 20, 2012</span>
+
+
+<p>Communities in the <a href="http://www.usaid.gov/crisis/horn-africa" target="_blank">Horn of Africa</a> are enduring their second summer of poor rains, failed crops, and withering livestock. In a region where the majority of the population makes under $2 a day in the best of times, this emergency has stretched to the breaking point many families’ ability to put food on the table.</p>
+
+<p>One year ago, the extent of this environmental crisis was made clear when the United Nations declared a famine in <a href="http://www.usaid.gov/somalia" target="_blank">Somalia</a>&mdash;the first to strike the region in nearly 30 years. In <a href="http://www.usaid.gov/Djibouti" target="_blank">Djibouti</a>, <a href="http://www.usaid.gov/ethiopia" target="_blank">Ethiopia</a>, and <a href="http://www.usaid.gov/kenya" target="_blank">Kenya</a>, the longterm investments in development paid off, preventing their slide into famine.</p>
+
+<div style="
+   width: 255px;
+   float: right;
+   background-color: #B2DCDD;
+   margin: 10px 10px 0px 10px;
+   padding: 10px;
+"><img alt="Thanks to better seeds and other technologies provided through USAID rural finance assistance, more than 867,000 households have seen their income grow.  Photo courtesy: Mariantonietta Peru/USAID" src="http://blog.usaid.gov/wp-content/uploads/2013/01/Horn-one-year-later.jpg" width="250" height="300"><p style="
+   font-size: 11px;
+">Thanks to better seeds and other technologies provided through USAID rural finance assistance, more than 867,000 households have seen their income grow. <em>Photo courtesy: Mariantonietta Peru/USAID</em></p></div>
+
+
+<p>But relief efforts weren’t easy. The drought severely affected more than 13 million people&mdash;more than the populations of New York City and Los Angeles combined&mdash;requiring a vast
+humanitarian response that could reach the remote, isolated, and often nomadic populations that had the greatest need. In Somalia, conflict and violence limited the reach of humanitarian assistance, and those hardest-hit by the drought were often the hardest to get to.</p>
+
+<p>A year later, despite the unflagging drought, conditions have improved across the Horn, thanks in part to the international community’s quick and aggressive response. USAID’s relief efforts in the Horn were designed to attack the emergency from two sides. Our work aims not only to save lives, but also to enable communities to recover faster and better withstand the next shock. Learning from previous droughts and famines, we prioritized:</p>
+<ul>
+<li dir="ltr">
+	<p dir="ltr">Food aid&mdash;to stop the hunger</li></ul>
+	<ul>
+<li dir="ltr">
+	<p dir="ltr">Health, nutrition, water, hygiene, and sanitation services&mdash;to combat disease, which kills more people in emergencies than a lack of food</li></ul>
+	<ul>
+<li dir="ltr">
+	<p dir="ltr">Support for livelihoods&mdash;to enable families to access food where markets were functioning</li></ul>
+<p>Since 2011, USAID has provided more than $1 billion in humanitarian assistance to the Horn, targeting more than 4.5 million people.</p>
+
+<p>However, the gains made over the past year are fragile. More than 9 million people in Djibouti, Ethiopia, Kenya, and Somalia still require humanitarian assistance, and the situation could worsen over the next few months. The core vulnerabilities of drought, conflict, poor governance, and chronic poverty continue to threaten the future of millions. Within USAID, we’re working hard to tackle these chronic threats and continue to be flexible in our response. The future will continue to present challenges, but USAID is committed to working with our partners to hold onto the gains we’ve all worked so hard to achieve.</p>
+
+<p>The one-year anniversary of the famine declaration in Somalia is a somber reminder of the continuing crisis and an opportunity to reflect on the need for communities to come together to help those in need.</p>
