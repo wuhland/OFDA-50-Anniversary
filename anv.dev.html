@@ -1281,7 +1281,7 @@ d3.select("body").append("div")
 	.attr('id','frame')
 	.style('width', width + 'px')
 	.append('div')
-		.style('overflow','auto')
+		.style('overflow','hidden')
 		.attr("id", "heading-Block")
 		.style("display", "block")
 		.style("width", width + "px");
@@ -1923,7 +1923,7 @@ function getHTTP(Media, Country, Name) {
 					
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} else if (Media === "Infographic") {
-					text = "<img width=\"" + width + "\" height=\"" + height + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\">";
+					text = "<iframe name='iframe1' id='iframe1' scrolling='yes'><img width=\"" + width + "\" height=\"" + height + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\"></iframe>";
 					//
 				} else if (Media === "Gallery") {
 					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
