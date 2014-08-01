@@ -1281,7 +1281,7 @@ d3.select("body").append("div")
 	.attr('id','frame')
 	.style('width', width + 'px')
 	.append('div')
-		.style('overflow','auto')
+		.style('overflow','hidden')
 		.attr("id", "heading-Block")
 		.style("display", "block")
 		.style("width", width + "px");
@@ -1914,6 +1914,7 @@ function getHTTP(Media, Country, Name) {
 			.attr("id","swipeBox")
 			.attr("height", "0px")
 			.style("opacity", 0)
+
 			.html(function () {
 				var text;
 				if (Media ===  "Video") {
@@ -1922,7 +1923,7 @@ function getHTTP(Media, Country, Name) {
 					
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} else if (Media === "Infographic") {
-					text = "<img width=\"" + width + "\" height=\"" + height + "\" src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\">";
+					text = "<img src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\">";
 				} else if (Media === "Gallery") {
 					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} 
