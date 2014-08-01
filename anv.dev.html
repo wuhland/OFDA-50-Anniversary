@@ -1923,7 +1923,7 @@ function getHTTP(Media, Country, Name) {
 					
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} else if (Media === "Infographic") {
-					text = "<iframe name='iframe1' id='iframe1' scrolling=\"yes\" src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
+					text = "<iframe overflow-x='hidden' name='iframe1' id='iframe1' scrolling=\"yes\" src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 					//<img width=\"" + width + "\" height=\"" + height + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\">";
 					//
 				} else if (Media === "Gallery") {
