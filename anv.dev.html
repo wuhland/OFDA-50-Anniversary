@@ -741,9 +741,9 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"complex",
 		"fullname":"Iraq",
-		"tagline":"words are wind",
-		"ovTagline":"words are wind",
-		"ovElements":[["","",""],["","",""],["","",""]]
+		"tagline":"After Saddam Hussein's regime was toppled in March 2003, continuing violence worsened an already bleak humanitarian situation. OFDA staff were the 1st U.S. non-military personnel to land in Baghdad, where they coordinated efforts to provide $451 million in aid over the next 9 years.",
+		"ovTagline":"Iraq U.S.-led operation began on March 20, 2003",
+		"ovElements":[["displaced","2.8","MILLION"],["aid","$451","MILLION"],["","",""]]
 
 	},
 	"JAM":{
@@ -2172,8 +2172,11 @@ function ov(feature) {
 							 		text = "people evacuated";
 							 	} else if (d[0] === "saved") {
 							 		text = "people saved";
+							 	} else if (d[0] === "aid") {
+							 		text = "in aid";
 								} else if (d[0] === "countriesaffected") {
 							 		text = "countries affected";
+
 								}
 							
 								return "<span class=nmTeal style=font-size:22pt>" + d[1] +  "</span>" + "&nbsp;<span class=nmTeal style=font-size:11pt;font-family:ssp_bold sans-serif>" + d[2] + "</span><br><span  style=font-size:11pt;font-weight:400;line-height:100%;color:#16B0C1;font-family:ssp_reg sans-serif>" +  text + "</span>";
