@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+                                                                                
+"features": [
+{ "type": "Feature", "properties": { "OBJECTID": 3556, "VertexCou": 11.0, "ISO": "USA", "NAME_0": "United States of America", "NAME_1": "District of Columbia", "VARNAME_1": "DC|D.C.", "NL_NAME_1": null, "HASC_1": "US.DC", "TYPE_1": "Federal District", "ENGTYPE_1": "Federal District", "VALIDFR_1": "18460709", "VALIDTO_1": "Present", "REMARKS_1": null, "Region": null, "RegionVar": null, "ProvNumber": 0, "NEV_Countr": null, "FIRST_FIPS": null, "FIRST_HASC": null, "FIPS_1": "US11", "gadm_level": 1.0, "CheckMe": 0, "Region_Cod": null, "Region_C_1": null, "ScaleRank": 0, "Region_C_2": null, "Region_C_3": null, "Country_Pr": null, "DataRank": 1, "Abbrev": "D.C.", "Postal": "DC", "Area_sqkm": 145.4, "sameAsCity": 9, "ADM0_A3": "USA", "MAP_COLOR": 1, "LabelRank": 9, "Shape_Leng": 0.584375176787, "Shape_Area": 0.0155635988853 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -76.909314541932531, 38.892975072341756 ], [ -77.019696087904094, 38.805497251596933 ], [ -77.0189880795362, 38.838553892847926 ], [ -77.025848431859629, 38.886722837988657 ], [ -77.065960736598697, 38.905887877323721 ], [ -77.066082806076622, 38.906009946801646 ], [ -77.074969525223366, 38.915336118766902 ], [ -77.113250775203085, 38.940165220548522 ], [ -77.113216003815467, 38.940192515871956 ], [ -77.041949480983703, 38.996135579393524 ], [ -76.909314541932531, 38.892975072341756 ] ] ] } }
+]
+}

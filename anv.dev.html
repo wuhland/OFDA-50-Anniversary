@@ -589,6 +589,20 @@ var featuredJSON = {
 		"ovTagline":"Ongoing conflict",
 		"ovElements":[["displaced","2.6","MILLION"],["insecure","6.7","MILLION"]]
 		},
+	"DC":{
+		"cat":"country",
+	//	"year":2012,
+		"xyz":[150,252,200],
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"N/A",
+		"fullname":"Washington, DC",
+		"tagline":"",
+		"ovTagline":"",
+		"ovElements":[]
+		},
 	"DJI":{
 		"cat":"regional",
 		"catName":"Horn of Africa",
@@ -1394,11 +1408,9 @@ var zoomRegion = function(region) {
 		contentDialog(region.id);
 		ov(region.id)
 		isGlobal(region.xyz, region.countries);
-		console.log(region.id)		
 }
 
 function popup (centroid, selection, type) {
-console.log(selection);
 	var selectionName = "";
 	var click = function () {};
 	var color;
@@ -1423,7 +1435,6 @@ console.log(selection);
 			contentDialog(FLA.id);
 			isGlobal(FLA.xyz, FLA.countries);
 			testDialog(dialogOptionBoolean,null);
-			console.log(dialogOptionBoolean)
 			}; 
 			color = "#FLA";
 			selectionName = "FLA";
@@ -1447,6 +1458,21 @@ console.log(selection);
 		selectionName = selection.id;
 		headline = featuredJSON[selection.id].fullname;
 		tagline = featuredJSON[selection.id].tagline;
+	} else if (type === "DC") {
+		click = function(){		
+			var DC = featuredJSON["DC"];
+			d3.selectAll(".popDetail, #tooltipImg, .popName, .another").remove();
+			tooltip.style("opacity",0).style("width","0px");	
+			zoom(DC.xyz);
+			contentDialog("DC");
+			isGlobal(DC.xyz, "#DC_path");
+			testDialog(dialogOptionBoolean,null);
+			}; 
+		color = "#NA";
+		selectionName = selection;
+		headline = points2[selection].fullname;
+		tagline = points2[selection].tagline;	
+		
 	} 
 	
 	var arrow = {};
@@ -1720,9 +1746,19 @@ d3.json("countries_min.topo.json", function(error, us) {
 //		ov(FLA.id)
 		isGlobal(FLA.xyz, FLA.countries);
 		testDialog(dialogOptionBoolean,null);
-		console.log(dialogOptionBoolean)
 //		d3.select("#FLA").transition().duration(500).style("opacity",1);
-//		console.log(region.id)
+			
+		});
+
+	d3.json("data/json/DC.geojson", function (error, dc)  {
+	g.append("g")
+		.selectAll("path")
+		.data(dc.features)
+		.enter()
+		.append("path")
+		.attr("d",path)
+		.style("fill","#FFCB36")
+		.attr("id","DC_path")
 			
 		});
 
@@ -1790,7 +1826,13 @@ setTimeout(function() {
 					.on("mouseover", function(d) {	
 						var centroid = projection(d[1]);
 						var selection = d[0];
-						var type = "points";
+						
+						var type = "";
+						if (this.id === "DC") {
+							type = "DC";
+						} else {
+							type = "points";
+						}
 						popup(centroid, selection, type); 
 					})
 					.attr("class",function(d) {
