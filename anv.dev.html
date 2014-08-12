@@ -1398,7 +1398,7 @@ var zoomRegion = function(region) {
 }
 
 function popup (centroid, selection, type) {
-
+console.log(selection);
 	var selectionName = "";
 	var click = function () {};
 	var color;
@@ -1451,19 +1451,19 @@ function popup (centroid, selection, type) {
 	
 	var arrow = {};
 	var offsets = [];
-if (centroid[0] >= .8 * width) {
+if (centroid[0] >= .8 * width || selection.id === "IDN") {
 		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%","border-right":"0px solid hsla(0,0%,0%,0)"};
 		offsets = [250,-90];
 							
 	} else if (centroid[1] >= .8 * height) {
 		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px","border-bottom":"0px solid hsla(0,0%,0%,0)"};
 		offsets = [95,29];
-	} else if (centroid[0] <= .2 * height) {
+	} else if (centroid[0] <= .2 * height || selection.id === "SOM" || selection.id === "CHL" || selection.id === "SDS") {
 		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-20px","top":"75px","border-left":"0px solid hsla(0,0%,0%,0)"};
 		offsets = [-50,-88];
 	} else {
 		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-20px","left":"40%","border-top":"0px solid hsla(0,0%,0%,0)"};
-		offsets = [95,40];
+		offsets = [105,38];
 	}
 	 
 		tooltip
