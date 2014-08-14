@@ -182,11 +182,11 @@
   {
     "month":"",
     "day":null,
-    "hour": ,
+    "hour":null,
     "lat":19.4,
     "lon":87,
     "class":0,
-    "wspeed": 
+    "wspeed":null
   },
   {
     "month":"",
