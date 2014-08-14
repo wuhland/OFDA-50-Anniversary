@@ -72,42 +72,6 @@
     "wspeed":0
   },
   {
-    "month":"",
-    "day":null,
-    "hour":null,
-    "lat":19.4,
-    "lon":87,
-    "class":0,
-    "wspeed":null 
-  },
-  {
-    "month":"",
-    "day":null,
-    "hour":null,
-    "lat":10,
-    "lon":97,
-    "class":0,
-    "wspeed":null
-  },
-  {
-    "month":"",
-    "day":null,
-    "hour":null,
-    "lat":11,
-    "lon":98,
-    "class":0,
-    "wspeed":null
-  },
-  {
-    "month":"",
-    "day":null,
-    "hour":null,
-    "lat":12,
-    "lon":98,
-    "class":0,
-    "wspeed":null
-  },
-  {
     "month":"Oct",
     "day":27,
     "hour":15,
