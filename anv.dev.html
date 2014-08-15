@@ -390,7 +390,7 @@ var topMargin = 0,
 adjust = 52;
 
 var tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip");
+	.attr("class", "tooltip");
 
 var featuredJSON = {
 	"AFG":{
@@ -587,9 +587,9 @@ var featuredJSON = {
 		"cat":"country",
 	//	"year":2012,
 		"xyz":[150,252,200],
-		"options":[],
+		"options":["Video"],
 		"Story":[],
-		"Video":[],
+		"Video":[{"Button":"How OFDA Saves Lives","URL":"www.youtube.com/embed/cd41B2yWL2A"},{"Button":"Smart Compassion: Donate Responsibly","URL":"www.youtube.com/embed/14h9_9sopRA"}],
 		"Infographic":[],
 		"type":"N/A",
 		"fullname":"Washington, DC",
@@ -870,7 +870,6 @@ var featuredJSON = {
 		"tagline":"",
 		"ovTagline":"",
 		"ovElements":[["","",""],["","",""],["","",""]]
-
 		},
 	"MLI":{
 		"cat":"regional",
@@ -924,23 +923,6 @@ var featuredJSON = {
 		"ovElements":[["killed","1,100",""],["affected","3,383",""],["percentbuildings","75%","OF BUILDINGS"]]
 
 		},
-	"MYS":{
-		"cat":"regional",
-		"catName":"Indian Ocean Tsunami",
-		"catID":"io_tsunami",
-		"year":2004,
-		"options":[],
-		"Story":[],
-		"Video":[],
-		"Infographic":[],
-		"type":"N/A",
-		"fullname":"Malaysia",
-		"tagline":"",
-		"ovTagline":"",
-		"ovElements":[["","",""],["","",""],["","",""]]
-
-		},
-	
 	"NPL":{
 		"cat":"country",
 		"year":1900,
@@ -1145,7 +1127,7 @@ var featuredJSON = {
 		"fullname":"Indian Ocean Tsunami",
 		"year":2011,
 		"options":[],
-		"type":"tsunami",
+		"region_type":"tsunami",
 		"Story":[],
 		"Infographic":[],
 		"Video":[],
@@ -1162,7 +1144,7 @@ var featuredJSON = {
 		"fullname":"Sahel Food Insecurity",
 		"year":2011,
 		"options":["Story"],
-		"type":"famine",
+		"region_type":"famine",
 		"Story":[{"Button":"Responding Early and Building Resilience in the Sahel","Name":"sahel.html"},{"Button":"USAID Tracks Displaced Families in Mali","Name":"mli.html"},{"Button":"Niger's Tree of Life", "Name":"ner.html"}],
 		"Infographic":[],
 		"Video":[],
@@ -1270,8 +1252,6 @@ var points2 = {
 
 
  
-//var featured = ["PHL","JAM","SDS","HTI"];
-//var featuredMap = d3.set(featured);
 var featuredMap = d3.map(featuredJSON);
 
 function httpGet(theURL){
@@ -1641,7 +1621,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 				return c; 
 				})
 			.attr("id", function(d) { return d.id; })
-
 			.attr("d", path)
 			.on("click", function(d) {
 				var c;// = function(){};
@@ -1650,7 +1629,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 					if (featuredJSON[d.id].cat === "regional") {
 						c = zoomRegion(featuredJSON[featuredJSON[d.id].catID]);
 					}
-							 
 				} else {
 						var xyz = [width / 2, height / 2, 1];
     					country = null;
@@ -1682,8 +1660,6 @@ d3.json("countries_min.topo.json", function(error, us) {
 				} else {
 					 return	null;
 				}
-				
-
 			})
 			.on("mouseout", function(d) {	
 					c = "";	
@@ -1698,13 +1674,8 @@ d3.json("countries_min.topo.json", function(error, us) {
 					c = null;
 				}
 				return c;
-			})
+			});
 		
-				
-		
-
-
-
 
 	d3.json("data/json/FLA.json", function (error, fla) { 
 	g.append("g")
