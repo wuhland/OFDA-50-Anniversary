@@ -47,6 +47,19 @@ var featuredJSON = {
 		"ovTagline":"Cyclone Bhola struck on November 12-13, 1970",
 		"ovElements":[["killed","300,000",""],["affected","3.6","MILLION"],["housedestroy","335,000",""]]
 		},
+	"BRA":{
+		"cat":"country",
+		"year":1988,
+		"options":["Story"],
+		"Story":[{"Button":"Rio do Sul: Brazil’s Model City for Disaster Risk Reduction Planning","Name":"bra.html"}],
+		"Video":[],
+		"Infographic":[],
+		"type":"flood",
+		"fullname":"Brazil",
+		"tagline":"Brazil and other countries in Latin America and the Caribbean experience a range of natural disasters including floods, landslides, hurricanes, droughts, and earthquakes. OFDA's work in Brazil focuses on reducing the risk that disasters pose on lives and livelihoods.",
+		"ovTagline":"Flooding in February 1988",
+		"ovElements":[["affected","3","MILLION+"],["economicdamages","1","BILLION"]]
+		},
 	"BFA":{
 		"cat":"regional",
 		"catName":"Sahel",
@@ -358,8 +371,8 @@ var featuredJSON = {
 	"IRQ":{
 		"cat":"country",
 		"year":2001,
-		"options":[],
-		"Story":[],
+		"options":["Story"],
+		"Story":[{"Button":"Healthcare, Water, and Shelter in Iraq","Name":"irq.html"}],
 		"Video":[],
 		"Infographic":[],
 		"type":"complex",
@@ -1769,7 +1782,7 @@ function ov(feature) {
 							 	} else if (d[0] === "countriesimpacted") {
 							 		text = "countries impacted";
 							 	} else if (d[0] === "economicdamages") {
-							 		text = "in economic damanges";
+							 		text = "in economic damages";
 							 	} else if (d[0] === "healthcare") {
 							 		text = "patients received health care";
 							 	} else if (d[0] === "surgeries") {
