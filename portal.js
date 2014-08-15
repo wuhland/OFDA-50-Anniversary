@@ -194,7 +194,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"volcano",
 		"fullname":"Colombia",
-		"tagline":"Dormant for nearly 150 years, ‘the Sleeping Lion’ Nevado del Ruiz volcano erupted in 1985, killing some 23,000 people. The eruption led to the creation of the USAID/U.S. Geological Service’s Volcano Disaster Assistance Program, the world’s only volcano crisis response team.",
+		"tagline":"Dormant for nearly 150 years, 'the Sleeping Lion' Nevado del Ruiz volcano erupted in 1985, killing some 23,000 people. The eruption led to the creation of the USAID/U.S. Geological Service's Volcano Disaster Assistance Program, the world's only volcano crisis response team.",
 		"ovTagline":"Volcano eruption on November 13, 1985",
 		"ovElements":[["killed","23,000",""],["injured","5,000",""],["homeless","7,700",""]]
 		},
