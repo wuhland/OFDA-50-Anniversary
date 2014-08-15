@@ -17,6 +17,22 @@ src:format('opentype');
 font-weight:bold;
 src: format('opentype');
 }
+
+#dataTitle {
+
+	width: 120px;
+	background-color: #B2DCDD;
+	color: #002A6C;
+	margin: 10px;
+	position: absolute;
+	bottom:0px;
+	right: 0px;
+	display:inline-block;
+	text-align: center; 
+	font-family: 'ssp_semibold', sans-serif;
+	font-weight: 300;
+	font-size: 15px;
+}
 	
 #hurr {
 	stroke-dasharray: 3,2;
@@ -25,15 +41,16 @@ src: format('opentype');
 .icon {
 stroke: hsla(360,0%,20%,1);
 }
+
 .background {
 	fill: white;
 	pointer-events: all;
 }
+
 .boundary {
 	stroke: white;
 	fill: none;
 }
-
 
 .featured { 
 	fill: #FFCB36;
