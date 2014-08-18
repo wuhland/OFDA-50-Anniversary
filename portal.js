@@ -58,7 +58,7 @@ var featuredJSON = {
 		"fullname":"Brazil",
 		"tagline":"Brazil and other countries in Latin America and the Caribbean experience a range of natural disasters including floods, landslides, hurricanes, droughts, and earthquakes. OFDA's work in Brazil focuses on reducing the risk that disasters pose on lives and livelihoods.",
 		"ovTagline":"Flooding in February 1988",
-		"ovElements":[["affected","3","MILLION+"],["economicdamages","1","BILLION"]]
+		"ovElements":[["affected","3","MILLION+"],["economicdamages","$1","BILLION"]]
 		},
 	"BFA":{
 		"cat":"regional",
@@ -756,9 +756,9 @@ var featuredJSON = {
 		"xyz":[660,350,3],
 		"fullname":"Indian Ocean Tsunami",
 		"year":2011,
-		"options":[],
+		"options":["Story"],
 		"region_type":"tsunami",
-		"Story":[],
+		"Story":[{"Button":"Snapshots of Hope in the Indian Ocean Tsunami Response","Name":"io_tsunami.html"}],
 		"Infographic":[],
 		"Video":[],
 		"tagline":"The deadliest tsunami in recorded history struck on December 26, 2004, killing an estimated 220,000 people and displacing more than 1.1 million people. Produced by a magnitude 9.0 earthquake, the tsunami affected at least 12 countries in the region.",
