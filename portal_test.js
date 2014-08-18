@@ -311,7 +311,7 @@ var featuredJSON = {
 		"options":["Infographic"],	
 		"Story":[],
 		"Video":[],
-		"Infographic":[{"Button":"Anatomy of Cholera Treatment Facility","Name":"graphic.jpg","Hyperlink":""}],
+		"Infographic":[{"Button":"Anatomy of Cholera Treatment Facility","Name":"graphic.jpg"}],
 		"type":"quake",
 		"disasterarray":{
 			"magnitude":7,
@@ -637,7 +637,7 @@ var featuredJSON = {
 		"options":["Story","Video", "Infographic"],
 		"Story":[{"Button":"Strengthening the Philippines through USAID relief","Name":"phl_final.html"}, {"Button":"Helping Typhoon-Affected Families in the Philippines Return Home","Name":"phl2.html"}],
 		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/oCK9IRLCky4"}],
-		"Infographic":[{"Button":"U.S. Government Humanitarian Aid to the Filipino","Name":"graphic.jpg","Hyperlink":"http://www.usaid.gov/sites/default/files/documents/1866/05.21.14_YolandaRMT_Infographic_FINAL.pdf"}],
+		"Infographic":[{"Button":"U.S. Government HUmanitarian Aid to the Filipino","Name":"graphic.jpg"}],
 		"type":"storm",
 		"fullname":"Philippines",
 		"tagline":"On November 8, 2013, Typhoon Haiyan - known locally as Typhoon Yolanda - made landfall in the central Philippines. Considered one of the most powerful storms ever to make landfall, Haiyan brought flooding, triggered landslides, and caused widespread damage.",
@@ -1545,10 +1545,11 @@ function getHTTP(Media, Country, Name) {
 					
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} else if (Media === "Infographic") {
-					text = "<img width=\"" + width + "\" height=\"" + (height - 20) + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\"><a target=\"_blank\" href=" + featuredJSON[Country].Infographic[0].Hyperlink + ">For PDF version click here.</a>";
+					text = "<img width=\"" + width + "\" height=\"" + height + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\">";
 				} else if (Media === "Gallery") {
 					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
-				}
+				} 
+					
 						
 				return text;
 		})//put up information screen
@@ -1846,21 +1847,18 @@ function country_clicked(d) {
 		xyz[2] = 6;  
 
 		zoom2ADM(d,xyz);
+		d3.json("data/countries/" + d.id.toLowerCase() + "/track.json", function(error, track) {
+
+		//	var color_scale = d3.scale.quantile().domain([1,5]).range(colorbrewer.YlGnBu[5]);
+			var color_scale = d3.scale.quantile().domain([0,1,5]).range(["white","#f48b8e","#a21015"]);
+			var year = featuredJSON[d.id].year;
 			map.append("div")
 				.attr("id", "dataTitle")
 				.append("div").attr("id","strip").style({"background-color":"whitesmoke","width":"5px","height":"100%","left":"0px","position":"absolute"});
 					
 			d3.select("#dataTitle").append("div")
 				.attr("id","dataTitleHTML")
-
-		var hurrAnimation = function(track_location) {
-		d3.json("data/countries/" + d.id.toLowerCase() + "/" + track_location, function(error, track) {
-
-		//	var color_scale = d3.scale.quantile().domain([1,5]).range(colorbrewer.YlGnBu[5]);
-			var color_scale = d3.scale.quantile().domain([0,1,5]).range(["white","#f48b8e","#a21015"]);
-			var year = featuredJSON[d.id].year;
-
-        		d3.select("#dataTitleHTML").html("<p><span id=\"popYear\">" + track[0].month + " " + track[0].day + ", " + year  + "</span><br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>");
+        		.html("<p><span id=\"popYear\">" + track[0].month + " " + track[0].day + ", " + year  + "</span><br>Category: <span style=\"color:" + color_scale(track[0].class) + "\">" + track[0].class + "</span></p>");
 			var dateTextChange = map.select('#dataTitleHTML');
 						
 			//var cat = dateTextChange.select('#category');	
@@ -2012,16 +2010,6 @@ function country_clicked(d) {
       					u01d = Math.sqrt(u01x * u01x + u01y * u01y);
   					return [u01x / u01d, u01y / u01d];
 				};
-			}//end of the hurrAnimation
-			
-		if (d.id === "IND") {
-			hurrAnimation("track.json");
-	
-		} else {
-			hurrAnimation("track.json");
-		
-	
-		}
    		}
 
 		else if ( featuredJSON[d.id].type == 'quake') {		
