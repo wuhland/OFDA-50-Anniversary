@@ -442,6 +442,18 @@ var featuredJSON = {
 	"LBY":{
 		"cat":"country",
 		"year":2011,
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"complex",
+		"fullname":"Liberia",
+		"tagline":"On August 5, USAID deployed a Disaster Assistance Response Team to Liberia to lead the overall U.S. response to the worst Ebola outbreak in history. The outbreak, affecting 4 countries, is the first to hit West Africa and has been declared an international health emergency.",
+		"ovElements":[["aid","$14.5","MILLION"],["countriesaffected","4",""],["rate","55-60%",""]]
+		},
+	"LBY":{
+		"cat":"country",
+		"year":2011,
 		"options":["Story", "Infographic"],
 		"Story":[{"Button":"Saving Lives in Libya","Name":"lby.html"}],
 		"Video":[],
@@ -627,8 +639,8 @@ var featuredJSON = {
 		"type":"complex",
 		"fullname":"Pakistan",
 		"tagline":"On October 8, 2005, a magnitude 7.6 earthquake struck 60 miles from Islamabad, causing landslides, demolishing infrastructure, and leveling entire cities. In 2010, historic flooding forced more than 10% of the population to flee their homes when water covered a fifth of the country - an area larger than the states of New York and New Jersey combined.",
-		"ovTagline":"Conflict broke out in 1975",
-		"ovElements":[["killed","150,000",""],["violence","1","MILLION"],["missing","17,000",""]]
+		"ovTagline":"Earthquake struck on October 8, 2005",
+		"ovElements":[["killed","73,338",""],["affected","5.1","MILLION"],["economicdamages","$5.2","BILLION"]]
 		},
 		
 	"PHL":{
@@ -1784,6 +1796,10 @@ function ov(feature) {
 							 		text = "in economic damages";
 							 	} else if (d[0] === "healthcare") {
 							 		text = "patients received health care";
+							 	} else if (d[0] === "rate") {
+							 		text = "fatality rate";
+							 	} else if (d[0] === "countriesaffected") {
+							 		text = "countries affected";
 							 	} else if (d[0] === "surgeries") {
 							 		text = "surgeries performed";
 							 	} else if (d[0] === "facilities") {
