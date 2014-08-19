@@ -17,6 +17,10 @@ src:format('opentype');
 font-weight:bold;
 src: format('opentype');
 }
+.font {
+	font-family: 'ssp_semibold', sans-serif;
+	font-size: 15px;
+}
 
 #dataTitle {
 

@@ -215,10 +215,10 @@ var featuredJSON = {
 		"cat":"country",
 	//	"year":2012,
 		"xyz":[150,252,200],
-		"options":["Video"],
+		"options":["Video","Infographic"],
 		"Story":[],
 		"Video":[{"Button":"How OFDA Saves Lives","URL":"www.youtube.com/embed/cd41B2yWL2A"},{"Button":"Smart Compassion: Donate Responsibly","URL":"www.youtube.com/embed/14h9_9sopRA"}],
-		"Infographic":[],
+		"Infographic":[{"Button":"DC Graphic","Name":"graphic.jpg","Hyperlink":"http://www.usaid.gov/sites/default/files/documents/1866/Disaster-Response-Infographic-10.31.12.pdf"}],
 		"type":"N/A",
 		"fullname":"Washington, DC",
 		"tagline":"",
@@ -311,7 +311,7 @@ var featuredJSON = {
 		"options":["Infographic"],	
 		"Story":[],
 		"Video":[],
-		"Infographic":[{"Button":"Anatomy of Cholera Treatment Facility","Name":"graphic.jpg","Hyperlink":""}],
+		"Infographic":[{"Button":"Anatomy of Cholera Treatment Facility","Name":"graphic.jpg","Hyperlink":"http://pdf.usaid.gov/pdf_docs/pdacu444.pdf"}],
 		"type":"quake",
 		"disasterarray":{
 			"magnitude":7,
@@ -401,7 +401,7 @@ var featuredJSON = {
 		"options":["Story", "Infographic"],
 		"Story":[{"Button":"Versatility and Leadership in the Face of an Unmatched Disaster","Name":"jpn.html"}],
 		"Video":[],
-		"Infographic":[{"Button":"Consequences of Nuclear Disasters","Name":"graphic.jpg"}],
+		"Infographic":[{"Button":"Consequences of Nuclear Disasters","Name":"graphic.jpg","Hyperlink":"http://pdf.usaid.gov/pdf_docs/pdacu444.pdf"}],
 		"type":"quake",
 		"disasterarray":{
 			"magnitude":9,
@@ -445,7 +445,7 @@ var featuredJSON = {
 		"options":["Story", "Infographic"],
 		"Story":[{"Button":"Saving Lives in Libya","Name":"lby.html"}],
 		"Video":[],
-		"Infographic":[{"Button":"Medical Assistance Saves Lives in Libya","Name":"graphic.jpg"}],
+		"Infographic":[{"Button":"Medical Assistance Saves Lives in Libya","Name":"graphic.jpg","Hyperlink":"http://pdf.usaid.gov/pdf_docs/pdacu444.pdf"}],
 		"type":"complex",
 		"fullname":"Libya",
 		"tagline":"In February 2011, an uprising in Libya led to escalating conflict  that uprooted entire communities, cut off supply routes, and left the Libyan people facing shorages of food, water, and fuel. OFDA's response focused on delivering critical medical assistance.",
@@ -728,7 +728,7 @@ var featuredJSON = {
 		"options":["Infographic", "Story"],
 		"Story":[{"Button":"Saving a Leg and a Life","Name":"syr.html"}, {"Button":"Round-the-Clock Aid for Syrian Baby","Name":"syr2.html"}],
 		"Video":[],
-		"Infographic":[{"Button":"Humanitarian Assistance for the Syria Crisis","Name":"graphic.jpg"}],
+		"Infographic":[{"Button":"Humanitarian Assistance for the Syria Crisis","Name":"graphic.jpg","Hyperlink":"http://www.usaid.gov/sites/default/files/documents/1866/07.09.14-Syria.pdf"}],
 		"type":"complex",
 		"fullname":"Syria",
 		"tagline":"4 years of brutal civil war has left more than 10 million people in need of humanitarian assistance in Syria. Nearly 1/2 the population is displaced, and the crisis affected more than 5 million children, which is as much as the total population of Norway.",
@@ -906,7 +906,8 @@ d3.select("body").append("div")
 		.style("display", "block")
 		.style("width", width + "px");
 
-
+//timer id to clear setTimout later
+var timerID;
 var projection = d3.geo.cylindricalStereographic()
 	.rotate([-32,0])
 	.parallel(45)
@@ -1083,14 +1084,14 @@ function popup (centroid, selection, type) {
 	
 	var arrow = {};
 	var offsets = [];
-if (centroid[0] >= 0.8 * width || selection.id === "IDN") {
+if (centroid[0] >= 0.8 * width || selection.id === "IDN"|| selection.id === "SOM" ) {
 		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%","border-right":"0px solid hsla(0,0%,0%,0)"};
 		offsets = [230,-100];
 							
 	} else if (centroid[1] >= 0.8 * height) {
 		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px","border-bottom":"0px solid hsla(0,0%,0%,0)"};
 		offsets = [95,29];
-	} else if (centroid[0] <= 0.2 * height || selection.id === "SOM" || selection.id === "CHL" || selection.id === "SDS") {
+	} else if (centroid[0] <= 0.2 * height || selection.id === "CHL" || selection.id === "SDS") {
 		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-20px","top":"75px","border-left":"0px solid hsla(0,0%,0%,0)"};
 		offsets = [-33,-86];
 	} else {
@@ -1474,18 +1475,19 @@ setTimeout(function() {
 
 
 function isGlobal (xyz, FC) {
+
 	if (xyz[2] === 1) {
 			d3.select("#hurr").remove();
 			d3.select("#icon").remove();
 	d3.selectAll(".circle").style("pointer-events","auto"); 
 	d3.select("#FLA").style("pointer-events","auto").transition().duration(500).style("fill","#FFCB36");
-
+	d3.selectAll("#ovContainer, #dataTitle").remove();
 	d3.selectAll(".warehouse, .office, .headquarters")
 		.style("pointer-events","auto")
 		.transition().duration(500)
 		.style("opacity","1");
-
-
+	clearTimeout(timerID);
+	d3.selectAll("#hurr, .icon").remove(); 
 	d3.select("#globeContainer").style("pointer-events","none").style("visibility","hidden");
 
 	d3.selectAll(".earthquake").remove();	
@@ -1501,12 +1503,13 @@ function isGlobal (xyz, FC) {
 	tooltip.style("pointer-events","none");
 
 	d3.selectAll(".circle").style("pointer-events","none"); 
-	d3.select("#FLA").style("pointer-events","none");		
-
+	d3.select("#FLA").style("pointer-events","none").transition().duration(500).style("fill","#CFCDC9");
 	d3.selectAll(".warehouse, .office, .headquarters")
 		.style("pointer-events","none")
 		.transition().duration(500)
 		.style("opacity",0);
+
+	d3.selectAll(".popDetail, .popFront, #arrow, .another").remove();	
 		
 	d3.select("#globeContainer").style("visibility","visible").style("pointer-events","auto");
 		
@@ -1545,7 +1548,7 @@ function getHTTP(Media, Country, Name) {
 					
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} else if (Media === "Infographic") {
-					text = "<img width=\"" + width + "\" height=\"" + (height - 20) + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\"><a target=\"_blank\" href=" + featuredJSON[Country].Infographic[0].Hyperlink + ">For PDF version click here.</a>";
+					text = "<img width=\"" + width + "\" height=\"" + (height - 67) + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\"><div style=\"width:100%;position:absolute;background-color:#2b2b2b;opacity:0.5;bottom:16px;\"><span class=\"font\" style=\"color:white;margin-left:5px;\" >PDF version<a style=\"color:#16B0C1;margin:5px;\" target=\"_blank\" href=" + featuredJSON[Country].Infographic[0].Hyperlink + ">here</a></span></div>";
 				} else if (Media === "Gallery") {
 					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				}
@@ -1905,11 +1908,13 @@ function country_clicked(d) {
       					pt = hurrPathEl.getPointAtLength(hurrPathElLen*i/track.length);
       					icon_g
         					.transition()
-        					.ease("linear")							
+        					.ease("linear")
+			//				.delay(700)							
         					.duration(150) //changed from 1000
         					.attr("transform", "translate(" + pt.x + "," + pt.y + "), scale("+(0.05*track[i].class)+"), rotate("+(i*15)+")");
       					icon
         					.transition()
+			//				.delay(700)
         					.ease("linear")
         					.duration(150) //changed from 1000
 
@@ -2016,6 +2021,7 @@ function country_clicked(d) {
 			
 		if (d.id === "IND") {
 			hurrAnimation("track.json");
+			timerID = setTimeout(function(){ hurrAnimation("track2.json"); },2000);
 	
 		} else {
 			hurrAnimation("track.json");
