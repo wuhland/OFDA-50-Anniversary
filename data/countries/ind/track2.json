@@ -1,81 +1,9 @@
-[
-  {
-    "month":"Oct",
-    "day":17,
-    "hour":0,
-    "lat":17.7,
-    "lon":86,
-    "class":1,
-    "wspeed":75
-  },
-  {
-    "month":"Oct",
-    "day":17,
-    "hour":3,
-    "lat":18,
-    "lon":85.5,
-    "class":1,
-    "wspeed":92
-  },
-  {
-    "month":"Oct",
-    "day":17,
-    "hour":6,
-    "lat":18,
-    "lon":85,
-    "class":1,
-    "wspeed":92
-  },
-  {
-    "month":"Oct",
-    "day":17,
-    "hour":9,
-    "lat":18.5,
-    "lon":85,
-    "class":1,
-    "wspeed":9
-  },
-  {
-    "month":"Oct",
-    "day":17,
-    "hour":12,
-    "lat":19,
-    "lon":85,
-    "class":1,
-    "wspeed":92
-  },
-  {
-    "month":"Oct",
-    "day":17,
-    "hour":15,
-    "lat":19,
-    "lon":85,
-    "class":1,
-    "wspeed":92
-  },
-  {
-    "month":"Oct",
-    "day":17,
-    "hour":18,
-    "lat":19.2,
-    "lon":85,
-    "class":2,
-    "wspeed":104
-  },
- {
-    "month":"Oct",
-    "day":17,
-    "hour":18,
-    "lat":19.2,
-    "lon":85,
-    "class":0,
-    "wspeed":0
-  },
-  {
+[ 
+{
     "month":"Oct",
     "day":27,
     "hour":15,
-    "lat":17,
+    "lat":17.1,
     "lon":90.5,
     "class":0,
     "wspeed":0
@@ -204,6 +132,6 @@
     "lat":20.5,
     "lon":86,
     "class":5,
-    "wspeed":161
-  }
+    "wspeed":161 
+ }
 ]
