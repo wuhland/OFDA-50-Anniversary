@@ -51,7 +51,7 @@ var featuredJSON = {
 		"cat":"country",
 		"year":1988,
 		"options":["Story"],
-		"Story":[{"Button":"Rio do Sul: Brazil’s Model City for Disaster Risk Reduction Planning","Name":"bra.html"},{"Button":"Resilient Farmers Take On Drought","Name":"bra2.html"}],
+		"Story":[{"Button":"Rio do Sul: Brazil's Model City for Disaster Risk Reduction Planning","Name":"bra.html"},{"Button":"Resilient Farmers Take On Drought","Name":"bra2.html"}],
 		"Video":[],
 		"Infographic":[],
 		"type":"flood",
