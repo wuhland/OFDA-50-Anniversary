@@ -439,7 +439,7 @@ var featuredJSON = {
 		"ovTagline":"Conflict broke out in 1975",
 		"ovElements":[["killed","150,000",""],["violence","1","MILLION"],["missing","17,000",""]]
 		},
-	"LBY":{
+	"LBR":{
 		"cat":"country",
 		"year":2011,
 		"options":["Story"],
