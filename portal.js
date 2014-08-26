@@ -178,6 +178,11 @@ var featuredJSON = {
 		"options":["Story"],
 		"Story":[{"Button":"By Preparing for Disaster, Chile Remains Resilient","Name":"chl.html"}],
 		"Video":[],
+		"disasterarray":{
+			"magnitude":8.8,
+			"depth":5, //in km
+			"epicenter":[-72.733,-35.909],//Long Lat
+			},
 		"Infographic":[],
 		"type":"quake",
 		"fullname":"Chile",
@@ -261,6 +266,16 @@ var featuredJSON = {
 		"options":[],
 		"Story":[],
 		"Video":[],
+		"disasterarray":{
+			"magnitude":7.6,
+			"depth":60, //in km
+			"epicenter":[-88.66,13.04],//Long Lat
+			},
+		"disasterarray2":{
+			"magnitude":6.6,
+			"depth":10, //in km
+			"epicenter":[-88.93,13.67],//Long Lat
+			},
 		"Infographic":[],
 		"type":"quake",
 		"fullname":"El Salvador",
@@ -632,11 +647,16 @@ var featuredJSON = {
 	"PAK":{
 		"cat":"country",
 		"year":1975,
+		"disasterarray":{
+			"magnitude":7.6,
+			"depth":10, //in km
+			"epicenter":[73.63,34.49],//Long Lat
+			},
 		"options":["Video", "Story"],
 		"Story":[{"Button":"A Day in the Life of an Aid Worker in Pakistan-Controlled Kashmir","Name":"pak.html"}],
 		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/vmY2H49O4xo"}],
 		"Infographic":[],
-		"type":"complex",
+		"type":"quake",
 		"fullname":"Pakistan",
 		"tagline":"On October 8, 2005, a magnitude 7.6 earthquake struck 60 miles from Islamabad, causing landslides, demolishing infrastructure, and leveling entire cities. In 2010, historic flooding forced more than 10% of the population to flee their homes when water covered a fifth of the country - an area larger than the states of New York and New Jersey combined.",
 		"ovTagline":"Earthquake struck on October 8, 2005",
