@@ -2078,7 +2078,6 @@ function country_clicked(d) {
 			zoom2ADM(d,xyz); 			
 			ov(d.id);
 
-//	var quakeAnimation = function(epicenter) {	
 		setTimeout(function() {			
 			g.append("circle")
     			.attr("class", "dot")
@@ -2090,10 +2089,58 @@ function country_clicked(d) {
 				.style("fill","#c7141a")
     			.attr("r", 6 / xyz[2])
 				.style("opacity",1);			
-			var animation = setInterval(function() {
+			animation = setInterval(function() {
   				g.append("circle")
       				.attr("class", "ring")
       				.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+      			//	.attr("r", 0)
+					.attr("r", featuredJSON[d.id].disasterarray.magnatude * 18 / xyz[2])
+					.attr("r", 4 / xyz[2] )
+      				.style("stroke-width", 3 / xyz[2])
+      				.style("stroke", "red")
+    			.transition()
+      				.ease("linear")
+      				.duration(6000)
+      				.style("stroke-opacity", 1e-6)
+      				.style("stroke-width", 1 / xyz[2]) 
+      				.style("stroke", "brown")
+      			//	.attr("r", 160 / xyz[2] )
+					.attr("r", featuredJSON[d.id].disasterarray.magnitude * 18 / xyz[2])
+      				.remove();
+			}, 800);
+			d3.selectAll(".background, #globeContainer, .notFeatured")
+				.on("click.stop", function() {
+					clearInterval(animation);		
+					clearInterval(animation2);		
+					svg.selectAll(".dot").remove();
+					svg.selectAll(".ring").remove();
+					d3.selectAll(".background, #globeContainer, .notFeatured")
+						.on("click.stop", null);
+					
+				});
+
+			},200);
+	
+		
+
+	if (d.id === "SLV") {
+	
+		setTimeout(function() { 
+		setTimeout(function() {			
+			g.append("circle")
+    			.attr("class", "dot")
+				.style("opacity",0)
+				.transition().delay(700)
+    	//		.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+				.attr("cx", projection(featuredJSON[d.id].disasterarray2.epicenter)[0])
+				.attr("cy",projection(featuredJSON[d.id].disasterarray2.epicenter)[1])
+				.style("fill","#c7141a")
+    			.attr("r", 6 / xyz[2])
+				.style("opacity",1);			
+			animation2 = setInterval(function() {
+  				g.append("circle")
+      				.attr("class", "ring")
+      				.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray2.epicenter) + ")")
       			//	.attr("r", 0)
 					.attr("r", 4 / xyz[2] )
       				.style("stroke-width", 3 / xyz[2])
@@ -2104,22 +2151,17 @@ function country_clicked(d) {
       				.style("stroke-opacity", 1e-6)
       				.style("stroke-width", 1 / xyz[2]) 
       				.style("stroke", "brown")
-      				.attr("r", 160 / xyz[2] )
+      			//	.attr("r", 160 / xyz[2] )
+					.attr("r", featuredJSON[d.id].disasterarray2.magnitude * 18 / xyz[2])
       				.remove();
 			}, 800);
-			d3.selectAll(".background, #globeContainer, .notFeatured")
-				.on("click.stop", function() {
-					clearInterval(animation);		
-					svg.select(".dot").remove();
-					svg.selectAll(".ring").remove();
-					d3.selectAll(".background, #globeContainer, .notFeatured")
-						.on("click.stop", null);
 					
-				});
 
 			},200);
-//	}
 
+
+		 },700 );
+	}
 		}
 
 		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id].type == "volcano" || featuredJSON[d.id].type == "famine" || featuredJSON[d.id].type == "DRR" ) {
