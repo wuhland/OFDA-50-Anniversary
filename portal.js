@@ -263,8 +263,8 @@ var featuredJSON = {
 	"SLV":{
 		"cat":"country",
 		"year":2001,
-		"options":[],
-		"Story":[],
+		"options":["Story"],
+		"Story":[{"Button":"No Name","Name":"El_Salvador.html"}],
 		"Video":[],
 		"disasterarray":{
 			"magnitude":7.6,
@@ -323,8 +323,8 @@ var featuredJSON = {
 	"HTI":{
 		"cat":"country",
 		"year":2010,
-		"options":["Infographic"],	
-		"Story":[],
+		"options":["Story","Infographic"],	
+		"Story":[{"Button":"Not named","Name":"Haiti.html"}],
 		"Video":[],
 		"Infographic":[{"Button":"Anatomy of Cholera Treatment Facility","Name":"graphic.jpg","Hyperlink":"http://pdf.usaid.gov/pdf_docs/pdacu444.pdf"}],
 		"type":"quake",
@@ -464,7 +464,7 @@ var featuredJSON = {
 		"type":"complex",
 		"fullname":"Liberia",
 		"tagline":"On August 5, USAID deployed a Disaster Assistance Response Team to Liberia to lead the overall U.S. response to the worst Ebola outbreak in history. The outbreak, affecting four countries, is the first to hit West Africa and has been declared an international health emergency.",
-		"ovElements":[["aid","$19.5","MILLION"],["countriesaffected","Four",""],["rate","55-60%",""]]
+		"ovElements":[["aid","$19.5","MILLION"],["countriesaffected","4",""],["rate","55-60%",""]]
 		},
 	"LBY":{
 		"cat":"country",
@@ -591,7 +591,7 @@ var featuredJSON = {
 		"fullname":"Nepal",
 		"tagline":"Nepal is one of the world's most disaster prone countries, where natural disasters over the past 100 years have affected almost 10 million people. Prepardness is vital to help people who face a threat of flooding, landslides, avalanches, and earthquakes.",
 		"ovTagline":"Natural Disasters (1900 - present)",
-		"ovElements":[["killed","23,153", ""],["affected","9.9","MILLION"],["damage","15", "BILLION"]]
+		"ovElements":[["killed","23,153", ""],["affected","9.9","MILLION"],["damage","$1.3", "BILLION"]]
 		},
 
 	"NZL":{
@@ -790,7 +790,7 @@ var featuredJSON = {
 		"year":2011,
 		"options":["Story"],
 		"region_type":"tsunami",
-		"Story":[{"Button":"Snapshots of Hope","Name":"io_tsunami.html"},{"Button":"Providing Relief in Sri Lanka","Name":"goal.html"}],
+		"Story":[{"Button":"Snapshots of Hope","Name":"IndianOceanTsunami.html"},{"Button":"Providing Relief in Sri Lanka","Name":"IndianOceanTsunamiGOAL.html"}],
 		"Infographic":[],
 		"Video":[],
 		"tagline":"The deadliest tsunami in recorded history struck on December 26, 2004, killing an estimated 220,000 people and displacing more than 1.1 million people. Produced by a magnitude 9.0 earthquake, the tsunami affected at least 12 countries in the region.",
@@ -1509,25 +1509,26 @@ setTimeout(function() {
 function isGlobal (xyz, FC) {
 
 	if (xyz[2] === 1) {
-			d3.select("#hurr").remove();
-			d3.select("#icon").remove();
-	d3.selectAll(".circle").style("pointer-events","auto"); 
-	d3.select("#FLA").style("pointer-events","auto").transition().duration(500).style("fill","#FFCB36");
-	d3.selectAll("#ovContainer, #dataTitle").remove();
-	d3.selectAll(".warehouse, .office, .headquarters")
-		.style("pointer-events","auto")
-		.transition().duration(500)
-		.style("opacity","1");
-	clearTimeout(timerID);
-	d3.selectAll("#hurr, .icon").remove(); 
-	d3.select("#globeContainer").style("pointer-events","none").style("visibility","hidden");
+		
+		d3.selectAll("#hurr, #icon, .dot, .ring").remove();
+		d3.select("#icon").remove();
+		d3.selectAll(".circle").style("pointer-events","auto"); 
+		d3.select("#FLA").style("pointer-events","auto").transition().duration(500).style("fill","#FFCB36");
+		d3.selectAll("#ovContainer, #dataTitle").remove();
+		d3.selectAll(".warehouse, .office, .headquarters")
+			.style("pointer-events","auto")
+			.transition().duration(500)
+			.style("opacity","1");
+		clearTimeout(timerID);
+		d3.selectAll("#hurr, .icon").remove(); 
+		d3.select("#globeContainer").style("pointer-events","none").style("visibility","hidden");
 
-	d3.selectAll(".earthquake").remove();	
+		d3.selectAll(".earthquake").remove();	
 
-	d3.selectAll(".featured").style("cursor","pointer")
-	.style("pointer-events","auto")
-	.transition().duration(500)
-	.style("opacity",1).style("fill","#FFCB36");
+		d3.selectAll(".featured").style("cursor","pointer")
+			.style("pointer-events","auto")
+			.transition().duration(500)
+			.style("opacity",1).style("fill","#FFCB36");
 
  
 } else if (xyz[2] > 1) {
@@ -2078,7 +2079,6 @@ function country_clicked(d) {
 			zoom2ADM(d,xyz); 			
 			ov(d.id);
 
-//	var quakeAnimation = function(epicenter) {	
 		setTimeout(function() {			
 			g.append("circle")
     			.attr("class", "dot")
@@ -2090,10 +2090,58 @@ function country_clicked(d) {
 				.style("fill","#c7141a")
     			.attr("r", 6 / xyz[2])
 				.style("opacity",1);			
-			var animation = setInterval(function() {
+			animation = setInterval(function() {
   				g.append("circle")
       				.attr("class", "ring")
       				.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+      			//	.attr("r", 0)
+					.attr("r", featuredJSON[d.id].disasterarray.magnatude * 18 / xyz[2])
+					.attr("r", 4 / xyz[2] )
+      				.style("stroke-width", 3 / xyz[2])
+      				.style("stroke", "red")
+    			.transition()
+      				.ease("linear")
+      				.duration(6000)
+      				.style("stroke-opacity", 1e-6)
+      				.style("stroke-width", 1 / xyz[2]) 
+      				.style("stroke", "brown")
+      			//	.attr("r", 160 / xyz[2] )
+					.attr("r", featuredJSON[d.id].disasterarray.magnitude * 18 / xyz[2])
+      				.remove();
+			}, 800);
+			d3.selectAll(".background, #globeContainer, .notFeatured")
+				.on("click.stop", function() {
+					clearInterval(animation);		
+					clearInterval(animation2);		
+					svg.selectAll(".dot").remove();
+					svg.selectAll(".ring").remove();
+					d3.selectAll(".background, #globeContainer, .notFeatured")
+						.on("click.stop", null);
+					
+				});
+
+			},200);
+	
+		
+
+	if (d.id === "SLV") {
+	
+		setTimeout(function() { 
+		setTimeout(function() {			
+			g.append("circle")
+    			.attr("class", "dot")
+				.style("opacity",0)
+				.transition().delay(700)
+    	//		.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
+				.attr("cx", projection(featuredJSON[d.id].disasterarray2.epicenter)[0])
+				.attr("cy",projection(featuredJSON[d.id].disasterarray2.epicenter)[1])
+				.style("fill","#c7141a")
+    			.attr("r", 6 / xyz[2])
+				.style("opacity",1);			
+			animation2 = setInterval(function() {
+  				g.append("circle")
+      				.attr("class", "ring")
+      				.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray2.epicenter) + ")")
       			//	.attr("r", 0)
 					.attr("r", 4 / xyz[2] )
       				.style("stroke-width", 3 / xyz[2])
@@ -2104,22 +2152,17 @@ function country_clicked(d) {
       				.style("stroke-opacity", 1e-6)
       				.style("stroke-width", 1 / xyz[2]) 
       				.style("stroke", "brown")
-      				.attr("r", 160 / xyz[2] )
+      			//	.attr("r", 160 / xyz[2] )
+					.attr("r", featuredJSON[d.id].disasterarray2.magnitude * 18 / xyz[2])
       				.remove();
 			}, 800);
-			d3.selectAll(".background, #globeContainer, .notFeatured")
-				.on("click.stop", function() {
-					clearInterval(animation);		
-					svg.select(".dot").remove();
-					svg.selectAll(".ring").remove();
-					d3.selectAll(".background, #globeContainer, .notFeatured")
-						.on("click.stop", null);
 					
-				});
 
 			},200);
-//	}
 
+
+		 },700 );
+	}
 		}
 
 		else if ( featuredJSON[d.id].type == "complex" || featuredJSON[d.id].type == "flood" || featuredJSON[d.id].type == "volcano" || featuredJSON[d.id].type == "famine" || featuredJSON[d.id].type == "DRR" ) {
