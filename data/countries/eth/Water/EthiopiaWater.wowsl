@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualLightBox>
+    <Gallery version="2.5">
+        <Settings>
+            <AppName>WOW Slider</AppName>
+            <AppUrlS>WOWSlider.com</AppUrlS>
+            <AppVersion>6.6</AppVersion>
+            <AutoPlay>false</AutoPlay>
+            <AutoPlayVideo>false</AutoPlayVideo>
+            <Captions>true</Captions>
+            <CaptionsEffect>parallax</CaptionsEffect>
+            <Controls>true</Controls>
+            <FullScreen>false</FullScreen>
+            <GalleryName>EthiopiaWater</GalleryName>
+            <GallerySuffix>1</GallerySuffix>
+            <HtmlCharset>UTF-8</HtmlCharset>
+            <ImageAspectRatio>true</ImageAspectRatio>
+            <ImageEffect>parallax</ImageEffect>
+            <ImageFillColor>#000000</ImageFillColor>
+            <ImageHeight>700</ImageHeight>
+            <ImageQuality>90</ImageQuality>
+            <ImageShrink2>true</ImageShrink2>
+            <ImageStretch>false</ImageStretch>
+            <ImageTemplate>/Applications/WOWSlider.app/Contents/Resources/templates/backgnd/shuffle/</ImageTemplate>
+            <ImageTemplateName>Shuffle</ImageTemplateName>
+            <ImageWidth>960</ImageWidth>
+            <Images>true</Images>
+            <JoomlaType>2.5</JoomlaType>
+            <OneLoop>false</OneLoop>
+            <OrderRandom>false</OrderRandom>
+            <PlayPause>false</PlayPause>
+            <Preloader>false</Preloader>
+            <PublishFileName>/Users/heatherfreitag/Desktop/Ethiopia Water/index.html</PublishFileName>
+            <PublishIndex>index.html</PublishIndex>
+            <PublishPath>/Users/heatherfreitag/Desktop/Ethiopia Water</PublishPath>
+            <PublishPreview>true</PublishPreview>
+            <PublishType>file</PublishType>
+            <RelativePath>false</RelativePath>
+            <ShowBullets>true</ShowBullets>
+            <ShowTooltips>true</ShowTooltips>
+            <SizeStyle>1</SizeStyle>
+            <SlideshowDelay>17</SlideshowDelay>
+            <SlideshowDuration>18</SlideshowDuration>
+            <SoundEnable>0</SoundEnable>
+            <SoundFileName></SoundFileName>
+            <StopOnHover>false</StopOnHover>
+            <TemplateName>shuffle</TemplateName>
+            <ThumbAlign>bottom</ThumbAlign>
+            <ThumbFormat>jpg</ThumbFormat>
+            <ThumbHeight>48</ThumbHeight>
+            <ThumbQuality>90</ThumbQuality>
+            <ThumbWidth>0</ThumbWidth>
+            <Thumbnails>false</Thumbnails>
+            <TooltipPos>bottom</TooltipPos>
+            <noFrame>false</noFrame>
+        </Settings>
+        <Images RelativePath="false">
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Water/Ethiopia water 1.jpg</url>
+                <title>Ethiopia: Water is Life</title>
+                <description>Thanks to the agriculture program, Morshida is now one of the area’s premier honey producers. Her biggest accomplishment? Giving her children the opportunity to get an education. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>3784375</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Water/Ethiopia water 2.jpg</url>
+                <title>Ethiopia: Water is Life</title>
+                <description>USAID (OFDA) worked with Global Team for Local Initiatives to restore water points, like this well. Now, Hamar women no longer need to trek long distances to get water. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>4400214</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Water/Ethiopia water 3.jpg</url>
+                <title>Ethiopia: Water is Life</title>
+                <description>In Ethiopia, almost half the population doesn’t have access to clean drinking water. Women and girls have no choice but to gather it from ponds, rivers, and other “unsafe” sources. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>5689308</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Water/Ethiopia water 4.jpg</url>
+                <title>Ethiopia: Water is Life</title>
+                <description>USAID (OFDA) is partnering with the International Rescue Committee to repair broken water pumps, like this one. Now, more than 150,000 people in Dalocha have access to clean water. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>3234359</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Water/Ethiopia water 5.jpg</url>
+                <title>Ethiopia: Water is Life</title>
+                <description>Running the water operations in Dalocha is a committee made up solely of women, and run by this woman, Semira Assefa; such female leadership is rare in this mostly Muslim community. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>4164596</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Water/Ethiopia water 6.jpg</url>
+                <title>Ethiopia: Water is Life</title>
+                <description>Principal Elias Saramiso sees school attendance plummet during the dry season because students, mostly the girls, are out searching for water. “I always feel depressed during that month,” said Saramiso. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>4720261</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Water/Ethiopia water 7.jpg</url>
+                <title>Ethiopia: Water is Life</title>
+                <description>8th grader Marta Dawit, who is at the top of her class, has been forced to miss school to get water for her family. But after USAID (OFDA) installed a water collection system at her school, she can pursue her dreams to be a teacher. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>3355069</filesize>
+            </Image>
+        </Images>
+    </Gallery>
+</VisualLightBox>

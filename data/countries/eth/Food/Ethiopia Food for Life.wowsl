@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualLightBox>
+    <Gallery version="2.5">
+        <Settings>
+            <AppName>WOW Slider</AppName>
+            <AppUrlS>WOWSlider.com</AppUrlS>
+            <AppVersion>6.6</AppVersion>
+            <AutoPlay>false</AutoPlay>
+            <AutoPlayVideo>false</AutoPlayVideo>
+            <Captions>true</Captions>
+            <CaptionsEffect>parallax</CaptionsEffect>
+            <Controls>true</Controls>
+            <FullScreen>false</FullScreen>
+            <GalleryName>Ethiopia Food for Life</GalleryName>
+            <GallerySuffix>1</GallerySuffix>
+            <HtmlCharset>UTF-8</HtmlCharset>
+            <ImageAspectRatio>true</ImageAspectRatio>
+            <ImageEffect>parallax</ImageEffect>
+            <ImageFillColor>#000000</ImageFillColor>
+            <ImageHeight>700</ImageHeight>
+            <ImageQuality>90</ImageQuality>
+            <ImageShrink2>true</ImageShrink2>
+            <ImageStretch>false</ImageStretch>
+            <ImageTemplate>/Applications/WOWSlider.app/Contents/Resources/templates/backgnd/shuffle/</ImageTemplate>
+            <ImageTemplateName>Shuffle</ImageTemplateName>
+            <ImageWidth>960</ImageWidth>
+            <Images>true</Images>
+            <JoomlaType>2.5</JoomlaType>
+            <OneLoop>false</OneLoop>
+            <OrderRandom>false</OrderRandom>
+            <PlayPause>false</PlayPause>
+            <Preloader>false</Preloader>
+            <PublishFileName>/Users/heatherfreitag/Desktop/Ethiopia Food/index.html</PublishFileName>
+            <PublishIndex>index.html</PublishIndex>
+            <PublishPath>/Users/heatherfreitag/Desktop/Ethiopia Food</PublishPath>
+            <PublishPreview>true</PublishPreview>
+            <PublishType>file</PublishType>
+            <RelativePath>false</RelativePath>
+            <ShowBullets>true</ShowBullets>
+            <ShowTooltips>true</ShowTooltips>
+            <SizeStyle>1</SizeStyle>
+            <SlideshowDelay>20</SlideshowDelay>
+            <SlideshowDuration>20</SlideshowDuration>
+            <SoundEnable>0</SoundEnable>
+            <SoundFileName></SoundFileName>
+            <StopOnHover>false</StopOnHover>
+            <TemplateName>shuffle</TemplateName>
+            <ThumbAlign>bottom</ThumbAlign>
+            <ThumbFormat>jpg</ThumbFormat>
+            <ThumbHeight>48</ThumbHeight>
+            <ThumbQuality>90</ThumbQuality>
+            <ThumbWidth>0</ThumbWidth>
+            <Thumbnails>false</Thumbnails>
+            <TooltipPos>bottom</TooltipPos>
+            <noFrame>false</noFrame>
+        </Settings>
+        <Images RelativePath="false">
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Food/Ethiopia food 1.jpg</url>
+                <title>Ethiopia: Food for Life</title>
+                <description>In Ethiopia, drought kills more people than any other type of natural disaster. Agriculture is the cornerstone of the economy, with more than 90% of crops grown by small-scale farmers. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>3429949</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Food/Ethiopia food 2.jpg</url>
+                <title>Ethiopia: Food for Life</title>
+                <description>USAID (OFDA) is working with Food for the Hungry to support a plant nursery where farmers receive drought-resistant seedlings and learn techniques to maximize crop yields. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>6078274</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Food/Ethiopia food 3.jpg</url>
+                <title>Ethiopia: Food for Life</title>
+                <description>Thanks to the program, Enate Lombebo and her husband have been able to make money growing and selling coffee. They’ve also been able to buy livestock and send their kids to school. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>4878136</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Food/Ethiopia food 5.jpg</url>
+                <title>Ethiopia: Food for Life</title>
+                <description>Kibeme Onke sits in front of her bumper crop of haricot beans that she was able to grow and harvest with help from the USAID (OFDA)-supported plant nursery program. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>5401305</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Food/Ethiopia food 6.jpg</url>
+                <title>Ethiopia: Food for Life</title>
+                <description>In addition to receiving seeds and training, Kibeme learned how to read, write, and even manage household finances. She now has a savings account to fall back on. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>5298458</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Food/Ethiopia food 7.jpg</url>
+                <title>Ethiopia: Food for Life</title>
+                <description>Morshida Elamo says that USAID (OFDA) helped change her life. With the seedlings and training she received, she helped save her family from starvation. Carol Han, USAID/OFDA.</description>
+                <filesize>2756485</filesize>
+            </Image>
+            <Image>
+                <url>/Users/heatherfreitag/Desktop/Ethiopia Food/Ethiopia food 8.jpg</url>
+                <title>Ethiopia: Food for Life</title>
+                <description>Thanks to the agriculture program, Morshida is now one of the area’s premier honey producers. Her biggest accomplishment? Giving her children the opportunity to get an education. Photo credit: Carol Han, USAID/OFDA.</description>
+                <filesize>5140864</filesize>
+            </Image>
+        </Images>
+    </Gallery>
+</VisualLightBox>

@@ -106,10 +106,11 @@ var featuredJSON = {
 		"catName":"Horn of Africa",
 		"catID":"horn",
 		"year":2011,
-		"options":["Story"],
+		"options":["Story","Gallery"],
 		"Story":[{"Button":"No Name","Name":"EthiopiaStory1.html"}],
 		"Video":[],
 		"Infographic":[],
+		"Gallery":[{"Button":"Ethiopia Cooking School","Folder":"SweetPotato"},{"Button":"Water is Life","Folder":"Water"},{"Button":"Food for Life","Folder":"Food"}],
 		"type":"famine",
 		"fullname":"Ethiopia",
 		"tagline":"From 1983-1985, drought conditions and political conflict in Ethiopia led to the <br><span style=color:#FFCB36;font-weight:bold>worst famine</span> in a century, causing more than 300,000 deaths and affecting more than 7.7 million people.",
@@ -220,10 +221,11 @@ var featuredJSON = {
 		"cat":"country",
 	//	"year":2012,
 		"xyz":[150,252,200],
-		"options":["Video","Infographic"],
+		"options":["Video","Infographic","Gallery"],
 		"Story":[],
 		"Video":[{"Button":"How OFDA Saves Lives","URL":"www.youtube.com/embed/cd41B2yWL2A"},{"Button":"Smart Compassion: Donate Responsibly","URL":"www.youtube.com/embed/14h9_9sopRA"}],
 		"Infographic":[{"Button":"DC Graphic","Name":"graphic.jpg","Hyperlink":"http://www.usaid.gov/sites/default/files/documents/1866/Disaster-Response-Infographic-10.31.12.pdf"}],
+		"Gallery":[{"Button":"DC","Folder":"Gallery"}],
 		"type":"N/A",
 		"fullname":"Washington, DC",
 		"tagline":"",
@@ -319,14 +321,29 @@ var featuredJSON = {
 		"ovTagline":"Earthquake on February 4, 1976",
 		"ovElements":[["affected","4.9","MILLION+"],["killed","23,000",""],["homeless","1.1","MILLION+"]]
 
+		},
+	"GIN":{
+		"cat":"regional",
+		"catName":"ebola",
+		"year":2011,
+		"catID":"ebola",
+		"options":["Story"],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"N/A",
+		"fullname":"Equatorial Guinea",
+		"tagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
 		},	
 	"HTI":{
 		"cat":"country",
 		"year":2010,
-		"options":["Story","Infographic"],	
+		"options":["Story","Infographic","Gallery"],	
 		"Story":[{"Button":"Helping Communities Rebuild","Name":"Haiti.html"},{"Button":"Preparing for Future Disasters in Haiti","Name":"Haiti_IOM.html"}],
 		"Video":[],
 		"Infographic":[{"Button":"Anatomy of Cholera Treatment Facility","Name":"graphic.jpg","Hyperlink":"http://pdf.usaid.gov/pdf_docs/pdacu444.pdf"}],
+		"Gallery":[{"Button":"Jamaica versus Hurricanes","Folder":"Gallery"}],
 		"type":"quake",
 		"disasterarray":{
 			"magnitude":7,
@@ -404,7 +421,7 @@ var featuredJSON = {
 		"Story":[{"Button":"Guiding America's Compassionate Spirit","Name":"jam.html"},{"Button":"How Rap Music is Saving Lives","Name":"Jamaica.html"}],
 		"Video":[],
 		"Infographic":[],
-		"Gallery":[{"Button":"Gallery 1","Name":"gallery.html"},{"Button":"Gallery 2","Name":"gallery2.html"},{"Button":"Gallery 3","Name":"gallery3.html"},{"Button":"Gallery 4","Name":"gallery4.html"},{"Button":"Gallery 6","Name":"gallery6.html"},{"Button":"Gallery 7","Name":"gallery7.html"},{"Button":"Gallery 8","Name":"gallery8.html"}],
+		"Gallery":[{"Button":"Jamaica versus Hurricanes","Folder":"Gallery"}],
 		"type":"storm",
 		"fullname":"Jamaica",
 		"tagline":"Jamaica has been hit by some 50 hurricanes and tropical storms since the late 1800s. Hurricane Ivan, which hit in September 2004, is among the most damaging storms in the island's recorded history.",
@@ -456,16 +473,18 @@ var featuredJSON = {
 		"ovElements":[["killed","150,000",""],["violence","1","MILLION"],["missing","17,000",""]]
 		},
 	"LBR":{
-		"cat":"country",
+		"cat":"regional",
+		"catName":"ebola",
 		"year":2011,
+		"catID":"ebola",
 		"options":["Story"],
-		"Story":[{"Button":"On the Frontlines of the Ebola Response: an Inside Look at a Program to Help the Grieving","Name":"lbr.html"}],
+		"Story":[],
 		"Video":[],
 		"Infographic":[],
-		"type":"complex",
+		"type":"N/A",
 		"fullname":"Liberia",
-		"tagline":"On August 5, USAID deployed a Disaster Assistance Response Team to Liberia to lead the overall U.S. response to the worst Ebola outbreak in history. The outbreak, affecting four countries, is the first to hit West Africa and has been declared an international health emergency.",
-		"ovElements":[["aid","$19.5","MILLION"],["countriesaffected","4",""],["rate","55-60%",""]]
+		"tagline":"",
+		"ovElements":[["","",""],["","",""],["","",""]]
 		},
 	"LBY":{
 		"cat":"country",
@@ -721,7 +740,20 @@ var featuredJSON = {
 		"tagline":"In 1988, OFDA spearheaded efforts to create Operation Lifeline, a system that allowed humanitarian assistance to reach war-torn and drought-affected areas of what is currently in South Sudan. In December 2013, conflict erupted again between South Sudanese government and rebel opposition forces. More than 1.5 million people have been forced from their homes and up to one million are at risk of famine.", 
 		"ovTagline":"Conflict broke out in December 2013",
 		"ovElements":[["displaced","1.5", "MILLION"],["humanitarian","40% country", ""],["insecure","7", "MILLION"]]  
-	
+		},
+	"SLE":{
+		"cat":"regional",
+		"catName":"Ebola",
+		"year":2011,
+		"catID":"ebola",
+		"options":[],
+		"Story":[],
+		"Video":[],
+		"Infographic":[],
+		"type":"N/A",
+		"fullname":"Sierra Leone",
+		"tagline":"",
+		"ovElements":[["hello","hello","hello"],["","",""],["","",""]]
 		},
 	"SOM":{
 		"cat":"doubleRegional",
@@ -754,14 +786,14 @@ var featuredJSON = {
 		"ovElements":[["affected","4.7", "MILLION"],["displaced","3", "MILLION"],["camps","1.2", "MILLION"]]  
 	
 		},
-		
 	"SYR":{
 		"cat":"country",
 		"year":2014,
-		"options":["Infographic", "Story"],
+		"options":["Infographic", "Story","Gallery"],
 		"Story":[{"Button":"Saving a Leg and a Life","Name":"syr.html"}, {"Button":"Round-the-Clock Aid for Syrian Baby","Name":"syr2.html"}],
 		"Video":[],
 		"Infographic":[{"Button":"Humanitarian Assistance for the Syria Crisis","Name":"graphic.jpg","Hyperlink":"http://www.usaid.gov/sites/default/files/documents/1866/07.09.14-Syria.pdf"}],
+		"Gallery":[{"Button":"Syria","Folder":"Gallery"}],
 		"type":"complex",
 		"fullname":"Syria",
 		"tagline":"4 years of brutal civil war has left more than 10 million people in need of humanitarian assistance in Syria. Nearly 1/2 the population is displaced, and the crisis affected more than 5 million children, which is as much as the total population of Norway.",
@@ -783,6 +815,34 @@ var featuredJSON = {
 		"ovTagline":"Flooding in 2011",
 		"ovElements":[["affected","13.6","MILLION"],["killed","823",""],["economicdamages","$46","BILLION"]]
 
+	},
+	"ZMB":{
+		"cat":"country",
+		"year":2011,
+		"options":["Story"],
+		"Story":[{"Button":"Land O'Lakes Goats of Hope","Name":"Zambia1.html"}],
+		"Video":[],
+		"Infographic":[],
+		"type":"flood",
+		"fullname":"Zambia",
+		"tagline":"Nothing here yet",
+		"ovTagline":"Flooding in 2011",
+		"ovElements":[["affected","13.6","MILLION"],["killed","823",""],["economicdamages","$46","BILLION"]]
+	},
+	"ebola":{
+		"id":"ebola",
+		"xyz":[350,350,10],
+		"fullname":"W. Africa Ebola Outbreak",
+		"year":2011,
+		"options":["Story","Video"],
+		"region_type":"complex",
+		"Story":[{"Button":"On the Frontlines of the Ebola Response: an Inside Look at a Program to Help the Grieving","Name":"lbr.html"},{"Button":"Liberia Gripped By Ebola's Many Tentacles","Name":"Ebola2.html"},{"Button":"Profiles in Courage: Ren&eacute; Van Slate","Name":"Ebola3.html"},{"Button":"Powering the Ebola Response","Name":"Ebola4.html"}],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/WUDDcVrU4y4"}],
+		"Infographic":[],
+		"type":"complex",
+		"tagline":"On August 5, USAID deployed a Disaster Assistance Response Team to Liberia to lead the overall U.S. response to the worst Ebola outbreak in history. The outbreak, affecting four countries, is the first to hit West Africa and has been declared an international health emergency.",
+		"ovElements":[["aid","$111","MILLION+"],["countriesaffected","5",""],["rate","55-60%",""]],
+		"countries":"#SLE, #LBR, #GIN"
 	},
 	"io_tsunami":{
 		"id":"io_tsunami",
@@ -1087,6 +1147,8 @@ function popup (centroid, selection, type) {
 		headline = featuredJSON[featuredJSON[selection.id].catID].fullname;
 		tagline = featuredJSON[featuredJSON[selection.id].catID].tagline;	
 	} else if (type === "invisible" ) {
+//		console.log(selection)
+//		console.log(type)
 		color = "#" + selection.id; 
 		click = function(){country_clicked(selection);}; 
 		selectionName = selection.id;
@@ -1118,17 +1180,17 @@ function popup (centroid, selection, type) {
 	var arrow = {};
 	var offsets = [];
 if (centroid[0] >= 0.8 * width || selection.id === "IDN"|| selection.id === "SOM" ) {
-		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%","border-right":"0px solid hsla(0,0%,0%,0)"};
+		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-left":"20px solid #16B0C1","top":"75px","left":"100%","border-right":"0px solid hsla(0,0%,0%,0)","pointer-events":"none"};
 		offsets = [230,-100];
 							
 	} else if (centroid[1] >= 0.8 * height) {
-		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px","border-bottom":"0px solid hsla(0,0%,0%,0)"};
+		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-top":"20px solid #16B0C1","bottom":"-20px","border-bottom":"0px solid hsla(0,0%,0%,0)","pointer-events":"none"};
 		offsets = [95,29];
 	} else if (centroid[0] <= 0.2 * height || selection.id === "CHL" || selection.id === "SDS") {
-		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-20px","top":"75px","border-left":"0px solid hsla(0,0%,0%,0)"};
+		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-right":"20px solid #16B0C1","left":"-20px","top":"75px","border-left":"0px solid hsla(0,0%,0%,0)","pointer-events":"none"};
 		offsets = [-33,-86];
 	} else {
-		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-20px","left":"40%","border-top":"0px solid hsla(0,0%,0%,0)"};
+		arrow = {"height":0,"width":0,"border":"20px solid hsla(0,0%,0%,0)","border-bottom":"20px solid #16B0C1","top":"-20px","left":"40%","border-top":"0px solid hsla(0,0%,0%,0)","pointer-events":"none"};
 		offsets = [97,33];
 	}
 	 
@@ -1433,19 +1495,41 @@ d3.json("countries_min.topo.json", function(error, us) {
 				.style("fill","red")
 				.style("fill-opacity","0")
 				.on("mouseout", function (d) {
+						var c = "";		
+						if (featuredJSON[d.id].cat === "country" || featuredJSON[d.id].cat === "doubleRegional" || featuredJSON[d.id].cat === "both"){ 
+							c =	d3.select("#" + d.id).transition().duration(500).style("fill", "#FFCB36");
+						} else if (featuredJSON[d.id].cat === "regional"){
+							c =	d3.selectAll(featuredJSON[featuredJSON[d.id].catID].countries)
+								.transition().duration(500).style("fill", "#FFCB36");
+						}
+						return c;
 				
-					d3.select("#" + d.id).transition().duration(500).style("fill", "#FFCB36");
+				//	d3.select("#" + d.id).transition().duration(500).style("fill", "#FFCB36");
 				})	
-				.on("mouseover", function (d) {
+				.on("mouseover", function (d) {					
+						var c = "";		
+						if (featuredJSON[d.id].cat === "country" || featuredJSON[d.id].cat === "doubleRegional" || featuredJSON[d.id].cat === "both"){ 
+							c =	d3.select("#" + d.id).transition().duration(500).style("fill", "#E89624");
+						} else if (featuredJSON[d.id].cat === "regional"){
+							c =	d3.selectAll(featuredJSON[featuredJSON[d.id].catID].countries)
+								.transition().duration(500).style("fill", "#E89624");
+						}
+						return c;
 					
-					d3.select("#" + d.id).transition().duration(500).style("fill", "#E89624");
+				//	d3.select("#" + d.id).transition().duration(500).style("fill", "#E89624");
 					var centroid = path.centroid(d);
 					var selection = d;
-					var type = "invisible";
+				//	var type = "invisible";
+					var type = featuredJSON[selection.id].cat;
 					popup (centroid, selection, type);	
 				})
 				.on("click", function(d) {
-					country_clicked(d);
+					var c = "";
+					if (featuredJSON[d.id].cat === "regional") {
+						c = zoomRegion(featuredJSON[featuredJSON[d.id].catID]);
+					}
+					else c = country_clicked(d);
+					return c;		
 				});
 
 setTimeout(function() {
@@ -1578,13 +1662,16 @@ function getHTTP(Media, Country, Name) {
 				var text;
 				if (Media ===  "Video") {
 					text =  "<iframe width=\"" + width + "\" height=\"" + height + "\" src=\"//" + ThingByName[Name].URL + "\" frameborder=\"0\" allowfullscreen></iframe>";
+				console.log(ThingByName);
+				console.log(ThingByName[Name]);
 				} else if (Media === "Story") {
 					
 					text = "<iframe name='iframe1' id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				} else if (Media === "Infographic") {
 					text = "<img width=\"" + width + "\" height=\"" + (height - 50) + "\"src=\"data/countries/" + Country.toLowerCase() + "/graphic.jpg\"><div style=\"width:100%;position:absolute;background-color:#2b2b2b;opacity:0.5;bottom:0px;\"><span class=\"font\" style=\"color:white;margin-left:5px;\" >PDF version<a style=\"color:#16B0C1;margin:5px;\" target=\"_blank\" href=" + featuredJSON[Country].Infographic[0].Hyperlink + ">here</a></span></div>";
 				} else if (Media === "Gallery") {
-					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
+					text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Folder + "/index.html" + "\" seamless></iframe>";
+				//	text = "<iframe name='iframe1' scrolling=\"no\"  id='iframe1' src=\"data/countries/" + Country.toLowerCase() + "/" + ThingByName[Name].Name + "\" seamless></iframe>";
 				}
 						
 				return text;
@@ -1670,7 +1757,7 @@ function contentDialog(Country) {
 
 				.attr("class","dialogBoxOption")
 				.attr("id", function(i) { return "option_" + i ; })
-				.text( function(d) { return d.Button; }) 
+				.html( function(d) { return d.Button; }) 
 				.on("click", function(d) {
 						
 					d3.select("#" + Media).classed("selected", true).classed("dialogBoxOff",false);
@@ -1947,12 +2034,10 @@ function country_clicked(d) {
       					icon_g
         					.transition()
         					.ease("linear")
-			//				.delay(700)							
         					.duration(150) //changed from 1000
         					.attr("transform", "translate(" + pt.x + "," + pt.y + "), scale("+(0.05*track[i].class)+"), rotate("+(i*15)+")");
       					icon
         					.transition()
-			//				.delay(700)
         					.ease("linear")
         					.duration(150) //changed from 1000
 
@@ -2096,7 +2181,7 @@ function country_clicked(d) {
       				.attr("class", "ring")
       				.attr("transform", "translate(" + projection(featuredJSON[d.id].disasterarray.epicenter) + ")")
       			//	.attr("r", 0)
-					.attr("r", featuredJSON[d.id].disasterarray.magnatude * 18 / xyz[2])
+					.attr("r", featuredJSON[d.id].disasterarray.magnitude * 18 / xyz[2])
 					.attr("r", 4 / xyz[2] )
       				.style("stroke-width", 3 / xyz[2])
       				.style("stroke", "red")
