@@ -106,9 +106,9 @@ var featuredJSON = {
 		"catName":"Horn of Africa",
 		"catID":"horn",
 		"year":2011,
-		"options":["Story","Gallery"],
+		"options":["Story","Gallery","Video"],
 		"Story":[{"Button":"No Name","Name":"EthiopiaStory1.html"}],
-		"Video":[],
+		"Video":[{"Button":"No Name","URL":"www.youtube.com/embed/jimweuZ_YnI"}],
 		"Infographic":[],
 		"Gallery":[{"Button":"Ethiopia Cooking School","Folder":"SweetPotato"},{"Button":"Water is Life","Folder":"Water"},{"Button":"Food for Life","Folder":"Food"}],
 		"type":"famine",
@@ -220,7 +220,7 @@ var featuredJSON = {
 	"DC":{
 		"cat":"country",
 	//	"year":2012,
-		"xyz":[150,252,200],
+		"xyz":[150,228,70],
 		"options":["Video","Infographic","Gallery"],
 		"Story":[],
 		"Video":[{"Button":"How OFDA Saves Lives","URL":"www.youtube.com/embed/cd41B2yWL2A"},{"Button":"Smart Compassion: Donate Responsibly","URL":"www.youtube.com/embed/14h9_9sopRA"}],
@@ -339,9 +339,9 @@ var featuredJSON = {
 	"HTI":{
 		"cat":"country",
 		"year":2010,
-		"options":["Story","Infographic","Gallery"],	
+		"options":["Story","Infographic","Gallery","Video"],	
 		"Story":[{"Button":"Helping Communities Rebuild","Name":"Haiti.html"},{"Button":"Preparing for Future Disasters in Haiti","Name":"Haiti_IOM.html"}],
-		"Video":[],
+		"Video":[{"Button":"No Name","URL":"www.youtube.com/embed/ABFznvUs1Ds"}],
 		"Infographic":[{"Button":"Anatomy of Cholera Treatment Facility","Name":"graphic.jpg","Hyperlink":"http://pdf.usaid.gov/pdf_docs/pdacu444.pdf"}],
 		"Gallery":[{"Button":"Jamaica versus Hurricanes","Folder":"Gallery"}],
 		"type":"quake",
@@ -417,9 +417,9 @@ var featuredJSON = {
 	"JAM":{
 		"cat":"country",
 		"year":2004,		
-		"options":["Story","Gallery"],		
+		"options":["Story","Gallery","Video"],		
 		"Story":[{"Button":"Guiding America's Compassionate Spirit","Name":"jam.html"},{"Button":"How Rap Music is Saving Lives","Name":"Jamaica.html"}],
-		"Video":[],
+		"Video":[{"Button":"No Name","URL":"www.youtube.com/embed/RJCtGynocPg"}],
 		"Infographic":[],
 		"Gallery":[{"Button":"Jamaica versus Hurricanes","Folder":"Gallery"}],
 		"type":"storm",
@@ -825,7 +825,7 @@ var featuredJSON = {
 		"Infographic":[],
 		"type":"flood",
 		"fullname":"Zambia",
-		"tagline":"Nothing here yet",
+		"tagline":"Alternating droughts and floods devastate farmers in Zambia, who rely on crops and livestock to feed their families and make a living. With our partners, OFDA's working to build Zambians' resilience to these shocks.",
 		"ovTagline":"Flooding in 2011",
 		"ovElements":[["affected","13.6","MILLION"],["killed","823",""],["economicdamages","$46","BILLION"]]
 	},
@@ -899,6 +899,7 @@ var featuredJSON = {
 
 var  points = [
 	["DC",[-77.03666,38.89511]],
+//	["DC",[77.03666,-38.89511]],
 	["Miami",[-80.224, 25.7877]],
 	["Pisa",[10.4, 43.716]],
 	["Dubai",[55.333,24.95]],
@@ -914,7 +915,8 @@ var points2 = {
 	"DC":{
 		"fullname":"Washington, DC",
 		"type":"headquarters",
-		"coord":[-77.03666,38.89511],
+		"coord":[-77.03666,90.89511],
+	//	"coord":[77.03666,138.89511],
 		"tagline":"Headquartered in D.C. and with more than 300 staff worldwide, USAID's Office of U.S. Foreign Disaster Assistance (OFDA) leads and coordinates the U.S. government's humanitarian assistance efforts overseas.  On average, OFDA responds to 70 disasters in more than 50 countries every year."
 	},
 	"Miami":{
@@ -1147,13 +1149,15 @@ function popup (centroid, selection, type) {
 		headline = featuredJSON[featuredJSON[selection.id].catID].fullname;
 		tagline = featuredJSON[featuredJSON[selection.id].catID].tagline;	
 	} else if (type === "invisible" ) {
-//		console.log(selection)
-//		console.log(type)
+//	} else if (type === "circle" ) {
+//		console.log(selection)	
+//	console.log(type)
 		color = "#" + selection.id; 
 		click = function(){country_clicked(selection);}; 
 		selectionName = selection.id;
 		headline = featuredJSON[selection.id].fullname;
 		tagline = featuredJSON[selection.id].tagline;
+		console.log(headline);
 	} else if (type === "doubleRegional"   ) {
 		click = null; 
 		color = "#" + selection.id; 
@@ -1164,7 +1168,8 @@ function popup (centroid, selection, type) {
 		click = function(){		
 			var DC = featuredJSON.DC;
 			d3.selectAll(".popDetail, #tooltipImg, .popName, .another").remove();
-			tooltip.style("opacity",0).style("width","0px");	
+			tooltip.style("opacity",0).style("width","0px");
+				
 			zoom(DC.xyz);
 			contentDialog("DC");
 			isGlobal(DC.xyz, "#DC_path");
@@ -1514,14 +1519,15 @@ d3.json("countries_min.topo.json", function(error, us) {
 							c =	d3.selectAll(featuredJSON[featuredJSON[d.id].catID].countries)
 								.transition().duration(500).style("fill", "#E89624");
 						}
-						return c;
-					
 				//	d3.select("#" + d.id).transition().duration(500).style("fill", "#E89624");
 					var centroid = path.centroid(d);
 					var selection = d;
 				//	var type = "invisible";
 					var type = featuredJSON[selection.id].cat;
 					popup (centroid, selection, type);	
+						return c;
+					
+
 				})
 				.on("click", function(d) {
 					var c = "";
