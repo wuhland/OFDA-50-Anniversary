@@ -223,7 +223,7 @@ var featuredJSON = {
 		"xyz":[150,228,70],
 		"options":["Video","Infographic","Gallery"],
 		"Story":[],
-		"Video":[{"Button":"How OFDA Saves Lives","URL":"www.youtube.com/embed/cd41B2yWL2A"},{"Button":"Smart Compassion: Donate Responsibly","URL":"www.youtube.com/embed/14h9_9sopRA"}],
+		"Video":[{"Button":"50 Years of Saving Lives","URL":"www.youtube.com/embed/rZIHDI7vbyw"},{"Button":"OFDA: Who we are","URL":"www.youtube.com/embed/cd41B2yWL2A"},{"Button":"Smart Compassion: Donate Responsibly","URL":"www.youtube.com/embed/14h9_9sopRA"}],
 		"Infographic":[{"Button":"DC Graphic","Name":"graphic.jpg","Hyperlink":"http://www.usaid.gov/sites/default/files/documents/1866/Disaster-Response-Infographic-10.31.12.pdf"}],
 		"Gallery":[{"Button":"DC","Folder":"Gallery"}],
 		"type":"N/A",
@@ -796,9 +796,9 @@ var featuredJSON = {
 		"Gallery":[{"Button":"Syria","Folder":"Gallery"}],
 		"type":"complex",
 		"fullname":"Syria",
-		"tagline":"4 years of brutal civil war has left more than 10 million people in need of humanitarian assistance in Syria. Nearly 1/2 the population is displaced, and the crisis affected more than 5 million children, which is as much as the total population of Norway.",
+		"tagline":"4 years of brutal civil war has left more than 12 million people in need of humanitarian assistance in Syria. Nearly 1/2 the population is displaced, and the crisis affected more than 5 million children, which is as much as the total population of Norway.",
 		"ovTagline":"Conflict broke out in March 2011",
-		"ovElements":[["humanitarian","10.8","MILLION"],["refugees","2.9","MILLION"],["children","5.5","MILLION"]]
+		"ovElements":[["humanitarian","12.2","MILLION"],["refugees","3+","MILLION"],["children","5.5","MILLION"]]
 		},
 	"THA":{
 		"cat":"both",
@@ -837,11 +837,11 @@ var featuredJSON = {
 		"options":["Story","Video"],
 		"region_type":"complex",
 		"Story":[{"Button":"On the Frontlines of the Ebola Response: an Inside Look at a Program to Help the Grieving","Name":"lbr.html"},{"Button":"Liberia Gripped By Ebola's Many Tentacles","Name":"Ebola2.html"},{"Button":"Profiles in Courage: Ren&eacute; Van Slate","Name":"Ebola3.html"},{"Button":"Powering the Ebola Response","Name":"Ebola4.html"}],
-		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/WUDDcVrU4y4"}],
+		"Video":[{"Button":"Plan","URL":"www.youtube.com/embed/mkoT2LuFc8Q"}],
 		"Infographic":[],
 		"type":"complex",
-		"tagline":"On August 5, USAID deployed a Disaster Assistance Response Team to Liberia to lead the overall U.S. response to the worst Ebola outbreak in history. The outbreak, affecting four countries, is the first to hit West Africa and has been declared an international health emergency.",
-		"ovElements":[["aid","$111","MILLION+"],["countriesaffected","5",""],["rate","55-60%",""]],
+		"tagline":"On August 5, USAID deployed a Disaster Assistance Response Team to Liberia to lead the overall U.S. response to the worst Ebola outbreak in history. The outbreak is the first to hit West Africa and has been declared an international health emergency.",
+		"ovElements":[["aid","$845","MILLION+"],["responders","3,000",""],["rate","55-60%",""]],
 		"countries":"#SLE, #LBR, #GIN"
 	},
 	"io_tsunami":{
@@ -1930,6 +1930,9 @@ function ov(feature) {
 							 		text = "in aid";
 								} else if (d[0] === "countriesaffected") {
 							 		text = "countries affected";
+
+								} else if (d[0] === "responders") {
+							 		text = "U.S. responders at peak";
 
 								}
 							
