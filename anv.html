@@ -1923,6 +1923,32 @@ function getHTTP(Media, Country, Name) {
 }
 
 function contentDialog(Country) {
+	console.log(featuredJSON[Country]);
+	console.log("length = " + featuredJSON[Country].Story.length.toString());
+	var medias = [];
+	accepted = ["Story","Video","Infographic","Gallery"];
+ 	var datas = featuredJSON[Country];
+/*	for (var i=0; i < accepted.length; i++){
+		if (Object.keys(datas).indexOf(accepted[i]) > -1 && datas[accepted[i]].length > 0) {
+	
+			medias.push(media);
+		}
+
+	}
+*/
+	console.log("medias = " + medias.toString())
+	function isAnything(value) {
+		if (typeof value !== "undefined" && accepted.indexOf(value) > -1  && value.length > 0){
+			return true;
+		}
+		else {
+			return false;
+		} 
+	}
+	console.log(datas);
+  // console.log (datas.filter(isAnything));
+	console.log(d3.keys(media));
+	console.log(media);	
 	dialogOptionBoolean = 0;
 	d3.select("#map").select("#cdContainer").append("div")
 			.attr("id","dialogBoxUnit")
